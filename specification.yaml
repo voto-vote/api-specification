@@ -1,0 +1,12 @@
+openapi: "3.0.2"
+info:
+  title: OPEN VOTE ADVICE APPLICATION AP
+  version: "0.0.1"
+servers:
+  - url: https://api.voto.vote/v1
+paths:
+  /test:
+    get:
+      responses:
+        "200":
+          description: OK
