@@ -1,12 +1,189 @@
 openapi: "3.0.2"
 info:
-  title: OPEN VOTE ADVICE APPLICATION AP
+  title: OPEN VOTE ADVICE APPLICATION API
+  description: Defines a common interface for vote advice applications.
   version: "0.0.1"
 servers:
-  - url: https://api.voto.vote/v1
+  - url: https://api.voto.vote
+tags:
+  - name: Election
+  - name: VAA
+  - name: API
 paths:
-  /test:
+  /:
     get:
+      tags:
+        - API
+      summary: Get info about this API
+      parameters:
+        - name: version
+          in: query
+          description: Version of API
+          schema:
+            type: string
+            example: "v1"
       responses:
         "200":
-          description: OK
+          description: |-
+            200 response
+  /elections:
+    get:
+      tags:
+        - Election
+      summary: Fetches array of Elections
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/Election.yaml#/Election"
+    post:
+      tags:
+        - Election
+      summary: Create Election object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Election.yaml#/NewElection"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Election.yaml#/Election"
+    put:
+      tags:
+        - Election
+      summary: Update Election object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Election.yaml#/Election"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Election.yaml#/Election"
+    delete:
+      tags:
+        - Election
+      summary: Update Election object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Election.yaml#/DeleteElection"
+      responses:
+        "200":
+          description: Success
+  /elections/{electionId}:
+    get:
+      tags:
+        - Election
+      summary: Get single Election
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Election.yaml#/Election"
+  /applications:
+    get:
+      tags:
+        - VAA
+      summary: Fetches array of VAA's
+      parameters:
+        - name: launch_date
+          in: query
+          description: Launch date of VAA
+          schema:
+            type: string
+            format: date
+            example: "2021-10-01"
+        - name: sundown_date
+          in: query
+          description: Sundown date of VAA
+          schema:
+            type: string
+            format: date
+            example: "2021-10-01"
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/Application.yaml#/Application"
+    post:
+      tags:
+        - VAA
+      summary: Create VAA object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Application.yaml#/NewApplication"
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Application.yaml#/Application"
+    put:
+      tags:
+        - VAA
+      summary: Update VAA object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Application.yaml#/NewApplication"
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Application.yaml#/Application"
+    delete:
+      tags:
+        - VAA
+      summary: Delete VAA object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Application.yaml#/DeleteApplication"
+      responses:
+        "201":
+          description: Success
+  /applications/{applicationId}:
+    get:
+      tags:
+        - VAA
+      summary: Fetches single VAA
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Application.yaml#/Application"

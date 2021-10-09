@@ -1,0 +1,75 @@
+Application:
+  allOf:
+    - $ref: "Application.yaml#/NewApplication"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+
+NewApplication:
+  type: object
+  required:
+    - election_id
+    - cluster_id
+    - title
+  properties:
+    election_id:
+      type: integer
+      example: 456
+    cluster_id:
+      type: integer
+      example: 789
+    match_type:
+      $ref: "MatchType.yaml#/MatchType"
+    algorithm:
+      $ref: "Algorithm.yaml#/Algorithm"
+    theme:
+      $ref: "Theme.yaml#/Theme"
+    title:
+      type: string
+      example: "Example Title"
+    subtitle:
+      type: string
+      example: "Example Subtitle"
+    description:
+      type: string
+      example: "Lorem ipsum dolor sed amet."
+    website:
+      type: string
+      example: "https://voto.vote"
+    logo:
+      type: string
+      example: "https://voto.vote/logo.png"
+    url:
+      type: string
+      example: "https://foo.bar/vaa"
+    launch_date:
+      type: string
+      format: date
+      example: "2021-08-27"
+    sundown_date:
+      type: string
+      format: date
+      example: "2021-09-27"
+
+DeleteApplication:
+  type: object
+  required:
+    - id
+  properties:
+    id:
+      type: integer
+      format: int64
+      example: 123
