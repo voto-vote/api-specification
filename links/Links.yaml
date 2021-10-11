@@ -1,0 +1,9 @@
+components:
+  links:
+    GetUserByUserId: # <----- The $ref's above point here
+      description: >
+        The `id` value returned in the response can be used as
+        the `userId` parameter in `GET /users/{userId}`.
+      operationId: getUser
+      parameters:
+        userId: "$response.body#/id"

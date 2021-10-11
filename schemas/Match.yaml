@@ -10,3 +10,6 @@ Match:
       enum: ["candidate", "party"]
       example: "candidate"
       description: Unit to identify the real amount
+    score:
+      type: float
+      example: 99.7

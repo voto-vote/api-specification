@@ -83,11 +83,28 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Election.yaml#/Election"
+          links:
+            GetElectionById: # <---- arbitrary name for the link
+              operationId: getElection
+              parameters:
+                electionID: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **electionId** parameter in `GET /elections/{electionId}`.
+          # -----------------------------------------------------
   /elections/{electionId}:
     get:
       tags:
         - Election
       summary: Get single Election
+      operationId: getElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         "200":
           description: Success
@@ -359,25 +376,75 @@ paths:
       responses:
         "201":
           description: Success
-
-  /applications/{applicationId}/vote:
-    post:
+  /applications/{applicationId}/theses:
+    get:
       tags:
-        - Vote
-      summary: Create new Vote
+        - VAA
+      summary: Fetches all theses for one VAA
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "schemas/Match.yaml#/Match"
-    delete:
+                oneOf:
+                  - type: array
+                    items:
+                      $ref: "schemas/These.yaml#/These"
+                  - type: array
+                    items:
+                      $ref: "schemas/These.yaml#/LanguageThese"
+    put:
       tags:
         - VAA
-      summary: Delete Vote
+      summary: Update VAA object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Application.yaml#/NewApplication"
       responses:
         "201":
           description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Application.yaml#/Application"
+    delete:
+      tags:
+        - VAA
+      summary: Delete VAA object
+      responses:
+        "201":
+          description: Success
+
+  /applications/{applicationId}/votings:
+    post:
+      tags:
+        - Vote
+      summary: Submit a new voting for an VAA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Voting.yaml#/NewVoting"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Voting.yaml#/Voting"
+
+  /applications/{applicationId}/votings/{voteId}:
+    get:
+      tags:
+        - Vote
+      summary: Get existing vote
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Voting.yaml#/Voting"
