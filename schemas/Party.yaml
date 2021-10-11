@@ -1,0 +1,48 @@
+Party:
+  allOf:
+    - $ref: "Party.yaml#/NewParty"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+
+NewParty:
+  type: object
+  required:
+    - election_id
+    - shortcut
+    - name
+  properties:
+    election_id:
+      type: integer
+      example: 123
+    parent_party_id:
+      type: integer
+      example: 456
+    shortcut:
+      type: string
+      example: "ABC"
+    name:
+      type: string
+      example: "Party name"
+    description:
+      type: string
+      example: "Example party description"
+    website:
+      type: string
+      example: "https://voto.vote"
+    logo:
+      type: string
+      example: "https://foo.bar/logo.png"

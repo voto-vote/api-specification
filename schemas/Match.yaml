@@ -1,0 +1,12 @@
+Match:
+  type: object
+  properties:
+    match:
+      oneOf:
+        - $ref: "Candidate.yaml#/Candidate"
+        - $ref: "Party.yaml#/Party"
+    match_type:
+      type: string
+      enum: ["candidate", "party"]
+      example: "candidate"
+      description: Unit to identify the real amount

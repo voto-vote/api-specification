@@ -28,11 +28,6 @@ NewApplication:
     election_id:
       type: integer
       example: 456
-    cluster_id:
-      type: integer
-      example: 789
-    match_type:
-      $ref: "MatchType.yaml#/MatchType"
     algorithm:
       $ref: "Algorithm.yaml#/Algorithm"
     theme:

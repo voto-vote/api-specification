@@ -1,14 +1,27 @@
-openapi: "3.0.2"
+openapi: "3.0.0"
 info:
   title: OPEN VOTE ADVICE APPLICATION API
   description: Defines a common interface for vote advice applications.
-  version: "0.0.1"
+  version: 0.0.1
+  contact:
+    name: API Support
+    url: https://voto.vote/
+    email: help@voto.vote
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
 servers:
   - url: https://api.voto.vote
+    description: "VOTO API Endpoint"
 tags:
   - name: Election
+    description: Objects related to elections.
   - name: VAA
+    description: Objects related to Vote advice applications.
   - name: API
+    description: About this API
+  - name: Vote
+    description: Endpoints for everything vote related
 paths:
   /:
     get:
@@ -31,6 +44,20 @@ paths:
       tags:
         - Election
       summary: Fetches array of Elections
+      parameters:
+        - name: election_date
+          in: query
+          description: Election date of election
+          schema:
+            type: string
+            format: date
+            example: "2021-10-01"
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
       responses:
         "200":
           description: Success
@@ -56,34 +83,6 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Election.yaml#/Election"
-    put:
-      tags:
-        - Election
-      summary: Update Election object
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Election.yaml#/Election"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Election.yaml#/Election"
-    delete:
-      tags:
-        - Election
-      summary: Update Election object
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Election.yaml#/DeleteElection"
-      responses:
-        "200":
-          description: Success
   /elections/{electionId}:
     get:
       tags:
@@ -96,6 +95,183 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Election.yaml#/Election"
+    put:
+      tags:
+        - Election
+      summary: Update Election object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Election.yaml#/NewElection"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Election.yaml#/Election"
+    delete:
+      tags:
+        - Election
+      summary: Delete Election object
+      responses:
+        "200":
+          description: Success
+  /elections/{electionId}/candidates:
+    get:
+      tags:
+        - Election
+      summary: Get candidates for election
+      parameters:
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/Candidate.yaml#/Candidate"
+    post:
+      tags:
+        - Election
+      summary: Create new candidate for election
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Candidate.yaml#/NewCandidate"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/Candidate.yaml#/Candidate"
+
+  /elections/{electionId}/candidates/{candidateId}:
+    get:
+      tags:
+        - Election
+      summary: Get single candidate
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Candidate.yaml#/Candidate"
+    put:
+      tags:
+        - Election
+      summary: Change candidate for election
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Candidate.yaml#/NewCandidate"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/Candidate.yaml#/Candidate"
+    delete:
+      tags:
+        - Election
+      summary: Delete candidate object
+      responses:
+        "200":
+          description: Success
+  /elections/{electionId}/parties:
+    get:
+      tags:
+        - Election
+      summary: Get parties for election
+      parameters:
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/Party.yaml#/Party"
+    post:
+      tags:
+        - Election
+      summary: Create new candidate for election
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Party.yaml#/NewParty"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/Party.yaml#/Party"
+
+  /elections/{electionId}/parties/{partyId}:
+    get:
+      tags:
+        - Election
+      summary: Get single party
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Party.yaml#/Party"
+    put:
+      tags:
+        - Election
+      summary: Change party for election
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Party.yaml#/NewParty"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "schemas/Party.yaml#/Party"
+    delete:
+      tags:
+        - Election
+      summary: Delete party object
+      responses:
+        "200":
+          description: Success
   /applications:
     get:
       tags:
@@ -147,6 +323,19 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Application.yaml#/Application"
+
+  /applications/{applicationId}:
+    get:
+      tags:
+        - VAA
+      summary: Fetches single VAA
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Application.yaml#/Application"
     put:
       tags:
         - VAA
@@ -167,23 +356,28 @@ paths:
       tags:
         - VAA
       summary: Delete VAA object
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Application.yaml#/DeleteApplication"
       responses:
         "201":
           description: Success
-  /applications/{applicationId}:
-    get:
+
+  /applications/{applicationId}/vote:
+    post:
       tags:
-        - VAA
-      summary: Fetches single VAA
+        - Vote
+      summary: Create new Vote
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: "schemas/Application.yaml#/Application"
+                type: array
+                items:
+                  $ref: "schemas/Match.yaml#/Match"
+    delete:
+      tags:
+        - VAA
+      summary: Delete Vote
+      responses:
+        "201":
+          description: Success
