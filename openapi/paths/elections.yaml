@@ -1,0 +1,55 @@
+get:
+  tags:
+    - Election
+  summary: Fetches array of Elections
+  operationId: getElections
+  parameters:
+    - name: election_date
+      in: query
+      description: Election date of election
+      schema:
+        type: string
+        format: date
+        example: '2021-10-01'
+    - name: limit
+      in: query
+      description: Limits the amount of items in the responsing array. Max results is 50.
+      schema:
+        type: integer
+        example: 20
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              $ref: schemas/Election.yaml#/Election
+post:
+  tags:
+    - Election
+  summary: Create Election object
+  operationId: creatElection
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          $ref: schemas/Election.yaml#/NewElection
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: schemas/Election.yaml#/Election
+      links:
+        GetElectionById:
+          operationId: getElection
+          parameters:
+            electionId: $response.body#/id
+          description: >
+            The `id` value returned in the response can be used as the
+            **electionId** parameter in `GET /elections/{electionId}`.

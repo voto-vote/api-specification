@@ -17,6 +17,9 @@ Candidate:
           type: string
           format: date-time
           example: 2021-10-05T06:00:00Z
+        public:
+          type: boolean
+          example: false
 
 NewCandidate:
   type: object

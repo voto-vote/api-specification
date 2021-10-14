@@ -355,6 +355,79 @@ paths:
       responses:
         "200":
           description: Success
+  /elections/{electionId}/candidates/{candidateId}/votes:
+    get:
+      tags:
+        - Election
+      summary: Get votes of a candidate
+      operationId: getVotingsForCandidate
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to get
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to get
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Voting.yaml#/Vote"
+    put:
+      tags:
+        - Election
+      summary: Change candidate votes for election
+      operationId: putCandidateVotes
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to put
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                votes:
+                  type: array
+                  items:
+                    $ref: "schemas/Voting.yaml#/Vote"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  votes:
+                    type: array
+                    items:
+                      $ref: "schemas/Voting.yaml#/Vote"
   /elections/{electionId}/parties:
     get:
       tags:
@@ -421,7 +494,6 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **partyId** parameter in `GET /elections/{electionId}/parties/{partyId}`.
-
   /elections/{electionId}/parties/{partyId}:
     get:
       tags:
@@ -524,6 +596,81 @@ paths:
       responses:
         "200":
           description: Success
+
+  /elections/{electionId}/parties/{partyId}/votes:
+    get:
+      tags:
+        - Election
+      summary: Get votes of a party
+      operationId: getVotingsForParty
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to get
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to get
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Voting.yaml#/Vote"
+    put:
+      tags:
+        - Election
+      summary: Change party votes for election
+      operationId: putCandidateVotes
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to put
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                votes:
+                  type: array
+                  items:
+                    $ref: "schemas/Voting.yaml#/Vote"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  votes:
+                    type: array
+                    items:
+                      $ref: "schemas/Voting.yaml#/Vote"
+
   /applications:
     get:
       tags:
@@ -665,6 +812,52 @@ paths:
       responses:
         "201":
           description: Success
+  /applications/{applicationId}/metadata:
+    get:
+      tags:
+        - VAA
+      summary: Fetches VAA specific metadata
+      operationId: getApplicationMetadata
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Application.yaml#/Metadata"
+    put:
+      tags:
+        - VAA
+      summary: Update VAA object
+      operationId: putApplicationMetadata
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Application.yaml#/Metadata"
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Application.yaml#/Metadata"
   /applications/{applicationId}/theses:
     get:
       tags:

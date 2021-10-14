@@ -1,0 +1,77 @@
+get:
+  tags:
+    - VAA
+  summary: Fetches single VAA
+  operationId: getApplication
+  parameters:
+    - in: path
+      name: applicationId
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Numeric ID of the VAA
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: schemas/Application.yaml#/Application
+      links:
+        GetApplicationById:
+          operationId: getApplication
+          parameters:
+            electionId: $response.body#/id
+          description: >
+            The `id` value returned in the response can be used as the
+            **applicationId** parameter in `GET /applications/{applicationId}`.
+put:
+  tags:
+    - VAA
+  summary: Update VAA object
+  operationId: putApplication
+  parameters:
+    - in: path
+      name: applicationId
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Numeric ID of the VAA
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: schemas/Application.yaml#/NewApplication
+  responses:
+    '201':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: schemas/Application.yaml#/Application
+      links:
+        GetApplicationById:
+          operationId: getApplication
+          parameters:
+            electionId: $response.body#/id
+          description: >
+            The `id` value returned in the response can be used as the
+            **applicationId** parameter in `GET /applications/{applicationId}`.
+delete:
+  tags:
+    - VAA
+  summary: Delete VAA object
+  operationId: deleteApplication
+  parameters:
+    - in: path
+      name: applicationId
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Numeric ID of the VAA
+  responses:
+    '201':
+      description: Success

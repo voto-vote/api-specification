@@ -1,0 +1,45 @@
+get:
+  tags:
+    - VAA
+  summary: Fetches VAA specific metadata
+  operationId: getApplicationMetadata
+  parameters:
+    - in: path
+      name: applicationId
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Numeric ID of the VAA
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: schemas/Application.yaml#/Metadata
+put:
+  tags:
+    - VAA
+  summary: Update VAA object
+  operationId: putApplicationMetadata
+  parameters:
+    - in: path
+      name: applicationId
+      required: true
+      schema:
+        type: integer
+        format: int64
+      description: Numeric ID of the VAA
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: schemas/Application.yaml#/Metadata
+  responses:
+    '201':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: schemas/Application.yaml#/Metadata
