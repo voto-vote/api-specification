@@ -1,0 +1,23 @@
+name: deploy-github-page
+# Run on each push to master
+on:
+  push:
+    branches: [main, dev]
+jobs:
+  test_job:
+    runs-on: self-hosted
+    name: Deploy redoc on github page
+    steps:
+      # To use this repository's private action, you must check out the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: redoc-cli test
+        uses: ./ # Uses an action in the root directory
+        with:
+          args: "bundle test/specification.yaml -o docs/index.html"
+
+      - name: check result
+        run: |
+          ls -al
+          test -f index.html || (echo "Missing index.html from previous step." && exit 1)
