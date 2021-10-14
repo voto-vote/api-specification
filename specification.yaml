@@ -11,8 +11,19 @@ info:
     name: MIT
     url: https://opensource.org/licenses/MIT
 servers:
-  - url: https://api.voto.vote
+  - url: https://{environment}.voto.vote/{version}
     description: "VOTO API Endpoint"
+    variables:
+      environment:
+        default: api # Production server
+        enum:
+          - api # Production server
+          - dev.api # Development server
+      version:
+        default: v1
+        enum:
+          - v1
+          - v2
 tags:
   - name: Election
     description: Objects related to elections.
@@ -28,6 +39,7 @@ paths:
       tags:
         - API
       summary: Get info about this API
+      operationId: getAPIInfo
       parameters:
         - name: version
           in: query
@@ -44,6 +56,7 @@ paths:
       tags:
         - Election
       summary: Fetches array of Elections
+      operationId: getElections
       parameters:
         - name: election_date
           in: query
@@ -66,15 +79,18 @@ paths:
               schema:
                 type: array
                 items:
+                  type: object
                   $ref: "schemas/Election.yaml#/Election"
     post:
       tags:
         - Election
       summary: Create Election object
+      operationId: creatElection
       requestBody:
         content:
           application/json:
             schema:
+              type: object
               $ref: "schemas/Election.yaml#/NewElection"
       responses:
         "200":
@@ -84,14 +100,14 @@ paths:
               schema:
                 $ref: "schemas/Election.yaml#/Election"
           links:
-            GetElectionById: # <---- arbitrary name for the link
+            GetElectionById:
               operationId: getElection
               parameters:
-                electionID: "$response.body#/id"
+                electionId: "$response.body#/id"
               description: >
                 The `id` value returned in the response can be used as
                 the **electionId** parameter in `GET /elections/{electionId}`.
-          # -----------------------------------------------------
+
   /elections/{electionId}:
     get:
       tags:
@@ -105,6 +121,7 @@ paths:
           schema:
             type: integer
             format: int64
+          description: Numeric ID of the election to get
       responses:
         "200":
           description: Success
@@ -112,10 +129,27 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Election.yaml#/Election"
+          links:
+            GetElectionById:
+              operationId: getElection
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **electionId** parameter in `GET /elections/{electionId}`.
     put:
       tags:
         - Election
       summary: Update Election object
+      operationId: putElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to put
       requestBody:
         content:
           application/json:
@@ -128,10 +162,27 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Election.yaml#/Election"
+          links:
+            GetElectionById:
+              operationId: getElection
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **electionId** parameter in `GET /elections/{electionId}`.
     delete:
       tags:
         - Election
       summary: Delete Election object
+      operationId: deleteElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to delete
       responses:
         "200":
           description: Success
@@ -140,6 +191,7 @@ paths:
       tags:
         - Election
       summary: Get candidates for election
+      operationId: getCandidatesForElection
       parameters:
         - name: limit
           in: query
@@ -147,6 +199,13 @@ paths:
           schema:
             type: integer
             example: 20
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to get
       responses:
         "200":
           description: Success
@@ -155,11 +214,21 @@ paths:
               schema:
                 type: array
                 items:
+                  type: object
                   $ref: "schemas/Candidate.yaml#/Candidate"
     post:
       tags:
         - Election
       summary: Create new candidate for election
+      operationId: createCandidatesForElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to get
       requestBody:
         content:
           application/json:
@@ -173,13 +242,38 @@ paths:
               schema:
                 type: array
                 items:
+                  type: object
                   $ref: "schemas/Candidate.yaml#/Candidate"
+          links:
+            GetCandidateById:
+              operationId: getCandidateForElection
+              parameters:
+                candidateId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /elections/{electionId}/candidates/{candidateId}`.
 
   /elections/{electionId}/candidates/{candidateId}:
     get:
       tags:
         - Election
       summary: Get single candidate
+      operationId: getCandidateForElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to get
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to get
       responses:
         "200":
           description: Success
@@ -187,10 +281,34 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Candidate.yaml#/Candidate"
+          links:
+            GetCandidateById:
+              operationId: getCandidateForElection
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /elections/{electionId}/candidates/{candidateId}`.
     put:
       tags:
         - Election
       summary: Change candidate for election
+      operationId: putCandidateForElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to put
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to put
       requestBody:
         content:
           application/json:
@@ -204,11 +322,36 @@ paths:
               schema:
                 type: array
                 items:
+                  type: object
                   $ref: "schemas/Candidate.yaml#/Candidate"
+          links:
+            GetCandidateById:
+              operationId: getCandidateForElection
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /elections/{electionId}/candidates/{candidateId}`.
     delete:
       tags:
         - Election
       summary: Delete candidate object
+      operationId: deleteCandidateForElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to delete
       responses:
         "200":
           description: Success
@@ -217,6 +360,7 @@ paths:
       tags:
         - Election
       summary: Get parties for election
+      operationId: getPartiesForElection
       parameters:
         - name: limit
           in: query
@@ -224,6 +368,13 @@ paths:
           schema:
             type: integer
             example: 20
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election
       responses:
         "200":
           description: Success
@@ -232,11 +383,21 @@ paths:
               schema:
                 type: array
                 items:
+                  type: object
                   $ref: "schemas/Party.yaml#/Party"
     post:
       tags:
         - Election
-      summary: Create new candidate for election
+      summary: Create new party for election
+      operationId: createPartyForElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election
       requestBody:
         content:
           application/json:
@@ -250,13 +411,38 @@ paths:
               schema:
                 type: array
                 items:
+                  type: object
                   $ref: "schemas/Party.yaml#/Party"
+          links:
+            GetPartyById:
+              operationId: getPartyForElection
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **partyId** parameter in `GET /elections/{electionId}/parties/{partyId}`.
 
   /elections/{electionId}/parties/{partyId}:
     get:
       tags:
         - Election
       summary: Get single party
+      operationId: getPartyForElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
       responses:
         "200":
           description: Success
@@ -264,10 +450,34 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Party.yaml#/Party"
+          links:
+            GetPartyById:
+              operationId: getPartyForElection
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **partyId** parameter in `GET /elections/{electionId}/parties/{partyId}`.
     put:
       tags:
         - Election
       summary: Change party for election
+      operationId: putPartyForElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
       requestBody:
         content:
           application/json:
@@ -281,11 +491,36 @@ paths:
               schema:
                 type: array
                 items:
+                  type: object
                   $ref: "schemas/Party.yaml#/Party"
+          links:
+            GetPartyById:
+              operationId: getPartyForElection
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **partyId** parameter in `GET /elections/{electionId}/parties/{partyId}`.
     delete:
       tags:
         - Election
       summary: Delete party object
+      operationId: deletePartyForElection
+      parameters:
+        - in: path
+          name: electionId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
       responses:
         "200":
           description: Success
@@ -294,6 +529,7 @@ paths:
       tags:
         - VAA
       summary: Fetches array of VAA's
+      operationId: getApplications
       parameters:
         - name: launch_date
           in: query
@@ -323,11 +559,13 @@ paths:
               schema:
                 type: array
                 items:
+                  type: object
                   $ref: "schemas/Application.yaml#/Application"
     post:
       tags:
         - VAA
       summary: Create VAA object
+      operationId: createApplication
       requestBody:
         content:
           application/json:
@@ -340,12 +578,29 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Application.yaml#/Application"
+          links:
+            GetApplicationById:
+              operationId: getApplication
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **applicationId** parameter in `GET /applications/{applicationId}`.
 
   /applications/{applicationId}:
     get:
       tags:
         - VAA
       summary: Fetches single VAA
+      operationId: getApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
       responses:
         "200":
           description: Success
@@ -353,10 +608,27 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Application.yaml#/Application"
+          links:
+            GetApplicationById:
+              operationId: getApplication
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **applicationId** parameter in `GET /applications/{applicationId}`.
     put:
       tags:
         - VAA
       summary: Update VAA object
+      operationId: putApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
       requestBody:
         content:
           application/json:
@@ -369,10 +641,27 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Application.yaml#/Application"
+          links:
+            GetApplicationById:
+              operationId: getApplication
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **applicationId** parameter in `GET /applications/{applicationId}`.
     delete:
       tags:
         - VAA
       summary: Delete VAA object
+      operationId: deleteApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
       responses:
         "201":
           description: Success
@@ -381,6 +670,15 @@ paths:
       tags:
         - VAA
       summary: Fetches all theses for one VAA
+      operationId: getThesesForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
       responses:
         "200":
           description: Success
@@ -390,30 +688,75 @@ paths:
                 oneOf:
                   - type: array
                     items:
+                      type: object
                       $ref: "schemas/These.yaml#/These"
                   - type: array
                     items:
+                      type: object
                       $ref: "schemas/These.yaml#/LanguageThese"
-    put:
+    post:
       tags:
         - VAA
-      summary: Update VAA object
+      summary: Add these
+      operationId: createTheseForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "schemas/Application.yaml#/NewApplication"
+              $ref: "schemas/These.yaml#/LanguageThese"
       responses:
         "201":
           description: Success
           content:
             application/json:
               schema:
-                $ref: "schemas/Application.yaml#/Application"
+                $ref: "schemas/These.yaml#/These"
+    put:
+      tags:
+        - VAA
+      summary: Put these
+      operationId: putThesesForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/These.yaml#/LanguageThese"
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/These.yaml#/These"
     delete:
       tags:
         - VAA
       summary: Delete VAA object
+      operationId: deleteThesesForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
       responses:
         "201":
           description: Success
@@ -423,6 +766,15 @@ paths:
       tags:
         - Vote
       summary: Submit a new voting for an VAA
+      operationId: createVotingForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
       requestBody:
         content:
           application/json:
@@ -435,12 +787,41 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Voting.yaml#/Voting"
+          links:
+            GetVoteById:
+              operationId: getVotingForApplication
+              parameters:
+                voteId: "$response.body#/id"
+                applicationId: "$response.body#/application_id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **voteId** parameter in `GET /applications/{applicationId}/votings/{voteId}`.
+
+
+                The `application_id` value returned in the response can be used as
+                the **applicationId** parameter in `GET /applications/{applicationId}/votings/{voteId}`.
 
   /applications/{applicationId}/votings/{voteId}:
     get:
       tags:
         - Vote
       summary: Get existing vote
+      operationId: getVotingForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: voteId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the vote
       responses:
         "200":
           description: Success

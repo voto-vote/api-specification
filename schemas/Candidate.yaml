@@ -30,7 +30,7 @@ NewCandidate:
       example: 123
     party_id:
       type: integer
-      exampoe: 789
+      example: 789
     description:
       type: string
       example: "Example Title"

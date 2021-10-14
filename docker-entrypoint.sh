@@ -4,7 +4,7 @@
 mkdir -p output/generated
 
 echo "Merging files..."
-speccy resolve ./specification.yml -o output/spec-merged.yml
+speccy resolve ./specification.yaml -o output/spec-merged.yml
 
 cd  output
 

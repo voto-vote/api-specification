@@ -11,5 +11,5 @@ Match:
       example: "candidate"
       description: Unit to identify the real amount
     score:
-      type: float
+      type: number
       example: 99.7
