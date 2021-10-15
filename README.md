@@ -1,5 +1,7 @@
 # VOTO API Specification
 
+![MIT](https://img.shields.io/badge/license-MIT-blue.svg)
+![CI](https://github.com/voto-vote/api-specification/workflows/redoc%20gh%20pages/badge.svg)
 [![Github Pages](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://voto-vote.github.io/api-specification/)
 
 This project contains the specification of the VOTO API. The schema is based on the [OpenAPI Specification v3.1](https://github.com/OAI/OpenAPI-Specification).
