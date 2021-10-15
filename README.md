@@ -1,6 +1,8 @@
 # VOTO API Specification
 
-This project contains the specification of the VOTO API. The schema is based on the [OpenAPI Specification v3.1](https://github.com/OAI/OpenAPI-Specification)
+[![Github Pages](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](https://voto-vote.github.io/api-specification/)
+
+This project contains the specification of the VOTO API. The schema is based on the [OpenAPI Specification v3.1](https://github.com/OAI/OpenAPI-Specification).
 
 ## Introduction
 
