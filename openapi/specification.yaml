@@ -33,6 +33,13 @@ tags:
     description: About this API
   - name: Vote
     description: Endpoints for everything vote related
+
+components:
+  securitySchemes:
+    firebase:
+      type: http
+      scheme: bearer
+
 paths:
   /:
     get:
@@ -57,6 +64,8 @@ paths:
         - Election
       summary: Fetches array of Elections
       operationId: getElections
+      security:
+        - firebase: []
       parameters:
         - name: election_date
           in: query
@@ -86,6 +95,8 @@ paths:
         - Election
       summary: Create Election object
       operationId: creatElection
+      security:
+        - firebase: []
       requestBody:
         content:
           application/json:
@@ -142,6 +153,8 @@ paths:
         - Election
       summary: Update Election object
       operationId: putElection
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: electionId
@@ -175,6 +188,8 @@ paths:
         - Election
       summary: Delete Election object
       operationId: deleteElection
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: electionId
@@ -221,6 +236,8 @@ paths:
         - Election
       summary: Create new candidate for election
       operationId: createCandidatesForElection
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: electionId
@@ -294,6 +311,8 @@ paths:
         - Election
       summary: Change candidate for election
       operationId: putCandidateForElection
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: electionId
@@ -337,6 +356,8 @@ paths:
         - Election
       summary: Delete candidate object
       operationId: deleteCandidateForElection
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: electionId
@@ -391,6 +412,8 @@ paths:
         - Election
       summary: Change candidate votes for election
       operationId: putCandidateVotes
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: electionId
@@ -463,6 +486,8 @@ paths:
         - Election
       summary: Create new party for election
       operationId: createPartyForElection
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: electionId
@@ -535,6 +560,8 @@ paths:
         - Election
       summary: Change party for election
       operationId: putPartyForElection
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: electionId
@@ -578,6 +605,8 @@ paths:
         - Election
       summary: Delete party object
       operationId: deletePartyForElection
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: electionId
@@ -632,7 +661,9 @@ paths:
       tags:
         - Election
       summary: Change party votes for election
-      operationId: putCandidateVotes
+      operationId: putPartyVotes
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: electionId
@@ -642,12 +673,12 @@ paths:
             format: int64
           description: Numeric ID of the election to put
         - in: path
-          name: candidateId
+          name: partyId
           required: true
           schema:
             type: integer
             format: int64
-          description: Numeric ID of the candidate to put
+          description: Numeric ID of the partyId to put
       requestBody:
         content:
           application/json:
@@ -677,6 +708,8 @@ paths:
         - VAA
       summary: Fetches array of VAA's
       operationId: getApplications
+      security:
+        - firebase: []
       parameters:
         - name: launch_date
           in: query
@@ -713,6 +746,8 @@ paths:
         - VAA
       summary: Create VAA object
       operationId: createApplication
+      security:
+        - firebase: []
       requestBody:
         content:
           application/json:
@@ -740,6 +775,8 @@ paths:
         - VAA
       summary: Fetches single VAA
       operationId: getApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -768,6 +805,8 @@ paths:
         - VAA
       summary: Update VAA object
       operationId: putApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -801,6 +840,8 @@ paths:
         - VAA
       summary: Delete VAA object
       operationId: deleteApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -818,6 +859,8 @@ paths:
         - VAA
       summary: Fetches VAA specific metadata
       operationId: getApplicationMetadata
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -838,6 +881,8 @@ paths:
         - VAA
       summary: Update VAA object
       operationId: putApplicationMetadata
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -892,6 +937,8 @@ paths:
         - VAA
       summary: Add these
       operationId: createTheseForApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -917,6 +964,8 @@ paths:
         - VAA
       summary: Put these
       operationId: putThesesForApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -942,6 +991,8 @@ paths:
         - VAA
       summary: Delete VAA object
       operationId: deleteThesesForApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId

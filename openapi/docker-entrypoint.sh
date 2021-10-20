@@ -3,8 +3,12 @@
 # Move into output folder in order to have clean docker volume
 mkdir -p output/generated
 
+
+echo "Linting files..."
+npx @redocly/openapi-cli lint specification.yaml
+
 echo "Merging files..."
-speccy resolve ./specification.yaml -o output/spec-merged.yaml
+npx @redocly/openapi-cli bundle specification.yaml -o ./output/spec-merged.yaml  
 
 cd  output
 
