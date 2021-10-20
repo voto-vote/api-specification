@@ -39,6 +39,8 @@ components:
     firebase:
       type: http
       scheme: bearer
+      bearerFormat: JWT
+      description: Retrieve this idToken here https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
 
 paths:
   /:
