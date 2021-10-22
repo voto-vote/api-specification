@@ -30,13 +30,15 @@ If you want to run everything manually, go to `openapi` folder and run:
 
 ```sh
 # Install speccy:
-npm install speccy -g
+npm install @redocly/openapi-cli -g
 # Install openapi-generator:
 brew install openapi-generator
-# Run Speccy to merge files:
-speccy resolve specification.yml -o spec-merged.yml
+# Run Linter:
+npx @redocly/openapi-cli lint specification.yaml
+# Merge files:
+npx @redocly/openapi-cli bundle specification.yaml -o ./output/spec-merged.yaml
 # Run openapi generator:
-openapi-generator generate -i spec-merged.yml -g go -o ./output
+openapi-generator-cli generate -i ./spec-merged.yaml -g $LANGUAGE -o ./generated/
 ```
 
 For more information, please visit: [https://github.com/OpenAPITools/openapi-generator](https://github.com/OpenAPITools/openapi-generator)
