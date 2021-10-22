@@ -1,7 +1,25 @@
 openapi: "3.0.0"
 info:
-  title: OPEN VOTE ADVICE APPLICATION API
-  description: Defines a common interface for vote advice applications.
+  title: VOTO - VOTE ADVICE APPLICATION API
+  description: |
+    <h3>Defines a common interface for vote advice applications</h3>
+    To secure the API, we use different roles within our system. The following table shows the permissions of each role for each entity.
+    It does not reflect reality perfectly. Creator can obviously only create candidates for its own application etc, but the table should give you an idea of how the roles work.
+
+    ***C* = Create<br>**
+    ***R* = Read<br>**
+    ***U* = Update<br>**
+    ***D* = Delete<br>**
+
+      |             | Admin | Creator | TrustPerson | Candidate | Anonymous |
+      |-------------|-------|---------|-------------|-----------|-----------|
+      | Election    | CRUD  | R       | R           | R         | R         |
+      | Candidate   | CRUD  | CRUD    | CRUD        | RU        | R         |
+      | Party       | CRUD  | CRUD    | RU          | R         | R         |
+      | Application | CRUD  | CRUD    | R           | R         | R         |
+      | Theses      | CRUD  | CRUD    | R           | R         | R         |
+      | Votings     | R     | CR      | CRU         | CRU       | CR        |
+
   version: 0.0.1
   contact:
     name: API Support
@@ -40,7 +58,8 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
-      description: Retrieve this idToken here https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
+      description: |
+        We currently use Firebase as Authentication Provider. In order to use parts of the API, you have to have a valid account and role. Retrieve this idToken here https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
 
 paths:
   /:
@@ -65,9 +84,11 @@ paths:
       tags:
         - Election
       summary: Fetches array of Elections
+      description: |
+        Fecthing elections is allowed for the `creator` and `admin` role.
       operationId: getElections
       security:
-        - firebase: []
+        - firebase: ["creator"]
       parameters:
         - name: election_date
           in: query
@@ -96,6 +117,8 @@ paths:
       tags:
         - Election
       summary: Create Election object
+      description: |
+        Creating elections is allowed for the `creator` and `admin` role.
       operationId: creatElection
       security:
         - firebase: []
