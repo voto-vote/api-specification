@@ -6,11 +6,6 @@ info:
     To secure the API, we use different roles within our system. The following table shows the permissions of each role for each entity.
     It does not reflect reality perfectly. Creator can obviously only create candidates for its own application etc, but the table should give you an idea of how the roles work.
 
-    ***C* = Create<br>**
-    ***R* = Read<br>**
-    ***U* = Update<br>**
-    ***D* = Delete<br>**
-
       |             | Admin | Creator | TrustPerson | Candidate | Anonymous |
       |-------------|-------|---------|-------------|-----------|-----------|
       | Election    | CRUD  | R       | R           | R         | R         |
@@ -19,6 +14,11 @@ info:
       | Application | CRUD  | CRUD    | R           | R         | R         |
       | Theses      | CRUD  | CRUD    | R           | R         | R         |
       | Votings     | R     | CR      | CRU         | CRU       | CR        |
+
+      ***C* = Create<br>**
+      ***R* = Read<br>**
+      ***U* = Update<br>**
+      ***D* = Delete<br>**
 
   version: 0.0.1
   contact:
