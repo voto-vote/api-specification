@@ -85,7 +85,7 @@ paths:
         - Election
       summary: Fetches array of Elections
       description: |
-        Fecthing elections is allowed for the `creator` and `admin` role.
+        Fetching elections is allowed for the `creator` and `admin` role.
       operationId: getElections
       security:
         - firebase: ["creator"]
@@ -118,7 +118,7 @@ paths:
         - Election
       summary: Create Election object
       description: |
-        Creating elections is allowed for the `creator` and `admin` role.
+        Creating elections is allowed for the `admin` role.
       operationId: creatElection
       security:
         - firebase: []
@@ -149,6 +149,8 @@ paths:
       tags:
         - Election
       summary: Get single Election
+      description: |
+        Fetching one single election by its ID is allowed for everyone.
       operationId: getElection
       parameters:
         - in: path
@@ -177,6 +179,8 @@ paths:
       tags:
         - Election
       summary: Update Election object
+      description: |
+        Updating one single election by its ID is allowed for the `admin` role.
       operationId: putElection
       security:
         - firebase: []
@@ -212,6 +216,8 @@ paths:
       tags:
         - Election
       summary: Delete Election object
+      description: |
+        Deleting one single election by its ID is allowed for the `admin` role.
       operationId: deleteElection
       security:
         - firebase: []
@@ -232,6 +238,8 @@ paths:
         - Election
       summary: Get candidates for election
       operationId: getCandidatesForElection
+      description: |
+        Fetching candidates for one single election by its ID is allowed for everyone.
       parameters:
         - name: limit
           in: query
@@ -260,6 +268,8 @@ paths:
       tags:
         - Election
       summary: Create new candidate for election
+      description: |
+        Creation of candidates is allowed for `admin`, `creator` (only in his election) and `trustperson` (only for his party)
       operationId: createCandidatesForElection
       security:
         - firebase: []
@@ -300,6 +310,8 @@ paths:
       tags:
         - Election
       summary: Get single candidate
+      description: |
+        Fetching a candidate for one election is allowed for everyone.
       operationId: getCandidateForElection
       parameters:
         - in: path
@@ -335,6 +347,8 @@ paths:
       tags:
         - Election
       summary: Change candidate for election
+      description: |
+        Changing a candidate for one election is allowed for `admin`, `creator` (within his election), `trustperson` (within his party) and one `candidate` for itself.
       operationId: putCandidateForElection
       security:
         - firebase: []
@@ -380,6 +394,8 @@ paths:
       tags:
         - Election
       summary: Delete candidate object
+      description: |
+        Deleting a candidate for one election is allowed for `admin`, `creator` (within his election), `trustperson` (within his party) and one `candidate` for itself.
       operationId: deleteCandidateForElection
       security:
         - firebase: []
@@ -406,6 +422,8 @@ paths:
       tags:
         - Election
       summary: Get votes of a candidate
+      description: |
+        Fetching a candidates votes for one election is allowed for everyone.
       operationId: getVotingsForCandidate
       parameters:
         - in: path
@@ -436,6 +454,8 @@ paths:
       tags:
         - Election
       summary: Change candidate votes for election
+      description: |
+        Changing a candidates votes for one election is allowed for `admin` and one `candidate` for itself.
       operationId: putCandidateVotes
       security:
         - firebase: []
@@ -482,6 +502,8 @@ paths:
         - Election
       summary: Get parties for election
       operationId: getPartiesForElection
+      description: |
+        Fetching parties for one election is allowed for everyone.
       parameters:
         - name: limit
           in: query
@@ -510,6 +532,8 @@ paths:
       tags:
         - Election
       summary: Create new party for election
+      description: |
+        Creating parties for one election is allowed for `admin` and `creator` (for its own election)
       operationId: createPartyForElection
       security:
         - firebase: []
@@ -549,6 +573,8 @@ paths:
       tags:
         - Election
       summary: Get single party
+      description: |
+        Fetching one party for one election by its ID is allowed for everyone.
       operationId: getPartyForElection
       parameters:
         - in: path
@@ -584,6 +610,8 @@ paths:
       tags:
         - Election
       summary: Change party for election
+      description: |
+        Changing a party for one election is allowed for `admin`, `creator` and the `trustperson` for its own party.
       operationId: putPartyForElection
       security:
         - firebase: []
@@ -629,6 +657,8 @@ paths:
       tags:
         - Election
       summary: Delete party object
+      description: |
+        Deleting a party for one election is allowed for `admin`, `creator` and `trustperson` for its own party.
       operationId: deletePartyForElection
       security:
         - firebase: []
@@ -656,6 +686,8 @@ paths:
       tags:
         - Election
       summary: Get votes of a party
+      description: |
+        Fetching votes for one specific party is allowed for everyone.
       operationId: getVotingsForParty
       parameters:
         - in: path
@@ -686,6 +718,8 @@ paths:
       tags:
         - Election
       summary: Change party votes for election
+      description: |
+        Changing votes for one specific party is only allowed for `trustperson` (for its own party)
       operationId: putPartyVotes
       security:
         - firebase: []
@@ -733,6 +767,8 @@ paths:
         - VAA
       summary: Fetches array of VAA's
       operationId: getApplications
+      description: |
+        Fetching applications is allowed for `admin`
       security:
         - firebase: []
       parameters:
@@ -771,6 +807,8 @@ paths:
         - VAA
       summary: Create VAA object
       operationId: createApplication
+      description: |
+        Creating applications is allowed for `admin`
       security:
         - firebase: []
       requestBody:
@@ -799,6 +837,8 @@ paths:
       tags:
         - VAA
       summary: Fetches single VAA
+      description: |
+        Fetching one application is allowed for `admin` and `creator`
       operationId: getApplication
       security:
         - firebase: []
@@ -829,6 +869,8 @@ paths:
       tags:
         - VAA
       summary: Update VAA object
+      description: |
+        Updating one application is allowed for `admin` and `creator` (for its own applications)
       operationId: putApplication
       security:
         - firebase: []
@@ -864,6 +906,8 @@ paths:
       tags:
         - VAA
       summary: Delete VAA object
+      description: |
+        Deleting one application is allowed for `admin` and `creator` (for its own applications)
       operationId: deleteApplication
       security:
         - firebase: []
@@ -883,6 +927,8 @@ paths:
       tags:
         - VAA
       summary: Fetches VAA specific metadata
+      description: |
+        Fetching one applications metadata is allowed for `admin` and `creator` (for its own applications)
       operationId: getApplicationMetadata
       security:
         - firebase: []
@@ -905,6 +951,8 @@ paths:
       tags:
         - VAA
       summary: Update VAA object
+      description: |
+        Fetching one applications metadata is allowed for `admin` and `creator` (for its own applications)
       operationId: putApplicationMetadata
       security:
         - firebase: []
@@ -933,6 +981,8 @@ paths:
       tags:
         - VAA
       summary: Fetches all theses for one VAA
+      description: |
+        Fetching one applications theses is allowed for `admin` and `creator` (for its own applications)
       operationId: getThesesForApplication
       parameters:
         - in: path
@@ -961,6 +1011,8 @@ paths:
       tags:
         - VAA
       summary: Add these
+      description: |
+        Adding application theses is allowed for `admin` and `creator` (for its own applications)
       operationId: createTheseForApplication
       security:
         - firebase: []
@@ -988,6 +1040,8 @@ paths:
       tags:
         - VAA
       summary: Put these
+      description: |
+        Changing application theses is allowed for `admin` and `creator` (for its own applications)
       operationId: putThesesForApplication
       security:
         - firebase: []
@@ -1015,6 +1069,8 @@ paths:
       tags:
         - VAA
       summary: Delete VAA object
+      description: |
+        Deleting application theses is allowed for `admin` and `creator` (for its own applications)
       operationId: deleteThesesForApplication
       security:
         - firebase: []
@@ -1035,6 +1091,8 @@ paths:
       tags:
         - Vote
       summary: Submit a new voting for an VAA
+      description: |
+        Creation of votings is allowed for everyone.
       operationId: createVotingForApplication
       parameters:
         - in: path
@@ -1075,6 +1133,8 @@ paths:
       tags:
         - Vote
       summary: Get existing vote
+      description: |
+        Fetching votings is allowed for everyone.
       operationId: getVotingForApplication
       parameters:
         - in: path
