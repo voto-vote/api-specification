@@ -1,0 +1,27 @@
+Theme:
+  type: object
+  properties:
+    color1:
+      $ref: "Theme.yaml#/Color"
+    color2:
+      $ref: "Theme.yaml#/Color"
+    color3:
+      $ref: "Theme.yaml#/Color"
+    color4:
+      $ref: "Theme.yaml#/Color"
+    logo:
+      type: string
+      example: "https://voto.vote/logo.png"
+
+Color:
+  type: object
+  properties:
+    red:
+      type: integer
+      example: 115
+    green:
+      type: integer
+      example: 0
+    blue:
+      type: integer
+      example: 150

@@ -1,0 +1,12 @@
+Error:
+  type: object
+  properties:
+    code:
+      type: string
+      example: "400"
+    message:
+      type: string
+      example: "Malformed request"
+  required:
+    - code
+    - message

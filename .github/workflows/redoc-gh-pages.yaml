@@ -1,0 +1,20 @@
+name: deploy-github-page
+on:
+  push:
+    branches: [main, dev]
+jobs:
+  build:
+    runs-on: self-hosted
+    name: Deploy redoc on github page
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Generate redoc
+        uses: seeebiii/redoc-cli-github-action@v10
+        with:
+          args: "bundle openapi/specification.yaml -o docs/index.html"
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/

@@ -1,0 +1,51 @@
+Candidate:
+  allOf:
+    - $ref: "Candidate.yaml#/NewCandidate"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        public:
+          type: boolean
+          example: false
+
+NewCandidate:
+  type: object
+  required:
+    - election_id
+    - cluster_id
+    - title
+  properties:
+    election_id:
+      type: integer
+      example: 123
+    party_id:
+      type: integer
+      example: 789
+    description:
+      type: string
+      example: "Example Title"
+    district:
+      type: string
+      example: "Example District"
+    list_place:
+      type: string
+      example: "Example list place"
+    website:
+      type: string
+      example: "https://voto.vote"
+    profile_picture:
+      type: string
+      example: "https://"

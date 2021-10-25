@@ -1,0 +1,92 @@
+Application:
+  allOf:
+    - $ref: "Application.yaml#/NewApplication"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+
+NewApplication:
+  type: object
+  required:
+    - election_id
+    - cluster_id
+    - title
+  properties:
+    election_id:
+      type: integer
+      example: 456
+    algorithm:
+      $ref: "Algorithm.yaml#/Algorithm"
+    theme:
+      $ref: "Theme.yaml#/Theme"
+    title:
+      type: string
+      example: "Example Title"
+    subtitle:
+      type: string
+      example: "Example Subtitle"
+    description:
+      type: string
+      example: "Lorem ipsum dolor sed amet."
+    website:
+      type: string
+      example: "https://voto.vote"
+    url:
+      type: string
+      example: "https://foo.bar/vaa"
+    launch_date:
+      type: string
+      format: date
+      example: "2021-08-27"
+    sundown_date:
+      type: string
+      format: date
+      example: "2021-09-27"
+    metadata:
+      $ref: "Application.yaml#/Metadata"
+
+DeleteApplication:
+  type: object
+  required:
+    - id
+  properties:
+    id:
+      type: integer
+      format: int64
+      example: 123
+
+Metadata:
+  type: object
+  properties:
+    match_type:
+      enum: [candidates, parties, hybrid]
+      example: "candidates"
+    top_matches:
+      type: integer
+      description: Represents a vote count - differs in each election system
+      example: 3
+    vote_min:
+      type: integer
+      example: 0
+    max_double_weights:
+      type: integer
+      example: 5
+    vote_max:
+      type: integer
+      example: 100
+    interaction_type:
+      enum: [slider, buttons, tindercards]
+      example: "slider"

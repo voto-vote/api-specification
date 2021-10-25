@@ -1,0 +1,47 @@
+Election:
+  allOf:
+    - $ref: "Election.yaml#/NewElection"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+
+NewElection:
+  type: object
+  required:
+    - election_id
+    - cluster_id
+    - title
+  properties:
+    election_date:
+      type: string
+      format: date
+      example: "2021-09-26"
+    location:
+      type: string
+      example: "Deutschland"
+    name:
+      type: string
+      example: "Bundestagswahl"
+
+DeleteElection:
+  type: object
+  required:
+    - id
+  properties:
+    id:
+      type: integer
+      format: int64
+      example: 123

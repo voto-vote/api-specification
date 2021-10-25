@@ -1,0 +1,41 @@
+These:
+  type: object
+  properties:
+    title:
+      type: array
+      items:
+        type: object
+        properties:
+          language:
+            type: string
+            example: "de"
+          text:
+            type: string
+            format: text
+            example: "Lorem ipsum dolor sed amet"
+    description:
+      type: array
+      items:
+        type: object
+        properties:
+          language:
+            type: string
+            example: "de"
+          text:
+            type: string
+            format: text
+            example: "Lorem ipsum dolor sed amet"
+
+LanguageThese:
+  type: object
+  properties:
+    language:
+      type: string
+      example: "de"
+    title:
+      type: string
+      example: "Lorem ipsum..."
+    text:
+      type: string
+      format: text
+      example: "Lorem ipsum dolor sed amet"

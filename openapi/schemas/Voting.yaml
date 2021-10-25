@@ -1,0 +1,47 @@
+Voting:
+  type: object
+  allOf:
+    - $ref: "Voting.yaml#/NewVoting"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        application_id:
+          type: integer
+          format: int64
+          example: 456
+        matches:
+          type: array
+          items:
+            $ref: "Match.yaml#/Match"
+        created_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+
+NewVoting:
+  type: object
+  properties:
+    votes:
+      type: array
+      items:
+        $ref: "Voting.yaml#/Vote"
+
+Vote:
+  type: object
+  properties:
+    these:
+      type: string
+      format: uuid
+      example: "1ec2a8a9-fc7d-6610-5469-44e2866ede02"
+    value:
+      type: integer
+      example: 75
