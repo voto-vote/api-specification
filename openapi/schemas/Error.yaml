@@ -3,8 +3,10 @@ Error:
   properties:
     code:
       type: string
+      example: "400"
     message:
       type: string
-    required:
-      - code
-      - message
+      example: "Malformed request"
+  required:
+    - code
+    - message
