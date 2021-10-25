@@ -113,6 +113,24 @@ paths:
                 items:
                   type: object
                   $ref: "schemas/Election.yaml#/Election"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
         - Election
@@ -129,8 +147,8 @@ paths:
               type: object
               $ref: "schemas/Election.yaml#/NewElection"
       responses:
-        "200":
-          description: Success
+        "201":
+          description: Created
           content:
             application/json:
               schema:
@@ -143,7 +161,30 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **electionId** parameter in `GET /elections/{electionId}`.
-
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
   /elections/{electionId}:
     get:
       tags:
@@ -175,6 +216,18 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **electionId** parameter in `GET /elections/{electionId}`.
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
         - Election
@@ -212,6 +265,36 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **electionId** parameter in `GET /elections/{electionId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
         - Election
@@ -230,8 +313,32 @@ paths:
             format: int64
           description: Numeric ID of the election to delete
       responses:
-        "200":
-          description: Success
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
   /elections/{electionId}/candidates:
     get:
       tags:
@@ -264,6 +371,18 @@ paths:
                 items:
                   type: object
                   $ref: "schemas/Candidate.yaml#/Candidate"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
         - Election
@@ -287,8 +406,8 @@ paths:
             schema:
               $ref: "schemas/Candidate.yaml#/NewCandidate"
       responses:
-        "200":
-          description: Success
+        "201":
+          description: Created
           content:
             application/json:
               schema:
@@ -304,6 +423,30 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **candidateId** parameter in `GET /elections/{electionId}/candidates/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
 
   /elections/{electionId}/candidates/{candidateId}:
     get:
@@ -343,6 +486,18 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **candidateId** parameter in `GET /elections/{electionId}/candidates/{candidateId}`.
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
         - Election
@@ -390,6 +545,36 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **candidateId** parameter in `GET /elections/{electionId}/candidates/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
         - Election
@@ -415,8 +600,32 @@ paths:
             format: int64
           description: Numeric ID of the candidate to delete
       responses:
-        "200":
-          description: Success
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
   /elections/{electionId}/candidates/{candidateId}/votes:
     get:
       tags:
@@ -450,6 +659,18 @@ paths:
                 items:
                   type: object
                   $ref: "schemas/Voting.yaml#/Vote"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
         - Election
@@ -496,6 +717,36 @@ paths:
                     type: array
                     items:
                       $ref: "schemas/Voting.yaml#/Vote"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
   /elections/{electionId}/parties:
     get:
       tags:
@@ -528,6 +779,18 @@ paths:
                 items:
                   type: object
                   $ref: "schemas/Party.yaml#/Party"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
         - Election
@@ -551,8 +814,8 @@ paths:
             schema:
               $ref: "schemas/Party.yaml#/NewParty"
       responses:
-        "200":
-          description: Success
+        "201":
+          description: Created
           content:
             application/json:
               schema:
@@ -568,6 +831,31 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **partyId** parameter in `GET /elections/{electionId}/parties/{partyId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /elections/{electionId}/parties/{partyId}:
     get:
       tags:
@@ -606,6 +894,18 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **partyId** parameter in `GET /elections/{electionId}/parties/{partyId}`.
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
         - Election
@@ -653,6 +953,37 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **partyId** parameter in `GET /elections/{electionId}/parties/{partyId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
     delete:
       tags:
         - Election
@@ -678,8 +1009,32 @@ paths:
             format: int64
           description: Numeric ID of the party
       responses:
-        "200":
-          description: Success
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
 
   /elections/{electionId}/parties/{partyId}/votes:
     get:
@@ -714,6 +1069,18 @@ paths:
                 items:
                   type: object
                   $ref: "schemas/Voting.yaml#/Vote"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
         - Election
@@ -760,6 +1127,36 @@ paths:
                     type: array
                     items:
                       $ref: "schemas/Voting.yaml#/Vote"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
 
   /applications:
     get:
@@ -802,6 +1199,24 @@ paths:
                 items:
                   type: object
                   $ref: "schemas/Application.yaml#/Application"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
         - VAA
@@ -818,7 +1233,7 @@ paths:
               $ref: "schemas/Application.yaml#/NewApplication"
       responses:
         "201":
-          description: Success
+          description: Created
           content:
             application/json:
               schema:
@@ -831,6 +1246,30 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **applicationId** parameter in `GET /applications/{applicationId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
 
   /applications/{applicationId}:
     get:
@@ -838,10 +1277,8 @@ paths:
         - VAA
       summary: Fetches single VAA
       description: |
-        Fetching one application is allowed for `admin` and `creator`
+        Fetching one application is allowed for everyone
       operationId: getApplication
-      security:
-        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -865,6 +1302,18 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **applicationId** parameter in `GET /applications/{applicationId}`.
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
         - VAA
@@ -888,7 +1337,7 @@ paths:
             schema:
               $ref: "schemas/Application.yaml#/NewApplication"
       responses:
-        "201":
+        "200":
           description: Success
           content:
             application/json:
@@ -902,6 +1351,36 @@ paths:
               description: >
                 The `id` value returned in the response can be used as
                 the **applicationId** parameter in `GET /applications/{applicationId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
         - VAA
@@ -920,8 +1399,32 @@ paths:
             format: int64
           description: Numeric ID of the VAA
       responses:
-        "201":
-          description: Success
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
   /applications/{applicationId}/metadata:
     get:
       tags:
@@ -930,8 +1433,6 @@ paths:
       description: |
         Fetching one applications metadata is allowed for `admin` and `creator` (for its own applications)
       operationId: getApplicationMetadata
-      security:
-        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -947,12 +1448,36 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Application.yaml#/Metadata"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
         - VAA
-      summary: Update VAA object
+      summary: Update VAA metadata object
       description: |
-        Fetching one applications metadata is allowed for `admin` and `creator` (for its own applications)
+        Updating one applications metadata is allowed for `admin` and `creator` (for its own applications)
       operationId: putApplicationMetadata
       security:
         - firebase: []
@@ -970,19 +1495,49 @@ paths:
             schema:
               $ref: "schemas/Application.yaml#/Metadata"
       responses:
-        "201":
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 $ref: "schemas/Application.yaml#/Metadata"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
   /applications/{applicationId}/theses:
     get:
       tags:
         - VAA
       summary: Fetches all theses for one VAA
       description: |
-        Fetching one applications theses is allowed for `admin` and `creator` (for its own applications)
+        Fetching one applications theses is allowed for everyone
       operationId: getThesesForApplication
       parameters:
         - in: path
@@ -1007,6 +1562,18 @@ paths:
                     items:
                       type: object
                       $ref: "schemas/These.yaml#/LanguageThese"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
         - VAA
@@ -1031,11 +1598,41 @@ paths:
               $ref: "schemas/These.yaml#/LanguageThese"
       responses:
         "201":
-          description: Success
+          description: Created
           content:
             application/json:
               schema:
                 $ref: "schemas/These.yaml#/These"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
         - VAA
@@ -1059,12 +1656,42 @@ paths:
             schema:
               $ref: "schemas/These.yaml#/LanguageThese"
       responses:
-        "201":
+        "200":
           description: Success
           content:
             application/json:
               schema:
                 $ref: "schemas/These.yaml#/These"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
         - VAA
@@ -1083,8 +1710,32 @@ paths:
             format: int64
           description: Numeric ID of the VAA
       responses:
-        "201":
+        "204":
           description: Success
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
 
   /applications/{applicationId}/votings:
     post:
@@ -1092,7 +1743,7 @@ paths:
         - Vote
       summary: Submit a new voting for an VAA
       description: |
-        Creation of votings is allowed for everyone.
+        Creation of votings is allowed for everyone. Please note, that we still prevent CORS requests.
       operationId: createVotingForApplication
       parameters:
         - in: path
@@ -1108,7 +1759,7 @@ paths:
             schema:
               $ref: "schemas/Voting.yaml#/NewVoting"
       responses:
-        "200":
+        "201":
           description: Success
           content:
             application/json:
@@ -1127,6 +1778,18 @@ paths:
 
                 The `application_id` value returned in the response can be used as
                 the **applicationId** parameter in `GET /applications/{applicationId}/votings/{voteId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
 
   /applications/{applicationId}/votings/{voteId}:
     get:
@@ -1158,3 +1821,15 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Voting.yaml#/Voting"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
