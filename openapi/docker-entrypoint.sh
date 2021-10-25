@@ -11,6 +11,7 @@ echo "Merging files..."
 npx @redocly/openapi-cli bundle specification.yaml -o ./output/spec-merged.yaml  
 
 cd  output
+
 openapi-generator-cli version-manager set 5.2.1
 
 echo "Generate code..."
