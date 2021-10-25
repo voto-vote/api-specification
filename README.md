@@ -8,7 +8,7 @@ This project contains the specification of the VOTO API. The schema is based on 
 
 ## Introduction
 
-We saw the need to create a standard set of informatioen for vote advice applications. Therefore, we came up with the idea of defining a standard API while fullfilling the OpenAPI specification format. This allows easy adoption with generated client and server stubs.
+We saw the need to create a standard set of information for vote advice applications. Therefore, we came up with the idea of defining a standard API while fullfilling the OpenAPI specification format. This allows easy adoption with generated client and server stubs.
 
 ## Usage
 
@@ -22,7 +22,7 @@ Go into `openapi` directory and simply build and run our docker image:
 docker build -t open-api-generator:latest . && docker run -v ${PWD}/:/app/ -e LANGUAGE=go open-api-generator
 ```
 
-You can specify the LANGUAGE for the generated code using the `LANGUAGE` environment variable. Check out the list from [here](https://openapi-generator.tech/docs/generators/).
+You can specify the LANGUAGE for the generated code using the `LANGUAGE` environment variable. Check out the list from [here](https://openapi-generator.tech/docs/generators/). After running, you will find the `output` folder, where one merged specification file and the generated code stays.
 
 ### Manual usage
 
