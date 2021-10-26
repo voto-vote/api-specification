@@ -3,7 +3,7 @@ Match:
   properties:
     match:
       oneOf:
-        - $ref: "Candidate.yaml#/Candidate"
+        - $ref: "Roles.yaml#/Candidate"
         - $ref: "Party.yaml#/Party"
     match_type:
       type: string
