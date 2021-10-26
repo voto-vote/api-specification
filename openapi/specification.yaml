@@ -10,10 +10,15 @@ info:
       |-------------|-------|---------|-------------|-----------|-----------|
       | Election    | CRUD  | R       | R           | R         | R         |
       | Candidate   | CRUD  | CRUD    | CRUD        | RU        | R         |
+      | CandidateVotes   | CRUD  | CRUD    | CRUD        | RU        | R         |
       | Party       | CRUD  | CRUD    | RU          | R         | R         |
+      | PartyVotes       | CRUD  | CRUD    | RU          | R         | R         |
       | Application | CRUD  | CRUD    | R           | R         | R         |
       | Theses      | CRUD  | CRUD    | R           | R         | R         |
       | Votings     | R     | CR      | CRU         | CRU       | CR        |
+      | Trustperson | CRUD  | CRUD    | CRUD        | R         | -         |
+      | Creator     | CRUD  | CRUD    | R           | R         | -         |
+      | Admins      | CRUD  | R       | -           | -         | -         |
 
       ***C* = Create<br>**
       ***R* = Read<br>**
