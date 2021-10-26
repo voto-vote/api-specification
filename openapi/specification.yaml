@@ -10,10 +10,15 @@ info:
       |-------------|-------|---------|-------------|-----------|-----------|
       | Election    | CRUD  | R       | R           | R         | R         |
       | Candidate   | CRUD  | CRUD    | CRUD        | RU        | R         |
+      | CandidateVotes   | CRUD  | CRUD    | CRUD        | RU        | R         |
       | Party       | CRUD  | CRUD    | RU          | R         | R         |
+      | PartyVotes       | CRUD  | CRUD    | RU          | R         | R         |
       | Application | CRUD  | CRUD    | R           | R         | R         |
       | Theses      | CRUD  | CRUD    | R           | R         | R         |
       | Votings     | R     | CR      | CRU         | CRU       | CR        |
+      | Trustperson | CRUD  | CRUD    | CRUD        | R         | -         |
+      | Creator     | CRUD  | CRUD    | R           | R         | -         |
+      | Admins      | CRUD  | R       | -           | -         | -         |
 
       ***C* = Create<br>**
       ***R* = Read<br>**
@@ -44,13 +49,15 @@ servers:
           - v2
 tags:
   - name: Election
-    description: Objects related to elections.
+    description: Objects related to elections
   - name: VAA
-    description: Objects related to Vote advice applications.
+    description: Objects related to Vote advice applications
   - name: API
     description: About this API
   - name: Vote
     description: Endpoints for everything vote related
+  - name: Roles
+    description: Management endpoints for roles within the VOTO platform. Please note, that candidates are handled in /elections endpoints as they are the only entity which is directly related to a match, whereas a party can have multiple TrustPersons
 
 components:
   securitySchemes:
@@ -370,7 +377,7 @@ paths:
                 type: array
                 items:
                   type: object
-                  $ref: "schemas/Candidate.yaml#/Candidate"
+                  $ref: "schemas/Roles.yaml#/Candidate"
         "404":
           description: Not found
           content:
@@ -404,7 +411,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "schemas/Candidate.yaml#/NewCandidate"
+              $ref: "schemas/Roles.yaml#/NewCandidate"
       responses:
         "201":
           description: Created
@@ -414,7 +421,7 @@ paths:
                 type: array
                 items:
                   type: object
-                  $ref: "schemas/Candidate.yaml#/Candidate"
+                  $ref: "schemas/Roles.yaml#/Candidate"
           links:
             GetCandidateById:
               operationId: getCandidateForElection
@@ -477,7 +484,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "schemas/Candidate.yaml#/Candidate"
+                $ref: "schemas/Roles.yaml#/Candidate"
           links:
             GetCandidateById:
               operationId: getCandidateForElection
@@ -526,7 +533,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "schemas/Candidate.yaml#/NewCandidate"
+              $ref: "schemas/Roles.yaml#/NewCandidate"
       responses:
         "200":
           description: Success
@@ -536,7 +543,7 @@ paths:
                 type: array
                 items:
                   type: object
-                  $ref: "schemas/Candidate.yaml#/Candidate"
+                  $ref: "schemas/Roles.yaml#/Candidate"
           links:
             GetCandidateById:
               operationId: getCandidateForElection
@@ -1821,6 +1828,809 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Voting.yaml#/Voting"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /admins:
+    get:
+      tags:
+        - Roles
+      summary: Get admins
+      description: |
+        Fetching creator is allowed for admins
+      operationId: getAdmins
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/Admin"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - Roles
+      summary: Create new admin
+      description: |
+        Creation of admins is allowed for admins
+      operationId: createAdmin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewAdmin"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/Admin"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /admins/{adminId}:
+    get:
+      tags:
+        - Roles
+      summary: Get Admin by ID
+      description: |
+        Fetching admins is allowed for admins
+      operationId: getAdminById
+      parameters:
+        - in: path
+          name: adminId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the admin
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/Admin"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - Roles
+      summary: Update admin for VAA
+      description: |
+        Updating admin is allowed for admins
+      operationId: updateAdmin
+      parameters:
+        - in: path
+          name: adminId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/Admin"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/Admin"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - Roles
+      summary: Remove admin
+      description: |
+        Remove admin is allowed for admin
+      operationId: deleteAdmin
+      parameters:
+        - in: path
+          name: adminId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the admin
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/creator:
+    get:
+      tags:
+        - Roles
+      summary: Get creator for VAA
+      description: |
+        Fetching creator is allowed for admins and creator.
+      operationId: getCreatorForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/Creator"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - Roles
+      summary: Create new creator for VAA
+      description: |
+        Creation of creator is allowed for admins and creator.
+      operationId: createCreatorForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewCreator"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/Creator"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/creator/{creatorId}:
+    get:
+      tags:
+        - Roles
+      summary: Get creator by ID for VAA
+      description: |
+        Fetching creator is allowed for admins and creator.
+      operationId: getCreatorForApplicationById
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: creatorId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the creator
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/Creator"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - Roles
+      summary: Update creator for VAA
+      description: |
+        Updating creator is allowed for admins and creator.
+      operationId: updateCreatorForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: creatorId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the creator
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/Creator"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/Creator"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - Roles
+      summary: Remove creator for VAA
+      description: |
+        Remove creator is allowed for admins and creator (for its own application).
+      operationId: deleteCreatorForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: creatorId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the creator
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/trustpersons:
+    get:
+      tags:
+        - Roles
+      summary: Get trustpersons for VAA
+      description: |
+        Fetching trustpersons is allowed for admins and creator as well as for trustpersons for their own party.
+      operationId: getTrustPersonsForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: query
+          name: partyId
+          required: false
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/TrustPerson"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - Roles
+      summary: Create new trustperson for VAA
+      description: |
+        Creation of trustperson is allowed for admins and creator as well as for trustpersons for their own party.
+      operationId: createTrustPersonForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewTrustPerson"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/TrustPerson"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+  /applications/{applicationId}/trustpersons/{trustpersonId}:
+    get:
+      tags:
+        - Roles
+      summary: Get trustperson by ID for VAA
+      description: |
+        Fetching trustperson by id is allowed for admins and creator.
+      operationId: getTrustpersonForApplicationById
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: trustpersonId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the trustperson
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/TrustPerson"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - Roles
+      summary: Update trustperson for VAA
+      description: |
+        Updating trustpersons is allowed for admins and creator as well as for trustpersons ( for their own party )
+      operationId: updateTrustPersonForApplicationById
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: trustpersonId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the trustperson
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/TrustPerson"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/TrustPerson"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - Roles
+      summary: Remove TrustPerson for VAA
+      description: |
+        Remove TrustPerson is allowed for admins and creator (for its own application) and for trustpersons ( for its own party ).
+      operationId: deleteTrustPersonForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: trustpersonId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the trustperson
+      responses:
+        "204":
+          description: No content
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
         "404":
           description: Not found
           content:
