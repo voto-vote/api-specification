@@ -29,7 +29,7 @@ You can specify the LANGUAGE for the generated code using the `LANGUAGE` environ
 If you want to run everything manually, go to `openapi` folder and run:
 
 ```sh
-# Install speccy:
+# Install redocly openapi-cli:
 npm install @redocly/openapi-cli -g
 # Install openapi-generator:
 brew install openapi-generator
