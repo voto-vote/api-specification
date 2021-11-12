@@ -86,6 +86,9 @@ paths:
         "200":
           description: |-
             200 response
+        "400":
+          description: |-
+            400 response - Malformed request
   /elections:
     get:
       tags:
