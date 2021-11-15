@@ -1852,6 +1852,13 @@ paths:
       description: |
         Fetching creator is allowed for admins
       operationId: getAdmins
+      parameters:
+        - in: query
+          name: limit
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
       responses:
         "200":
           description: Success
@@ -2099,6 +2106,12 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the VAA
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
       responses:
         "200":
           description: Success
@@ -2382,6 +2395,12 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the party
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
       responses:
         "200":
           description: Success
