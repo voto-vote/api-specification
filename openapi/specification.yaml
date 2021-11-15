@@ -68,6 +68,13 @@ components:
       description: |
         We currently use Firebase as Authentication Provider. In order to use parts of the API, you have to have a valid account and role. Retrieve this idToken here https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password
 
+x-amazon-apigateway-request-validators:
+  all:
+    validateRequestBody: true
+    validateRequestParameters: true
+
+x-amazon-apigateway-request-validator: all
+
 paths:
   /:
     get:
@@ -1563,15 +1570,9 @@ paths:
           content:
             application/json:
               schema:
-                oneOf:
-                  - type: array
-                    items:
-                      type: object
-                      $ref: "schemas/These.yaml#/These"
-                  - type: array
-                    items:
-                      type: object
-                      $ref: "schemas/These.yaml#/LanguageThese"
+                items:
+                  type: object
+                  $ref: "schemas/These.yaml#/These"
         "404":
           description: Not found
           content:
