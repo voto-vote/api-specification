@@ -9,6 +9,18 @@ Admin:
           type: integer
           format: int64
           example: 123
+        firstName:
+          type: string
+          example: John
+          description: Firstname of admin - pulled from users profile
+        lastName:
+          type: string
+          example: Doe
+          description: Lastname of admin - pulled from users profile
+        contact:
+          type: string
+          example: john@doe.com
+          description: Contact mail of admin
         created_at:
           type: string
           format: date-time
@@ -25,18 +37,7 @@ NewAdmin:
       type: integer
       format: int64
       example: 123
-    firstName:
-      type: string
-      example: John
-      description: Firstname of creator - pulled from users profile
-    lastName:
-      type: string
-      example: Doe
-      description: Lastname of creator - pulled from users profile
-    contact:
-      type: string
-      example: john@doe.com
-      description: Contact mail of creator
+      description: "user_id which should be promoted to an admin"
 
 Creator:
   allOf:
