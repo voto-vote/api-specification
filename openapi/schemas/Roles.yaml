@@ -218,10 +218,14 @@ User:
 NewUser:
   type: object
   required:
-    - election_id
-    - cluster_id
-    - title
+    - first_name
+    - last_name
+    - email
+    - gender_id
   properties:
+    title:
+      type: string
+      example: "Dr."
     first_name:
       type: string
       example: "John"
