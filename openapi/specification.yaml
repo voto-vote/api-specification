@@ -2034,6 +2034,204 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /users:
+    post:
+      tags:
+        - Roles
+      summary: Create new user
+      description: |
+        Creation of users is allowed for admins, creators, and trustpersons
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewUser"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/User"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /users/{userId}:
+    get:
+      tags:
+        - Roles
+      summary: Get User by ID
+      description: |
+        Fetching users is allowed for admins
+      operationId: getUserById
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the user
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/User"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - Roles
+      summary: Update user
+      description: |
+        Updating user is allowed for admins and the user itself.
+      operationId: updateUser
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/User"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/User"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - Roles
+      summary: Remove user
+      description: |
+        Remove user is allowed for admin
+      operationId: deleteUser
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the user
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /applications/{applicationId}/creator:
     get:
       tags:
