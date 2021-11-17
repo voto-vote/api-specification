@@ -133,11 +133,11 @@ NewTrustPerson:
     contact:
       type: string
       example: john@doe.com
-      description: Contact mail of trust person
+      description: Contact mail of trustperson
     status:
       type: integer
       example: 0
-      description: "Status of creator"
+      description: "Status of trustperson"
 
 Candidate:
   allOf:
@@ -193,7 +193,7 @@ NewCandidate:
     status:
       type: integer
       example: 0
-      description: "Status of creator"
+      description: "Status of candidate"
 
 User:
   allOf:
@@ -258,4 +258,4 @@ NewUser:
     status:
       type: integer
       example: 0
-      description: "Status of creator"
+      description: "Status of user"

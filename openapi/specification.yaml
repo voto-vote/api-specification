@@ -19,6 +19,7 @@ info:
       | Trustperson | CRUD  | CRUD    | CRUD        | R         | -         |
       | Creator     | CRUD  | CRUD    | R           | R         | -         |
       | Admins      | CRUD  | R       | -           | -         | -         |
+      | Users       | CRUD  | CR      | CR          | RUD       | -         |
 
       ***C* = Create<br>**
       ***R* = Read<br>**
