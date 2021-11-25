@@ -253,6 +253,9 @@ NewUser:
     address2:
       type: string
       example: "2nd floor"
+    job:
+      type: string
+      example: "CEO"
     zipcode:
       type: integer
       example: 12345
