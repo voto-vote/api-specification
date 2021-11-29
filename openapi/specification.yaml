@@ -2152,7 +2152,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "schemas/Roles.yaml#/User"
+              $ref: "schemas/Roles.yaml#/NewUser"
       responses:
         "200":
           description: Success

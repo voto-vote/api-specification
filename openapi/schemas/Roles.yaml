@@ -262,7 +262,3 @@ NewUser:
     city:
       type: string
       example: "Stuttgart"
-    status:
-      type: integer
-      example: 0
-      description: "Status of user"
