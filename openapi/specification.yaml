@@ -106,7 +106,7 @@ paths:
         Fetching elections is allowed for the `creator` and `admin` role.
       operationId: getElections
       security:
-        - firebase: ["creator"]
+        - firebase: []
       parameters:
         - name: election_date
           in: query
