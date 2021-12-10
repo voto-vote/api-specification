@@ -1289,6 +1289,236 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /applications/themes:
+    get:
+      tags:
+        - VAA
+      summary: Fetches array of VAA's
+      operationId: getThemes
+      description: |
+        Fetching themes is allowed for `admin` and `creators`
+      security:
+        - firebase: []
+      parameters:
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Theme.yaml#/Theme"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - VAA
+      summary: Create theme object
+      operationId: createTheme
+      description: |
+        Creating themes is allowed for `admin` and `creators`
+      security:
+        - firebase: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Theme.yaml#/NewTheme"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Theme.yaml#/Theme"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/themes/{themeId}:
+    get:
+      tags:
+        - VAA
+      summary: Fetches single theme
+      description: |
+        Fetching one theme is allowed for everyone
+      operationId: getTheme
+      parameters:
+        - in: path
+          name: themeId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the theme
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Theme.yaml#/Theme"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA
+      summary: Update theme object
+      description: |
+        Updating one theme is allowed for `admin` and `creator` (for its own applications)
+      operationId: putTheme
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: themeId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the theme
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Theme.yaml#/Theme"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Theme.yaml#/Theme"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - VAA
+      summary: Delete theme object
+      description: |
+        Deleting one theme is allowed for `admin` and `creator` (for its own applications)
+      operationId: deleteTheme
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: themeId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the theme
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /applications/{applicationId}:
     get:
       tags:
@@ -1707,7 +1937,7 @@ paths:
     delete:
       tags:
         - VAA
-      summary: Delete VAA object
+      summary: Delete theses object
       description: |
         Deleting application theses is allowed for `admin` and `creator` (for its own applications)
       operationId: deleteThesesForApplication
