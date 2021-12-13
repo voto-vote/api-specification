@@ -30,8 +30,9 @@ NewApplication:
       example: 456
     algorithm:
       $ref: "Algorithm.yaml#/Algorithm"
-    theme:
-      $ref: "Theme.yaml#/Theme"
+    theme_id:
+      type: integer
+      example: 789
     title:
       type: string
       example: "Example Title"
