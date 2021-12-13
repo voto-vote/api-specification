@@ -1293,7 +1293,7 @@ paths:
     get:
       tags:
         - VAA
-      summary: Fetches array of VAA's
+      summary: Fetches array of themes.
       operationId: getThemes
       description: |
         Fetching themes is allowed for `admin` and `creators`

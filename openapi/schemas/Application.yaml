@@ -55,8 +55,10 @@ NewApplication:
       type: string
       format: date
       example: "2021-09-27"
-    metadata:
-      $ref: "Application.yaml#/Metadata"
+    configuration:
+      type: string
+      example: "https://voto.vote/foo_bar.json"
+      description: "This is the url, where you find your individual configuration for the VOTO VAA"
 
 DeleteApplication:
   type: object
@@ -67,26 +69,3 @@ DeleteApplication:
       type: integer
       format: int64
       example: 123
-
-Metadata:
-  type: object
-  properties:
-    match_type:
-      enum: [candidates, parties, hybrid]
-      example: "candidates"
-    top_matches:
-      type: integer
-      description: Represents a vote count - differs in each election system
-      example: 3
-    vote_min:
-      type: integer
-      example: 0
-    max_double_weights:
-      type: integer
-      example: 5
-    vote_max:
-      type: integer
-      example: 100
-    interaction_type:
-      enum: [slider, buttons, tindercards]
-      example: "slider"
