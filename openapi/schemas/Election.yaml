@@ -5,6 +5,10 @@ Election:
       required:
         - id
       properties:
+        status:
+          type: integer
+          format: int64
+          example: 0
         id:
           type: integer
           format: int64
