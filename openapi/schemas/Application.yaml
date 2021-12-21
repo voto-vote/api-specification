@@ -58,6 +58,9 @@ NewApplication:
       type: string
       example: "https://voto.vote/foo_bar.json"
       description: "This is the url, where you find your individual configuration for the VOTO VAA"
+    status:
+      type: integer
+      example: 123
 
 DeleteApplication:
   type: object
