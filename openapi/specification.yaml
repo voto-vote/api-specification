@@ -1292,7 +1292,7 @@ paths:
   /applications/clusters:
     get:
       tags:
-        - Cluster
+        - VAA
       summary: Fetches array of clusters
       operationId: getClusters
       description: |
@@ -1329,9 +1329,9 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
-        - Cluster
+        - VAA
       summary: Create Cluster object
-      operationId: createApplication
+      operationId: createCluster
       description: |
         Creating clusters is allowed for `admin`
       security:
@@ -1376,7 +1376,7 @@ paths:
   /applications/clusters/{clusterId}:
     get:
       tags:
-        - Cluster
+        - VAA
       summary: Fetches single cluster
       description: |
         Fetching one cluster is allowed for everyone
@@ -1410,7 +1410,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
-        - Cluster
+        - VAA
       summary: Update Cluster object
       description: |
         Updating one cluster is allowed for `admin` and `creator` (for its own applications)
