@@ -27,6 +27,9 @@ NewApplication:
   properties:
     election_id:
       type: integer
+      example: 123
+    cluster_id:
+      type: integer
       example: 456
     theme_id:
       type: integer
