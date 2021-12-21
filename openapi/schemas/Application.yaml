@@ -28,8 +28,6 @@ NewApplication:
     election_id:
       type: integer
       example: 456
-    algorithm:
-      $ref: "Algorithm.yaml#/Algorithm"
     theme_id:
       type: integer
       example: 789
