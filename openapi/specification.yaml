@@ -1289,6 +1289,185 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /applications/clusters:
+    get:
+      tags:
+        - Cluster
+      summary: Fetches array of clusters
+      operationId: getClusters
+      description: |
+        Fetching clusters is allowed for `admin`
+      security:
+        - firebase: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Cluster.yaml#/Cluster"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - Cluster
+      summary: Create Cluster object
+      operationId: createApplication
+      description: |
+        Creating clusters is allowed for `admin`
+      security:
+        - firebase: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Cluster.yaml#/NewCluster"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Cluster.yaml#/Cluster"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/clusters/{clusterId}:
+    get:
+      tags:
+        - Cluster
+      summary: Fetches single cluster
+      description: |
+        Fetching one cluster is allowed for everyone
+      operationId: getCluster
+      parameters:
+        - in: path
+          name: clusterId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the Cluster
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Cluster.yaml#/Cluster"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - Cluster
+      summary: Update Cluster object
+      description: |
+        Updating one cluster is allowed for `admin` and `creator` (for its own applications)
+      operationId: putCluster
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: clusterId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the Cluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Cluster.yaml#/NewCluster"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Cluster.yaml#/Cluster"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /applications/themes:
     get:
       tags:

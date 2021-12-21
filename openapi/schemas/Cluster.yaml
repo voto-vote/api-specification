@@ -1,0 +1,49 @@
+Cluster:
+  allOf:
+    - $ref: "Cluster.yaml#/NewCluster"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+
+NewCluster:
+  type: object
+  required:
+    - election_id
+    - cluster_id
+    - title
+  properties:
+    title:
+      type: string
+      example: "Example Title"
+    subtitle:
+      type: string
+      example: "Example Subtitle"
+    description:
+      type: string
+      example: "Lorem ipsum dolor sed amet."
+    url:
+      type: string
+      example: "https://foo.bar/cluster"
+
+DeleteCluster:
+  type: object
+  required:
+    - id
+  properties:
+    id:
+      type: integer
+      format: int64
+      example: 123
