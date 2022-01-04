@@ -1,6 +1,6 @@
-Application:
+Cluster:
   allOf:
-    - $ref: "Application.yaml#/NewApplication"
+    - $ref: "Cluster.yaml#/NewCluster"
     - type: object
       required:
         - id
@@ -18,22 +18,13 @@ Application:
           format: date-time
           example: 2021-10-05T06:00:00Z
 
-NewApplication:
+NewCluster:
   type: object
   required:
     - election_id
     - cluster_id
     - title
   properties:
-    election_id:
-      type: integer
-      example: 123
-    cluster_id:
-      type: integer
-      example: 456
-    theme_id:
-      type: integer
-      example: 789
     title:
       type: string
       example: "Example Title"
@@ -43,29 +34,11 @@ NewApplication:
     description:
       type: string
       example: "Lorem ipsum dolor sed amet."
-    website:
-      type: string
-      example: "https://voto.vote"
     url:
       type: string
-      example: "https://foo.bar/vaa"
-    launch_date:
-      type: string
-      format: date
-      example: "2021-08-27"
-    sundown_date:
-      type: string
-      format: date
-      example: "2021-09-27"
-    configuration:
-      type: string
-      example: "https://voto.vote/foo_bar.json"
-      description: "This is the url, where you find your individual configuration for the VOTO VAA"
-    status:
-      type: integer
-      example: 123
+      example: "https://foo.bar/cluster"
 
-DeleteApplication:
+DeleteCluster:
   type: object
   required:
     - id

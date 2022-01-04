@@ -1,4 +1,0 @@
-Algorithm:
-  type: string
-  enum: [hybrid, algo1, algo2]
-  example: "hybrid"

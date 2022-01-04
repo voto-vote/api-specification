@@ -19,6 +19,7 @@ info:
       | Trustperson | CRUD  | CRUD    | CRUD        | R         | -         |
       | Creator     | CRUD  | CRUD    | R           | R         | -         |
       | Admins      | CRUD  | R       | -           | -         | -         |
+      | Users       | CRUD  | CR      | CR          | RUD       | -         |
 
       ***C* = Create<br>**
       ***R* = Read<br>**
@@ -105,7 +106,7 @@ paths:
         Fetching elections is allowed for the `creator` and `admin` role.
       operationId: getElections
       security:
-        - firebase: ["creator"]
+        - firebase: []
       parameters:
         - name: election_date
           in: query
@@ -1288,6 +1289,415 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /applications/clusters:
+    get:
+      tags:
+        - VAA
+      summary: Fetches array of clusters
+      operationId: getClusters
+      description: |
+        Fetching clusters is allowed for `admin`
+      security:
+        - firebase: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Cluster.yaml#/Cluster"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - VAA
+      summary: Create Cluster object
+      operationId: createCluster
+      description: |
+        Creating clusters is allowed for `admin`
+      security:
+        - firebase: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Cluster.yaml#/NewCluster"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Cluster.yaml#/Cluster"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/clusters/{clusterId}:
+    get:
+      tags:
+        - VAA
+      summary: Fetches single cluster
+      description: |
+        Fetching one cluster is allowed for everyone
+      operationId: getCluster
+      parameters:
+        - in: path
+          name: clusterId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the Cluster
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Cluster.yaml#/Cluster"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA
+      summary: Update Cluster object
+      description: |
+        Updating one cluster is allowed for `admin` and `creator` (for its own applications)
+      operationId: putCluster
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: clusterId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the Cluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Cluster.yaml#/NewCluster"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Cluster.yaml#/Cluster"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/themes:
+    get:
+      tags:
+        - VAA
+      summary: Fetches array of themes.
+      operationId: getThemes
+      description: |
+        Fetching themes is allowed for `admin` and `creators`
+      security:
+        - firebase: []
+      parameters:
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Theme.yaml#/Theme"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - VAA
+      summary: Create theme object
+      operationId: createTheme
+      description: |
+        Creating themes is allowed for `admin` and `creators`
+      security:
+        - firebase: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Theme.yaml#/NewTheme"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Theme.yaml#/Theme"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/themes/{themeId}:
+    get:
+      tags:
+        - VAA
+      summary: Fetches single theme
+      description: |
+        Fetching one theme is allowed for everyone
+      operationId: getTheme
+      parameters:
+        - in: path
+          name: themeId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the theme
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Theme.yaml#/Theme"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA
+      summary: Update theme object
+      description: |
+        Updating one theme is allowed for `admin` and `creator` (for its own applications)
+      operationId: putTheme
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: themeId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the theme
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Theme.yaml#/Theme"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Theme.yaml#/Theme"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - VAA
+      summary: Delete theme object
+      description: |
+        Deleting one theme is allowed for `admin` and `creator` (for its own applications)
+      operationId: deleteTheme
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: themeId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the theme
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /applications/{applicationId}:
     get:
       tags:
@@ -1442,112 +1852,7 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-  /applications/{applicationId}/metadata:
-    get:
-      tags:
-        - VAA
-      summary: Fetches VAA specific metadata
-      description: |
-        Fetching one applications metadata is allowed for `admin` and `creator` (for its own applications)
-      operationId: getApplicationMetadata
-      parameters:
-        - in: path
-          name: applicationId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the VAA
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Application.yaml#/Metadata"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    put:
-      tags:
-        - VAA
-      summary: Update VAA metadata object
-      description: |
-        Updating one applications metadata is allowed for `admin` and `creator` (for its own applications)
-      operationId: putApplicationMetadata
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: applicationId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the VAA
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Application.yaml#/Metadata"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Application.yaml#/Metadata"
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
+
   /applications/{applicationId}/theses:
     get:
       tags:
@@ -1706,7 +2011,7 @@ paths:
     delete:
       tags:
         - VAA
-      summary: Delete VAA object
+      summary: Delete theses object
       description: |
         Deleting application theses is allowed for `admin` and `creator` (for its own applications)
       operationId: deleteThesesForApplication
@@ -2006,6 +2311,204 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the admin
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /users:
+    post:
+      tags:
+        - Roles
+      summary: Create new user
+      description: |
+        Creation of users is allowed for admins, creators, and trustpersons
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewUser"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/User"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /users/{userId}:
+    get:
+      tags:
+        - Roles
+      summary: Get User by ID
+      description: |
+        Fetching users is allowed for admins
+      operationId: getUserById
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the user
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/User"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - Roles
+      summary: Update user
+      description: |
+        Updating user is allowed for admins and the user itself.
+      operationId: updateUser
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewUser"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/User"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - Roles
+      summary: Remove user
+      description: |
+        Remove user is allowed for admin
+      operationId: deleteUser
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the user
       responses:
         "204":
           description: No content

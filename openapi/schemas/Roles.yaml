@@ -82,6 +82,10 @@ NewCreator:
       type: string
       example: john@doe.com
       description: Contact mail of creator
+    status:
+      type: integer
+      example: 0
+      description: "Status of creator"
 
 TrustPerson:
   allOf:
@@ -129,7 +133,11 @@ NewTrustPerson:
     contact:
       type: string
       example: john@doe.com
-      description: Contact mail of trust person
+      description: Contact mail of trustperson
+    status:
+      type: integer
+      example: 0
+      description: "Status of trustperson"
 
 Candidate:
   allOf:
@@ -182,3 +190,75 @@ NewCandidate:
     profile_picture:
       type: string
       example: "https://"
+    status:
+      type: integer
+      example: 0
+      description: "Status of candidate"
+
+User:
+  allOf:
+    - $ref: "Roles.yaml#/NewUser"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+
+NewUser:
+  type: object
+  required:
+    - first_name
+    - last_name
+    - email
+    - gender_id
+  properties:
+    title:
+      type: string
+      example: "Dr."
+    first_name:
+      type: string
+      example: "John"
+    last_name:
+      type: string
+      example: "Doe"
+    gender_id:
+      type: integer
+      format: int64
+      example: 123
+    email:
+      type: string
+      format: email
+      example: "john@doe.com"
+    birthday:
+      type: string
+      format: date
+      example: "1993-12-27"
+    phone:
+      type: integer
+      example: 1234567890
+    address1:
+      type: string
+      example: "Johnstreet 42"
+    address2:
+      type: string
+      example: "2nd floor"
+    job:
+      type: string
+      example: "CEO"
+    zipcode:
+      type: integer
+      example: 12345
+    city:
+      type: string
+      example: "Stuttgart"

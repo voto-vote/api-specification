@@ -1,5 +1,30 @@
 Theme:
+  allOf:
+    - $ref: "Theme.yaml#/NewTheme"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+
+NewTheme:
   type: object
+  required:
+    - color1
+    - color2
+    - color3
+    - color4
   properties:
     color1:
       $ref: "Theme.yaml#/Color"
@@ -9,9 +34,6 @@ Theme:
       $ref: "Theme.yaml#/Color"
     color4:
       $ref: "Theme.yaml#/Color"
-    logo:
-      type: string
-      example: "https://voto.vote/logo.png"
 
 Color:
   type: object
