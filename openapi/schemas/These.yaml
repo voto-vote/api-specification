@@ -5,7 +5,7 @@ LanguageThese:
       type: string
       format: text
       example: "Lorem ipsum dolor sed amet"
-    description:
+    text:
       type: string
       format: text
       example: "Lorem ipsum dolor sed amet"
@@ -44,7 +44,7 @@ These:
       type: string
       format: text
       example: "Lorem ipsum dolor sed amet"
-    description:
+    text:
       type: string
       format: text
       example: "Lorem ipsum dolor sed amet"
