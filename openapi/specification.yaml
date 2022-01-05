@@ -1853,11 +1853,11 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/theses:
+  /applications/{applicationId}/theses/{language}:
     get:
       tags:
         - VAA
-      summary: Fetches all theses for one VAA
+      summary: Fetches all theses for one VAA in specific language
       description: |
         Fetching one applications theses is allowed for everyone
       operationId: getThesesForApplication
@@ -1907,18 +1907,25 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the VAA
+        - in: path
+          name: language
+          required: true
+          schema:
+            type: string
+            format: text
+          description: Language code
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "schemas/These.yaml#/LanguageThese"
+              $ref: "schemas/These.yaml#/NewLanguageThese"
       responses:
         "201":
           description: Created
           content:
             application/json:
               schema:
-                $ref: "schemas/These.yaml#/These"
+                $ref: "schemas/These.yaml#/LanguageThese"
         "400":
           description: Malformed request
           content:
@@ -1966,18 +1973,25 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the VAA
+        - in: path
+          name: language
+          required: true
+          schema:
+            type: string
+            format: text
+          description: Language code
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "schemas/These.yaml#/LanguageThese"
+              $ref: "schemas/These.yaml#/NewLanguageThese"
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                $ref: "schemas/These.yaml#/These"
+                $ref: "schemas/These.yaml#/LanguageThese"
         "400":
           description: Malformed request
           content:
@@ -2025,6 +2039,13 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the VAA
+        - in: path
+          name: language
+          required: true
+          schema:
+            type: string
+            format: text
+          description: Language code
       responses:
         "204":
           description: Success

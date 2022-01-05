@@ -1,32 +1,67 @@
+LanguageThese:
+  type: object
+  properties:
+    title:
+      type: string
+      format: text
+      example: "Lorem ipsum dolor sed amet"
+    description:
+      type: string
+      format: text
+      example: "Lorem ipsum dolor sed amet"
+    id:
+      type: integer
+      format: int64
+      example: 123
+    applicationId:
+      type: integer
+      format: int64
+      example: 123
+    created_at:
+      type: string
+      format: date-time
+      example: 2021-10-05T06:00:00Z
+    updated_at:
+      type: string
+      format: date-time
+      example: 2021-10-05T06:00:00Z
+
+NewLanguageThese:
+  type: object
+  properties:
+    title:
+      type: string
+      example: "Lorem ipsum..."
+    text:
+      type: string
+      format: text
+      example: "Lorem ipsum dolor sed amet"
+
 These:
   type: object
   properties:
     title:
-      type: array
-      items:
-        type: object
-        properties:
-          language:
-            type: string
-            example: "de"
-          text:
-            type: string
-            format: text
-            example: "Lorem ipsum dolor sed amet"
+      type: string
+      format: text
+      example: "Lorem ipsum dolor sed amet"
     description:
-      type: array
-      items:
-        type: object
-        properties:
-          language:
-            type: string
-            example: "de"
-          text:
-            type: string
-            format: text
-            example: "Lorem ipsum dolor sed amet"
+      type: string
+      format: text
+      example: "Lorem ipsum dolor sed amet"
+    id:
+      type: integer
+      format: int64
+      example: 123
+    created_at:
+      type: string
+      format: date-time
+      example: 2021-10-05T06:00:00Z
+    updated_at:
+      type: string
+      format: date-time
+      example: 2021-10-05T06:00:00Z
 
-LanguageThese:
+NewThese:
   type: object
   properties:
     language:
