@@ -1468,6 +1468,250 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /applications/theses/{language}:
+    get:
+      tags:
+        - VAA
+      summary: Fetches array of theses
+      operationId: getOverallTheses
+      description: |
+        Fetching theses is allowed for `admin`
+      security:
+        - firebase: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/These.yaml#/These"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - VAA
+      summary: Create new language these
+      operationId: createOverallThese
+      description: |
+        Creating theses is allowed for `admin`
+      security:
+        - firebase: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/These.yaml#/NewThese"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/These.yaml#/These"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/theses/{language}/{theseId}:
+    get:
+      tags:
+        - VAA
+      summary: Fetches single language these
+      description: |
+        Fetching one these is allowed for everyone
+      operationId: getSingleThese
+      parameters:
+        - in: path
+          name: language
+          required: true
+          schema:
+            type: string
+            format: text
+          description: Language code
+        - in: path
+          name: theseId
+          required: true
+          schema:
+            type: integer
+            format: text
+          description: Numeric id of the these
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/These.yaml#/These"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA
+      summary: Update these object
+      description: |
+        Updating one these is allowed for `admin` and `creator` (for its own applications)
+      operationId: putOverallThese
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: language
+          required: true
+          schema:
+            type: string
+            format: text
+          description: Language code
+        - in: path
+          name: theseId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the these
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/These.yaml#/NewThese"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/These.yaml#/These"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - VAA
+      summary: Delete overall these
+      description: |
+        Deleting a these  is allowed for `admin`, `creator` and `trustperson` for its own party.
+      operationId: deleteOverallThese
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: language
+          required: true
+          schema:
+            type: string
+            format: text
+          description: Language code
+        - in: path
+          name: theseId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the these
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /applications/themes:
     get:
       tags:
