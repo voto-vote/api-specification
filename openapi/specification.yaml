@@ -2200,10 +2200,62 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/theses/{language}/{theseId}:
+    get:
+      tags:
+        - VAA
+      summary: Fetches one these for one VAA in specific language
+      description: |
+        Fetching one applications theses is allowed for everyone
+      operationId: putSingleTheseForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: language
+          required: true
+          schema:
+            type: string
+            format: text
+          description: Language code
+        - in: path
+          name: theseId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the these
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                  $ref: "schemas/These.yaml#/These"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
         - VAA
-      summary: Put these
+      summary: Update language these for application
       description: |
         Changing application theses is allowed for `admin` and `creator` (for its own applications)
       operationId: putThesesForApplication
@@ -2269,7 +2321,7 @@ paths:
     delete:
       tags:
         - VAA
-      summary: Delete theses object
+      summary: Delete application these
       description: |
         Deleting application theses is allowed for `admin` and `creator` (for its own applications)
       operationId: deleteThesesForApplication
