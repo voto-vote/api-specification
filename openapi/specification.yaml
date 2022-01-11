@@ -2137,6 +2137,13 @@ paths:
             type: string
             format: text
           description: Language code
+        - in: path
+          name: theseId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the language these
       responses:
         "204":
           description: Success
