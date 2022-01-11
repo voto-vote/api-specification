@@ -52,7 +52,11 @@ tags:
   - name: Election
     description: Objects related to elections
   - name: VAA
-    description: Objects related to Vote advice applications
+    description: Objects related to Vote advice applications#
+  - name: VAA/Roles
+    description: Creators/TrustPersons related to Vote advice applications
+  - name: VAA/Matches
+    description: Candidates/Parties and all of their subpaths related to Vote advice applications
   - name: API
     description: About this API
   - name: Vote
@@ -1841,7 +1845,7 @@ paths:
   /applications/{applicationId}/creator:
     get:
       tags:
-        - Roles
+        - VAA/Roles
       summary: Get creator for VAA
       description: |
         Fetching creator is allowed for admins and creator.
@@ -1896,7 +1900,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
-        - Roles
+        - VAA/Roles
       summary: Create new creator for VAA
       description: |
         Creation of creator is allowed for admins and creator.
@@ -1955,7 +1959,7 @@ paths:
   /applications/{applicationId}/creator/{creatorId}:
     get:
       tags:
-        - Roles
+        - VAA/Roles
       summary: Get creator by ID for VAA
       description: |
         Fetching creator is allowed for admins and creator.
@@ -2008,7 +2012,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
-        - Roles
+        - VAA/Roles
       summary: Update creator for VAA
       description: |
         Updating creator is allowed for admins and creator.
@@ -2072,7 +2076,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
-        - Roles
+        - VAA/Roles
       summary: Remove creator for VAA
       description: |
         Remove creator is allowed for admins and creator (for its own application).
@@ -2123,7 +2127,7 @@ paths:
   /applications/{applicationId}/trustpersons:
     get:
       tags:
-        - Roles
+        - VAA/Roles
       summary: Get trustpersons for VAA
       description: |
         Fetching trustpersons is allowed for admins and creator as well as for trustpersons for their own party.
@@ -2185,7 +2189,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
-        - Roles
+        - VAA/Roles
       summary: Create new trustperson for VAA
       description: |
         Creation of trustperson is allowed for admins and creator as well as for trustpersons for their own party.
@@ -2244,7 +2248,7 @@ paths:
   /applications/{applicationId}/trustpersons/{trustpersonId}:
     get:
       tags:
-        - Roles
+        - VAA/Roles
       summary: Get trustperson by ID for VAA
       description: |
         Fetching trustperson by id is allowed for admins and creator.
@@ -2297,7 +2301,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
-        - Roles
+        - VAA/Roles
       summary: Update trustperson for VAA
       description: |
         Updating trustpersons is allowed for admins and creator as well as for trustpersons ( for their own party )
@@ -2361,7 +2365,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
-        - Roles
+        - VAA/Roles
       summary: Remove TrustPerson for VAA
       description: |
         Remove TrustPerson is allowed for admins and creator (for its own application) and for trustpersons ( for its own party ).
@@ -2418,7 +2422,7 @@ paths:
   /applications/{applicationId}/candidates:
     get:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Get candidates for VAA
       operationId: getCandidatesForApplication
       description: |
@@ -2461,7 +2465,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Create new candidate for application
       description: |
         Creation of candidates is allowed for `admin`, `creator` (only in his application) and `trustperson` (only for his party)
@@ -2527,7 +2531,7 @@ paths:
   /applications/{applicationId}/candidates/{candidateId}:
     get:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Get single candidate
       description: |
         Fetching a candidate for one application is allowed for everyone.
@@ -2576,7 +2580,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Change candidate for application
       description: |
         Changing a candidate for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party) and one `candidate` for itself.
@@ -2653,7 +2657,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Delete candidate object
       description: |
         Deleting a candidate for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party) and one `candidate` for itself.
@@ -2705,7 +2709,7 @@ paths:
   /applications/{applicationId}/candidates/{candidateId}/votes:
     get:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Get votes of a candidate
       description: |
         Fetching a candidates votes for one application is allowed for everyone.
@@ -2749,7 +2753,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Change candidate votes for application
       description: |
         Changing a candidates votes for one application is allowed for `admin` and one `candidate` for itself.
@@ -2826,7 +2830,7 @@ paths:
   /applications/{applicationId}/parties:
     get:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Get parties for application
       operationId: getPartiesForApplication
       description: |
@@ -2869,7 +2873,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Create new party for application
       description: |
         Creating parties for one application is allowed for `admin` and `creator` (for its own application)
@@ -2935,7 +2939,7 @@ paths:
   /applications/{applicationId}/parties/{partyId}:
     get:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Get single party
       description: |
         Fetching one party for one application by its ID is allowed for everyone.
@@ -2984,7 +2988,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Change party for application
       description: |
         Changing a party for one application is allowed for `admin`, `creator` and the `trustperson` for its own party.
@@ -3062,7 +3066,7 @@ paths:
 
     delete:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Delete party object
       description: |
         Deleting a party for one application is allowed for `admin`, `creator` and `trustperson` for its own party.
@@ -3115,7 +3119,7 @@ paths:
   /applications/{applicationId}/parties/{partyId}/votes:
     get:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Get votes of a party
       description: |
         Fetching votes for one specific party is allowed for everyone.
@@ -3159,7 +3163,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
-        - VAA
+        - VAA/Matches
       summary: Change party votes for application
       description: |
         Changing votes for one specific party is only allowed for `trustperson` (for its own party)
