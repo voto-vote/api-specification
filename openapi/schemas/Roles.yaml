@@ -54,6 +54,18 @@ Creator:
           type: integer
           format: int64
           example: 456
+        firstName:
+          type: string
+          example: John
+          description: Firstname of creator - pulled from users profile
+        lastName:
+          type: string
+          example: Doe
+          description: Lastname of creator - pulled from users profile
+        contact:
+          type: string
+          example: john@doe.com
+          description: Contact mail of creator
         created_at:
           type: string
           format: date-time
@@ -70,22 +82,6 @@ NewCreator:
       type: integer
       format: int64
       example: 123
-    firstName:
-      type: string
-      example: John
-      description: Firstname of creator - pulled from users profile
-    lastName:
-      type: string
-      example: Doe
-      description: Lastname of creator - pulled from users profile
-    contact:
-      type: string
-      example: john@doe.com
-      description: Contact mail of creator
-    status:
-      type: integer
-      example: 0
-      description: "Status of creator"
 
 TrustPerson:
   allOf:
@@ -102,6 +98,18 @@ TrustPerson:
           type: integer
           format: int64
           example: 456
+        firstName:
+          type: string
+          example: John
+          description: Firstname of trustperson - pulled from users profile
+        lastName:
+          type: string
+          example: Doe
+          description: Lastname of trustperson - pulled from users profile
+        contact:
+          type: string
+          example: john@doe.com
+          description: Contact mail of trustperson
         created_at:
           type: string
           format: date-time
@@ -122,22 +130,6 @@ NewTrustPerson:
       type: integer
       format: int64
       example: 456
-    firstName:
-      type: string
-      example: John
-      description: Firstname of trust person - pulled from users profile
-    lastName:
-      type: string
-      example: Doe
-      description: Lastname of trust person - pulled from users profile
-    contact:
-      type: string
-      example: john@doe.com
-      description: Contact mail of trustperson
-    status:
-      type: integer
-      example: 0
-      description: "Status of trustperson"
 
 Candidate:
   allOf:
@@ -150,6 +142,23 @@ Candidate:
           type: integer
           format: int64
           example: 123
+        firstName:
+          type: string
+          example: John
+          description: Firstname of candidate - pulled from users profile
+        lastName:
+          type: string
+          example: Doe
+          description: Lastname of candidate - pulled from users profile
+        contact:
+          type: string
+          example: john@doe.com
+          description: Contact mail of creator
+        age:
+          type: integer
+          format: int64
+          example: 456
+          description: Age of the candidate, pulled from users profile
         created_at:
           type: string
           format: date-time
@@ -190,10 +199,6 @@ NewCandidate:
     profile_picture:
       type: string
       example: "https://"
-    status:
-      type: integer
-      example: 0
-      description: "Status of candidate"
 
 User:
   allOf:
