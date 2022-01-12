@@ -475,7 +475,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/clusters:
+  /clusters:
     get:
       tags:
         - VAA
@@ -559,7 +559,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/clusters/{clusterId}:
+  /clusters/{clusterId}:
     get:
       tags:
         - VAA
@@ -654,53 +654,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/theses/{language}:
-    get:
-      tags:
-        - VAA
-      summary: Fetches array of theses
-      operationId: getOverallTheses
-      description: |
-        Fetching theses is allowed for `admin`
-      parameters:
-        - in: path
-          name: language
-          required: true
-          schema:
-            type: string
-          description: Language code
-      security:
-        - firebase: []
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/These.yaml#/These"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-
-  /applications/themes:
+  /themes:
     get:
       tags:
         - VAA
@@ -791,7 +745,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/themes/{themeId}:
+  /themes/{themeId}:
     get:
       tags:
         - VAA
@@ -1878,7 +1832,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/creator:
+  /applications/{applicationId}/roles/creator:
     get:
       tags:
         - VAA/Roles
@@ -1996,7 +1950,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/creator/{creatorId}:
+  /applications/{applicationId}/roles/creator/{creatorId}:
     get:
       tags:
         - VAA/Roles
@@ -2170,7 +2124,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/trustpersons:
+  /applications/{applicationId}/roles/trustpersons:
     get:
       tags:
         - VAA/Roles
@@ -2295,7 +2249,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/trustpersons/{trustpersonId}:
+  /applications/{applicationId}/roles/trustpersons/{trustpersonId}:
     get:
       tags:
         - VAA/Roles
@@ -2475,7 +2429,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/candidates:
+  /applications/{applicationId}/roles/candidates:
     get:
       tags:
         - VAA/Matches
@@ -2584,7 +2538,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/candidates/{candidateId}:
+  /applications/{applicationId}/roles/candidates/{candidateId}:
     get:
       tags:
         - VAA/Matches
@@ -2762,7 +2716,7 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-  /applications/{applicationId}/candidates/{candidateId}/votes:
+  /applications/{applicationId}/roles/candidates/{candidateId}/votes:
     get:
       tags:
         - VAA/Matches
@@ -2883,7 +2837,7 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-  /applications/{applicationId}/parties:
+  /applications/{applicationId}/roles/parties:
     get:
       tags:
         - VAA/Matches
@@ -2992,7 +2946,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/parties/{partyId}:
+  /applications/{applicationId}/roles/parties/{partyId}:
     get:
       tags:
         - VAA/Matches
@@ -3172,7 +3126,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/parties/{partyId}/votes:
+  /applications/{applicationId}/roles/parties/{partyId}/votes:
     get:
       tags:
         - VAA/Matches
