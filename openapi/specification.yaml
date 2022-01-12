@@ -662,6 +662,13 @@ paths:
       operationId: getOverallTheses
       description: |
         Fetching theses is allowed for `admin`
+      parameters:
+        - in: path
+          name: language
+          required: true
+          schema:
+            type: string
+          description: Language code
       security:
         - firebase: []
       responses:
@@ -1094,6 +1101,12 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the VAA
+        - in: path
+          name: language
+          required: true
+          schema:
+            type: string
+          description: Language code
       responses:
         "200":
           description: Success
@@ -1257,6 +1270,13 @@ paths:
             type: string
             format: text
           description: Language code
+        - in: path
+          name: theseId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the these
       requestBody:
         content:
           application/json:
