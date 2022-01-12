@@ -2429,7 +2429,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/roles/candidates:
+  /applications/{applicationId}/matches/candidates:
     get:
       tags:
         - VAA/Matches
@@ -2538,7 +2538,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/roles/candidates/{candidateId}:
+  /applications/{applicationId}/matches/candidates/{candidateId}:
     get:
       tags:
         - VAA/Matches
@@ -2716,7 +2716,7 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-  /applications/{applicationId}/roles/candidates/{candidateId}/votes:
+  /applications/{applicationId}/matches/candidates/{candidateId}/votes:
     get:
       tags:
         - VAA/Matches
@@ -2837,7 +2837,7 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-  /applications/{applicationId}/roles/parties:
+  /applications/{applicationId}/matches/parties:
     get:
       tags:
         - VAA/Matches
@@ -2946,7 +2946,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/roles/parties/{partyId}:
+  /applications/{applicationId}/matches/parties/{partyId}:
     get:
       tags:
         - VAA/Matches
@@ -3126,7 +3126,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/roles/parties/{partyId}/votes:
+  /applications/{applicationId}/matches/parties/{partyId}/votes:
     get:
       tags:
         - VAA/Matches
