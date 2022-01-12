@@ -21,6 +21,11 @@ Admin:
           type: string
           example: john@doe.com
           description: Contact mail of admin
+        status:
+          type: integer
+          format: int64
+          example: 1
+          description: Status of admin
         created_at:
           type: string
           format: date-time
@@ -66,6 +71,11 @@ Creator:
           type: string
           example: john@doe.com
           description: Contact mail of creator
+        status:
+          type: integer
+          format: int64
+          example: 1
+          description: Status of creator
         created_at:
           type: string
           format: date-time
@@ -110,6 +120,11 @@ TrustPerson:
           type: string
           example: john@doe.com
           description: Contact mail of trustperson
+        status:
+          type: integer
+          format: int64
+          example: 1
+          description: Status of trustperson
         created_at:
           type: string
           format: date-time
@@ -159,6 +174,11 @@ Candidate:
           format: int64
           example: 456
           description: Age of the candidate, pulled from users profile
+        status:
+          type: integer
+          format: int64
+          example: 1
+          description: Status of candidate
         created_at:
           type: string
           format: date-time
@@ -267,3 +287,8 @@ NewUser:
     city:
       type: string
       example: "Stuttgart"
+    status:
+      type: integer
+      format: int64
+      example: 1
+      description: Status of user
