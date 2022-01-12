@@ -1463,6 +1463,8 @@ paths:
       description: |
         Fetching admins is allowed for admins
       operationId: getAdmins
+      security:
+        - firebase: []
       parameters:
         - in: query
           name: limit
@@ -1511,6 +1513,8 @@ paths:
       description: |
         Creation of admins is allowed for admins
       operationId: createAdmin
+      security:
+        - firebase: []
       requestBody:
         content:
           application/json:
@@ -1562,6 +1566,8 @@ paths:
       description: |
         Fetching admins is allowed for admins
       operationId: getAdminById
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: adminId
@@ -1608,6 +1614,8 @@ paths:
       description: |
         Remove admin is allowed for admin
       operationId: deleteAdmin
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: adminId
@@ -1652,6 +1660,8 @@ paths:
       description: |
         Creation of users is allowed for admins, creators, and trustpersons
       operationId: createUser
+      security:
+        - firebase: []
       requestBody:
         content:
           application/json:
@@ -1703,6 +1713,8 @@ paths:
       description: |
         Fetching users is allowed for admins
       operationId: getUserById
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: userId
@@ -1749,6 +1761,8 @@ paths:
       description: |
         Updating user is allowed for admins and the user itself.
       operationId: updateUser
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: userId
@@ -1806,6 +1820,8 @@ paths:
       description: |
         Remove user is allowed for admin
       operationId: deleteUser
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: userId
@@ -1850,6 +1866,8 @@ paths:
       description: |
         Fetching creator is allowed for admins and creator.
       operationId: getCreatorForApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -1905,6 +1923,8 @@ paths:
       description: |
         Creation of creator is allowed for admins and creator.
       operationId: createCreatorForApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -1964,6 +1984,8 @@ paths:
       description: |
         Fetching creator is allowed for admins and creator.
       operationId: getCreatorForApplicationById
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -2017,6 +2039,8 @@ paths:
       description: |
         Updating creator is allowed for admins and creator.
       operationId: updateCreatorForApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -2081,6 +2105,8 @@ paths:
       description: |
         Remove creator is allowed for admins and creator (for its own application).
       operationId: deleteCreatorForApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -2132,6 +2158,8 @@ paths:
       description: |
         Fetching trustpersons is allowed for admins and creator as well as for trustpersons for their own party.
       operationId: getTrustPersonsForApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -2194,6 +2222,8 @@ paths:
       description: |
         Creation of trustperson is allowed for admins and creator as well as for trustpersons for their own party.
       operationId: createTrustPersonForApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -2253,6 +2283,8 @@ paths:
       description: |
         Fetching trustperson by id is allowed for admins and creator.
       operationId: getTrustpersonForApplicationById
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -2306,6 +2338,8 @@ paths:
       description: |
         Updating trustpersons is allowed for admins and creator as well as for trustpersons ( for their own party )
       operationId: updateTrustPersonForApplicationById
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
@@ -2370,6 +2404,8 @@ paths:
       description: |
         Remove TrustPerson is allowed for admins and creator (for its own application) and for trustpersons ( for its own party ).
       operationId: deleteTrustPersonForApplication
+      security:
+        - firebase: []
       parameters:
         - in: path
           name: applicationId
