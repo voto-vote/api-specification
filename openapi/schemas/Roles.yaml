@@ -148,7 +148,7 @@ NewTrustPerson:
 
 Candidate:
   allOf:
-    - $ref: "Roles.yaml#/NewCandidate"
+    - $ref: "Roles.yaml#/PublicCandidate"
     - type: object
       required:
         - id
@@ -197,6 +197,24 @@ Candidate:
         public:
           type: boolean
           example: false
+
+PublicCandidate:
+  properties:
+    party_id:
+      type: integer
+      example: 123
+    description:
+      type: string
+      example: "Example Title"
+    district:
+      type: string
+      example: "Example District"
+    list_place:
+      type: string
+      example: "Example list place"
+    website:
+      type: string
+      example: "https://voto.vote"
 
 NewCandidate:
   type: object
