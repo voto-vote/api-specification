@@ -157,6 +157,14 @@ Candidate:
           type: integer
           format: int64
           example: 123
+        application_id:
+          type: integer
+          format: int64
+          example: 789
+        title:
+          type: string
+          example: Dr.
+          description: Title of candidate - pulled from users profile
         firstName:
           type: string
           example: John
@@ -165,15 +173,14 @@ Candidate:
           type: string
           example: Doe
           description: Lastname of candidate - pulled from users profile
-        contact:
-          type: string
-          example: john@doe.com
-          description: Contact mail of creator
         age:
           type: integer
           format: int64
           example: 456
           description: Age of the candidate, pulled from users profile
+        profile_picture:
+          type: string
+          example: "https://"
         status:
           type: integer
           format: int64
@@ -194,16 +201,15 @@ Candidate:
 NewCandidate:
   type: object
   required:
-    - election_id
-    - cluster_id
-    - title
+    - party_id
+    - user_id
   properties:
-    election_id:
-      type: integer
-      example: 123
     party_id:
       type: integer
-      example: 789
+      example: 123
+    user_id:
+      type: integer
+      example: 456
     description:
       type: string
       example: "Example Title"
@@ -216,9 +222,6 @@ NewCandidate:
     website:
       type: string
       example: "https://voto.vote"
-    profile_picture:
-      type: string
-      example: "https://"
 
 User:
   allOf:
