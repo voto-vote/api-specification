@@ -211,8 +211,8 @@ PublicCandidate:
       type: string
       example: "Example District"
     list_place:
-      type: string
-      example: "Example list place"
+      type: integer
+      example: 1
     website:
       type: string
       example: "https://voto.vote"
@@ -236,8 +236,8 @@ NewCandidate:
       type: string
       example: "Example District"
     list_place:
-      type: string
-      example: "Example list place"
+      type: integer
+      example: 1
     website:
       type: string
       example: "https://voto.vote"
