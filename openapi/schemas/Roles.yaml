@@ -199,6 +199,7 @@ Candidate:
           example: false
 
 PublicCandidate:
+  type: object
   properties:
     party_id:
       type: integer
