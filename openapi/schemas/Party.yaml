@@ -9,6 +9,10 @@ Party:
           type: integer
           format: int64
           example: 123
+        status:
+          type: integer
+          format: int64
+          example: 1
         created_at:
           type: string
           format: date-time
