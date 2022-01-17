@@ -21,11 +21,11 @@ Party:
 NewParty:
   type: object
   required:
-    - election_id
+    - application_id
     - shortcut
     - name
   properties:
-    election_id:
+    application_id:
       type: integer
       example: 123
     parent_party_id:
