@@ -2682,7 +2682,7 @@ paths:
                 type: array
                 items:
                   type: object
-                  $ref: "schemas/Voting.yaml#/Vote"
+                  $ref: "schemas/Voting.yaml#/CandidateVote"
         "404":
           description: Not found
           content:
@@ -2728,7 +2728,7 @@ paths:
                 votes:
                   type: array
                   items:
-                    $ref: "schemas/Voting.yaml#/Vote"
+                    $ref: "schemas/Voting.yaml#/CandidateVote"
       responses:
         "200":
           description: Success
@@ -2740,7 +2740,7 @@ paths:
                   votes:
                     type: array
                     items:
-                      $ref: "schemas/Voting.yaml#/Vote"
+                      $ref: "schemas/Voting.yaml#/CandidateVote"
         "400":
           description: Malformed request
           content:
@@ -3092,7 +3092,7 @@ paths:
                 type: array
                 items:
                   type: object
-                  $ref: "schemas/Voting.yaml#/Vote"
+                  $ref: "schemas/Voting.yaml#/PartyVote"
         "404":
           description: Not found
           content:
@@ -3138,7 +3138,7 @@ paths:
                 votes:
                   type: array
                   items:
-                    $ref: "schemas/Voting.yaml#/Vote"
+                    $ref: "schemas/Voting.yaml#/PartyVote"
       responses:
         "200":
           description: Success
@@ -3150,7 +3150,7 @@ paths:
                   votes:
                     type: array
                     items:
-                      $ref: "schemas/Voting.yaml#/Vote"
+                      $ref: "schemas/Voting.yaml#/PartyVote"
         "400":
           description: Malformed request
           content:

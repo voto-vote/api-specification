@@ -38,10 +38,65 @@ NewVoting:
 Vote:
   type: object
   properties:
-    these:
-      type: string
-      format: uuid
-      example: "1ec2a8a9-fc7d-6610-5469-44e2866ede02"
+    statement_id:
+      type: integer
+      format: int64
+      example: 123
+    application_id:
+      type: integer
+      format: int64
+      example: 456
     value:
       type: integer
       example: 75
+    weight:
+      type: integer
+      example: 1
+    created_at:
+      type: string
+      format: date-time
+      example: 2021-10-05T06:00:00Z
+
+PartyVote:
+  type: object
+  allOf:
+    - $ref: "Voting.yaml#/Vote"
+    - type: object
+      properties:
+      id:
+        type: integer
+        format: int64
+        example: 123
+      party_id:
+        type: integer
+        format: int64
+        example: 456
+      explanation:
+        type: string
+        example: "Lorem ipsum"
+      updated_at:
+        type: string
+        format: date-time
+        example: 2021-10-05T06:00:00Z
+
+CandidateVote:
+  type: object
+  allOf:
+    - $ref: "Voting.yaml#/Vote"
+    - type: object
+      properties:
+      id:
+        type: integer
+        format: int64
+        example: 123
+      candidate_id:
+        type: integer
+        format: int64
+        example: 456
+      explanation:
+        type: string
+        example: "Lorem ipsum"
+      updated_at:
+        type: string
+        format: date-time
+        example: 2021-10-05T06:00:00Z
