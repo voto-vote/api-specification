@@ -13,6 +13,9 @@ Party:
           type: integer
           format: int64
           example: 1
+        public:
+          type: boolean
+          example: false
         created_at:
           type: string
           format: date-time
