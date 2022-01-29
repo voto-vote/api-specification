@@ -3258,7 +3258,7 @@ paths:
     put:
       tags:
         - VAA/Matches
-      summary: Update trustperson for VAA
+      summary: Update trustperson for VAA and party
       description: |
         Updating trustpersons is allowed for admins and creator as well as for trustpersons ( for their own party )
       operationId: updateTrustPersonForApplicationByPartyAndId
@@ -3331,7 +3331,7 @@ paths:
     delete:
       tags:
         - VAA/Matches
-      summary: Remove TrustPerson for VAA and Party
+      summary: Remove TrustPerson for VAA and party
       description: |
         Remove TrustPerson is allowed for admins and creator (for its own application) and for trustpersons ( for its own party ).
       operationId: deleteTrustPersonForApplicationAndParty
