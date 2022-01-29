@@ -3063,11 +3063,11 @@ paths:
   /applications/{applicationId}/matches/parties/{partyId}/trustpersons:
     get:
       tags:
-        - VAA/Roles
+        - VAA/Matches
       summary: Get trustpersons for party in VAA
       description: |
         Fetching trustpersons for a party is allowed for admins and creator as well as for trustpersons for their own party.
-      operationId: getTrustPersonsForApplication
+      operationId: getTrustPersonsForApplicationAndParty
       security:
         - firebase: []
       parameters:
@@ -3127,11 +3127,11 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     post:
       tags:
-        - VAA/Roles
-      summary: Create new trustperson for VAA
+        - VAA/Matches
+      summary: Create new trustperson for VAA for specific party
       description: |
         Creation of trustperson is allowed for admins and creator as well as for trustpersons for their own party.
-      operationId: createTrustPersonForApplication
+      operationId: createTrustPersonForApplicationAndParty
       security:
         - firebase: []
       parameters:
@@ -3199,7 +3199,7 @@ paths:
       summary: Get trustperson by ID for VAA and party
       description: |
         Fetching trustperson by id is allowed for admins and creator as well as for trustpersons of partyId
-      operationId: getTrustpersonForApplicationById
+      operationId: getTrustpersonForApplicationByPartyAndId
       security:
         - firebase: []
       parameters:
@@ -3257,11 +3257,11 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
-        - VAA/Roles
+        - VAA/Matches
       summary: Update trustperson for VAA
       description: |
         Updating trustpersons is allowed for admins and creator as well as for trustpersons ( for their own party )
-      operationId: updateTrustPersonForApplicationById
+      operationId: updateTrustPersonForApplicationByPartyAndId
       security:
         - firebase: []
       parameters:
@@ -3330,11 +3330,11 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
-        - VAA/Roles
-      summary: Remove TrustPerson for VAA
+        - VAA/Matches
+      summary: Remove TrustPerson for VAA and Party
       description: |
         Remove TrustPerson is allowed for admins and creator (for its own application) and for trustpersons ( for its own party ).
-      operationId: deleteTrustPersonForApplication
+      operationId: deleteTrustPersonForApplicationAndParty
       security:
         - firebase: []
       parameters:
