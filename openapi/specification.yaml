@@ -3413,7 +3413,7 @@ paths:
           description: Numeric ID of the VAA
         - in: query
           name: partyId
-          required: false
+          required: true
           schema:
             type: integer
             format: int64
