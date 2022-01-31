@@ -3078,9 +3078,9 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the VAA
-        - in: query
+        - in: path
           name: partyId
-          required: false
+          required: true
           schema:
             type: integer
             format: int64
@@ -3411,7 +3411,7 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the VAA
-        - in: query
+        - in: path
           name: partyId
           required: true
           schema:
