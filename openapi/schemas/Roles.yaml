@@ -21,6 +21,11 @@ Admin:
           type: string
           example: john@doe.com
           description: Contact mail of admin
+        status:
+          type: integer
+          format: int64
+          example: 1
+          description: Status of admin
         created_at:
           type: string
           format: date-time
@@ -54,6 +59,23 @@ Creator:
           type: integer
           format: int64
           example: 456
+        firstName:
+          type: string
+          example: John
+          description: Firstname of creator - pulled from users profile
+        lastName:
+          type: string
+          example: Doe
+          description: Lastname of creator - pulled from users profile
+        contact:
+          type: string
+          example: john@doe.com
+          description: Contact mail of creator
+        status:
+          type: integer
+          format: int64
+          example: 1
+          description: Status of creator
         created_at:
           type: string
           format: date-time
@@ -70,22 +92,6 @@ NewCreator:
       type: integer
       format: int64
       example: 123
-    firstName:
-      type: string
-      example: John
-      description: Firstname of creator - pulled from users profile
-    lastName:
-      type: string
-      example: Doe
-      description: Lastname of creator - pulled from users profile
-    contact:
-      type: string
-      example: john@doe.com
-      description: Contact mail of creator
-    status:
-      type: integer
-      example: 0
-      description: "Status of creator"
 
 TrustPerson:
   allOf:
@@ -102,6 +108,23 @@ TrustPerson:
           type: integer
           format: int64
           example: 456
+        firstName:
+          type: string
+          example: John
+          description: Firstname of trustperson - pulled from users profile
+        lastName:
+          type: string
+          example: Doe
+          description: Lastname of trustperson - pulled from users profile
+        contact:
+          type: string
+          example: john@doe.com
+          description: Contact mail of trustperson
+        status:
+          type: integer
+          format: int64
+          example: 1
+          description: Status of trustperson
         created_at:
           type: string
           format: date-time
@@ -122,26 +145,10 @@ NewTrustPerson:
       type: integer
       format: int64
       example: 456
-    firstName:
-      type: string
-      example: John
-      description: Firstname of trust person - pulled from users profile
-    lastName:
-      type: string
-      example: Doe
-      description: Lastname of trust person - pulled from users profile
-    contact:
-      type: string
-      example: john@doe.com
-      description: Contact mail of trustperson
-    status:
-      type: integer
-      example: 0
-      description: "Status of trustperson"
 
 Candidate:
   allOf:
-    - $ref: "Roles.yaml#/NewCandidate"
+    - $ref: "Roles.yaml#/PublicCandidate"
     - type: object
       required:
         - id
@@ -150,6 +157,35 @@ Candidate:
           type: integer
           format: int64
           example: 123
+        application_id:
+          type: integer
+          format: int64
+          example: 789
+        title:
+          type: string
+          example: Dr.
+          description: Title of candidate - pulled from users profile
+        firstName:
+          type: string
+          example: John
+          description: Firstname of candidate - pulled from users profile
+        lastName:
+          type: string
+          example: Doe
+          description: Lastname of candidate - pulled from users profile
+        age:
+          type: integer
+          format: int64
+          example: 456
+          description: Age of the candidate, pulled from users profile
+        profile_picture:
+          type: string
+          example: "https://"
+        status:
+          type: integer
+          format: int64
+          example: 1
+          description: Status of candidate
         created_at:
           type: string
           format: date-time
@@ -162,19 +198,12 @@ Candidate:
           type: boolean
           example: false
 
-NewCandidate:
+PublicCandidate:
   type: object
-  required:
-    - election_id
-    - cluster_id
-    - title
   properties:
-    election_id:
-      type: integer
-      example: 123
     party_id:
       type: integer
-      example: 789
+      example: 123
     description:
       type: string
       example: "Example Title"
@@ -182,18 +211,36 @@ NewCandidate:
       type: string
       example: "Example District"
     list_place:
-      type: string
-      example: "Example list place"
+      type: integer
+      example: 1
     website:
       type: string
       example: "https://voto.vote"
-    profile_picture:
-      type: string
-      example: "https://"
-    status:
+
+NewCandidate:
+  type: object
+  required:
+    - party_id
+    - user_id
+  properties:
+    party_id:
       type: integer
-      example: 0
-      description: "Status of candidate"
+      example: 123
+    user_id:
+      type: integer
+      example: 456
+    description:
+      type: string
+      example: "Example Title"
+    district:
+      type: string
+      example: "Example District"
+    list_place:
+      type: integer
+      example: 1
+    website:
+      type: string
+      example: "https://voto.vote"
 
 User:
   allOf:
@@ -262,3 +309,8 @@ NewUser:
     city:
       type: string
       example: "Stuttgart"
+    status:
+      type: integer
+      format: int64
+      example: 1
+      description: Status of user

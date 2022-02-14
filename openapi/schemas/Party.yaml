@@ -9,6 +9,13 @@ Party:
           type: integer
           format: int64
           example: 123
+        status:
+          type: integer
+          format: int64
+          example: 1
+        public:
+          type: boolean
+          example: false
         created_at:
           type: string
           format: date-time
@@ -21,11 +28,11 @@ Party:
 NewParty:
   type: object
   required:
-    - election_id
+    - application_id
     - shortcut
     - name
   properties:
-    election_id:
+    application_id:
       type: integer
       example: 123
     parent_party_id:
