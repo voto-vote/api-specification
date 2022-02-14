@@ -2537,6 +2537,34 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /users/me:
+    get:
+      tags:
+        - Roles
+      summary: Get your user profile
+      description: |
+        Fetching yourself is allowed for everyone for their account
+      operationId: getMyself
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/User"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /applications/{applicationId}/creator:
     get:
       tags:
