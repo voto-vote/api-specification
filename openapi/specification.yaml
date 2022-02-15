@@ -375,6 +375,12 @@ paths:
           schema:
             type: integer
             example: 20
+        - name: page
+          in: query
+          description: Sets the page offset
+          schema:
+            type: integer
+            example: 20
         - in: path
           name: electionId
           required: true
@@ -382,22 +388,13 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the election to get
-        - name: page
-          in: query
-          description: Sets the page offset
-          schema:
-            type: integer
-            example: 20
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Roles.yaml#/Candidate"
+                $ref: "schemas/Roles.yaml#/Candidates"
         "404":
           description: Not found
           content:
@@ -789,6 +786,12 @@ paths:
           schema:
             type: integer
             example: 20
+        - name: page
+          in: query
+          description: Sets the page offset
+          schema:
+            type: integer
+            example: 20
         - in: path
           name: electionId
           required: true
@@ -802,10 +805,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Party.yaml#/Party"
+                $ref: "schemas/Party.yaml#/Parties"
         "404":
           description: Not found
           content:
@@ -1216,16 +1216,19 @@ paths:
           schema:
             type: integer
             example: 20
+        - name: page
+          in: query
+          description: Sets the page offset
+          schema:
+            type: integer
+            example: 20
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Application.yaml#/Application"
+                $ref: "schemas/Application.yaml#/Applications"
         "401":
           description: Unauthorized
           content:
@@ -1487,13 +1490,6 @@ paths:
         Fetching themes is allowed for `admin` and `creators`
       security:
         - firebase: []
-      parameters:
-        - name: limit
-          in: query
-          description: Limits the amount of items in the responsing array. Max results is 50.
-          schema:
-            type: integer
-            example: 20
       responses:
         "200":
           description: Success
@@ -2168,9 +2164,15 @@ paths:
         Fetching admins is allowed for admins
       operationId: getAdmins
       parameters:
-        - in: query
-          name: limit
+        - name: limit
+          in: query
           description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
+        - name: page
+          in: query
+          description: Sets the page offset
           schema:
             type: integer
             example: 20
@@ -2180,10 +2182,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Roles.yaml#/Admin"
+                $ref: "schemas/Roles.yaml#/Admins"
         "401":
           description: Unauthorized
           content:
@@ -2596,16 +2595,19 @@ paths:
           schema:
             type: integer
             example: 20
+        - name: page
+          in: query
+          description: Sets the page offset
+          schema:
+            type: integer
+            example: 20
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Roles.yaml#/Creator"
+                $ref: "schemas/Roles.yaml#/Creators"
         "401":
           description: Unauthorized
           content:
@@ -2885,16 +2887,19 @@ paths:
           schema:
             type: integer
             example: 20
+        - name: page
+          in: query
+          description: Sets the page offset
+          schema:
+            type: integer
+            example: 20
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Roles.yaml#/TrustPerson"
+                $ref: "schemas/Roles.yaml#/TrustPersons"
         "401":
           description: Unauthorized
           content:

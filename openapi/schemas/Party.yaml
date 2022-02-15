@@ -25,6 +25,17 @@ Party:
           format: date-time
           example: 2021-10-05T06:00:00Z
 
+Parties: 
+  type: object
+  properties: 
+    data: 
+      type: array
+      items:
+        type: object
+        $ref: "Party.yaml#/Party"
+    metadata:
+      $ref: "Metadata.yaml#/Metadata" 
+
 NewParty:
   type: object
   required:

@@ -35,6 +35,17 @@ Admin:
           format: date-time
           example: 2021-10-05T06:00:00Z
 
+Admins: 
+  type: object
+  properties: 
+    data: 
+      type: array
+      items:
+        type: object
+        $ref: "Roles.yaml#/Admin"
+    metadata:
+      $ref: "Metadata.yaml#/Metadata" 
+
 NewAdmin:
   type: object
   properties:
@@ -85,6 +96,17 @@ Creator:
           format: date-time
           example: 2021-10-05T06:00:00Z
 
+Creators: 
+  type: object
+  properties: 
+    data: 
+      type: array
+      items:
+        type: object
+        $ref: "Roles.yaml#/Creator"
+    metadata:
+      $ref: "Metadata.yaml#/Metadata" 
+
 NewCreator:
   type: object
   properties:
@@ -133,6 +155,17 @@ TrustPerson:
           type: string
           format: date-time
           example: 2021-10-05T06:00:00Z
+
+TrustPersons: 
+  type: object
+  properties: 
+    data: 
+      type: array
+      items:
+        type: object
+        $ref: "Roles.yaml#/TrustPerson"
+    metadata:
+      $ref: "Metadata.yaml#/Metadata" 
 
 NewTrustPerson:
   type: object
@@ -216,6 +249,17 @@ PublicCandidate:
     website:
       type: string
       example: "https://voto.vote"
+
+Candidates: 
+  type: object
+  properties: 
+    data: 
+      type: array
+      items:
+        type: object
+        $ref: "Roles.yaml#/Candidate"
+    metadata:
+      $ref: "Metadata.yaml#/Metadata" 
 
 NewCandidate:
   type: object
