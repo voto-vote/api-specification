@@ -1,0 +1,27 @@
+Metadata:
+  type: object
+  properties:
+    count: 
+      type: integer
+      example: 20
+      description: If there is an array, how much items are in it
+    total:
+      type: integer
+      example: 100
+      description: How much entries are there in total
+    page:
+      type: integer
+      example: 0
+      description: Always starts at 0 - the only way a normal person should start counting
+    _links:
+      type: object
+      properties:
+        self:
+          type: string
+          example: "https://api.voto.vote/applications?page=1"
+        prev:
+          type: string
+          example: "https://api.voto.vote/applications?page=0"
+        next:
+          type: string
+          example: "https://api.voto.vote/applications?page=2"

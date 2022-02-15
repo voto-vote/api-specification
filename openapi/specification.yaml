@@ -121,6 +121,12 @@ paths:
           schema:
             type: integer
             example: 20
+        - name: page
+          in: query
+          description: Sets the page offset
+          schema:
+            type: integer
+            example: 20
       responses:
         "200":
           description: Success

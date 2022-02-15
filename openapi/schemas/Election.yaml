@@ -21,6 +21,8 @@ Election:
           type: string
           format: date-time
           example: 2021-10-05T06:00:00Z
+        metadata:
+          $ref: "Metadata.yaml#/Metadata"
 
 NewElection:
   type: object
