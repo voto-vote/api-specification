@@ -18,10 +18,10 @@ Metadata:
       properties:
         self:
           type: string
-          example: "https://api.voto.vote/applications?page=1"
+          example: "https://api.voto.vote/{entity+}?page=1"
         prev:
           type: string
-          example: "https://api.voto.vote/applications?page=0"
+          example: "https://api.voto.vote/{entity+}?page=0"
         next:
           type: string
-          example: "https://api.voto.vote/applications?page=2"
+          example: "https://api.voto.vote/{entity+}?page=2"
