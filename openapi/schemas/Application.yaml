@@ -18,6 +18,17 @@ Application:
           format: date-time
           example: 2021-10-05T06:00:00Z
 
+Applications: 
+  type: object
+  properties: 
+    data: 
+      type: array
+      items:
+        type: object
+        $ref: "Application.yaml#/Application"
+    metadata:
+      $ref: "Metadata.yaml#/Metadata"
+
 NewApplication:
   type: object
   required:

@@ -22,6 +22,17 @@ Election:
           format: date-time
           example: 2021-10-05T06:00:00Z
 
+Elections: 
+  type: object
+  properties: 
+    data: 
+      type: array
+      items:
+        type: object
+        $ref: "Election.yaml#/Election"
+    metadata:
+      $ref: "Metadata.yaml#/Metadata" 
+
 NewElection:
   type: object
   required:

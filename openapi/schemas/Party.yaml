@@ -9,6 +9,13 @@ Party:
           type: integer
           format: int64
           example: 123
+        status:
+          type: integer
+          format: int64
+          example: 1
+        public:
+          type: boolean
+          example: false
         created_at:
           type: string
           format: date-time
@@ -18,14 +25,25 @@ Party:
           format: date-time
           example: 2021-10-05T06:00:00Z
 
+Parties: 
+  type: object
+  properties: 
+    data: 
+      type: array
+      items:
+        type: object
+        $ref: "Party.yaml#/Party"
+    metadata:
+      $ref: "Metadata.yaml#/Metadata" 
+
 NewParty:
   type: object
   required:
-    - election_id
+    - application_id
     - shortcut
     - name
   properties:
-    election_id:
+    application_id:
       type: integer
       example: 123
     parent_party_id:

@@ -1,0 +1,34 @@
+Translation:
+  type: object
+  properties:
+    id:
+      type: integer
+      format: int64
+      example: 123
+    applicationId:
+      type: integer
+      format: int64
+      example: 123
+    language:
+      type: string
+      format: text
+      example: "de"
+    created_at:
+      type: string
+      format: date-time
+      example: 2021-10-05T06:00:00Z
+    updated_at:
+      type: string
+      format: date-time
+      example: 2021-10-05T06:00:00Z
+
+NewTranslation:
+  type: object
+  properties:
+    applicationId:
+      type: string
+      example: "Lorem ipsum..."
+    language:
+      type: string
+      format: text
+      example: "de"
