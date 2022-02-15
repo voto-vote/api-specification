@@ -24,6 +24,17 @@ Election:
         metadata:
           $ref: "Metadata.yaml#/Metadata"
 
+Elections: 
+  type: object
+  properties: 
+    data: 
+      type: array
+      items:
+        type: object
+        $ref: "schemas/Election.yaml#/Election"
+    metadata:
+      $ref: "Metadata.yaml#/Metadata" 
+
 NewElection:
   type: object
   required:

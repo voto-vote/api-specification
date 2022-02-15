@@ -133,10 +133,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Election.yaml#/Election"
+                $ref: "schemas/Election.yaml#/Elections"
         "401":
           description: Unauthorized
           content:
@@ -385,6 +382,12 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the election to get
+        - name: page
+          in: query
+          description: Sets the page offset
+          schema:
+            type: integer
+            example: 20
       responses:
         "200":
           description: Success
