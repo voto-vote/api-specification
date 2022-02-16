@@ -360,830 +360,6 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-  /elections/{electionId}/candidates:
-    get:
-      tags:
-        - Election
-      summary: Get candidates for election
-      operationId: getCandidatesForElection
-      description: |
-        Fetching candidates for one single election by its ID is allowed for everyone.
-      parameters:
-        - name: limit
-          in: query
-          description: Limits the amount of items in the responsing array. Max results is 50.
-          schema:
-            type: integer
-            example: 20
-        - name: page
-          in: query
-          description: Sets the page offset
-          schema:
-            type: integer
-            example: 20
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election to get
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Roles.yaml#/Candidates"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    post:
-      tags:
-        - Election
-      summary: Create new candidate for election
-      description: |
-        Creation of candidates is allowed for `admin`, `creator` (only in his election) and `trustperson` (only for his party)
-      operationId: createCandidatesForElection
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election to get
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Roles.yaml#/NewCandidate"
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Roles.yaml#/Candidate"
-          links:
-            GetCandidateById:
-              operationId: getCandidateForElection
-              parameters:
-                candidateId: "$response.body#/id"
-              description: >
-                The `id` value returned in the response can be used as
-                the **candidateId** parameter in `GET /elections/{electionId}/candidates/{candidateId}`.
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-
-  /elections/{electionId}/candidates/{candidateId}:
-    get:
-      tags:
-        - Election
-      summary: Get single candidate
-      description: |
-        Fetching a candidate for one election is allowed for everyone.
-      operationId: getCandidateForElection
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election to get
-        - in: path
-          name: candidateId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the candidate to get
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Roles.yaml#/Candidate"
-          links:
-            GetCandidateById:
-              operationId: getCandidateForElection
-              parameters:
-                electionId: "$response.body#/id"
-              description: >
-                The `id` value returned in the response can be used as
-                the **candidateId** parameter in `GET /elections/{electionId}/candidates/{candidateId}`.
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    put:
-      tags:
-        - Election
-      summary: Change candidate for election
-      description: |
-        Changing a candidate for one election is allowed for `admin`, `creator` (within his election), `trustperson` (within his party) and one `candidate` for itself.
-      operationId: putCandidateForElection
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election to put
-        - in: path
-          name: candidateId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the candidate to put
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Roles.yaml#/NewCandidate"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Roles.yaml#/Candidate"
-          links:
-            GetCandidateById:
-              operationId: getCandidateForElection
-              parameters:
-                electionId: "$response.body#/id"
-              description: >
-                The `id` value returned in the response can be used as
-                the **candidateId** parameter in `GET /elections/{electionId}/candidates/{candidateId}`.
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    delete:
-      tags:
-        - Election
-      summary: Delete candidate object
-      description: |
-        Deleting a candidate for one election is allowed for `admin`, `creator` (within his election), `trustperson` (within his party) and one `candidate` for itself.
-      operationId: deleteCandidateForElection
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election
-        - in: path
-          name: candidateId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the candidate to delete
-      responses:
-        "204":
-          description: No content
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-  /elections/{electionId}/candidates/{candidateId}/votes:
-    get:
-      tags:
-        - Election
-      summary: Get votes of a candidate
-      description: |
-        Fetching a candidates votes for one election is allowed for everyone.
-      operationId: getVotingsForCandidate
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election to get
-        - in: path
-          name: candidateId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the candidate to get
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Voting.yaml#/Vote"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    put:
-      tags:
-        - Election
-      summary: Change candidate votes for election
-      description: |
-        Changing a candidates votes for one election is allowed for `admin` and one `candidate` for itself.
-      operationId: putCandidateVotes
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election to put
-        - in: path
-          name: candidateId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the candidate to put
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                votes:
-                  type: array
-                  items:
-                    $ref: "schemas/Voting.yaml#/Vote"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  votes:
-                    type: array
-                    items:
-                      $ref: "schemas/Voting.yaml#/Vote"
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-  /elections/{electionId}/parties:
-    get:
-      tags:
-        - Election
-      summary: Get parties for election
-      operationId: getPartiesForElection
-      description: |
-        Fetching parties for one election is allowed for everyone.
-      parameters:
-        - name: limit
-          in: query
-          description: Limits the amount of items in the responsing array. Max results is 50.
-          schema:
-            type: integer
-            example: 20
-        - name: page
-          in: query
-          description: Sets the page offset
-          schema:
-            type: integer
-            example: 20
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Party.yaml#/Parties"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    post:
-      tags:
-        - Election
-      summary: Create new party for election
-      description: |
-        Creating parties for one election is allowed for `admin` and `creator` (for its own election)
-      operationId: createPartyForElection
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Party.yaml#/NewParty"
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Party.yaml#/Party"
-          links:
-            GetPartyById:
-              operationId: getPartyForElection
-              parameters:
-                electionId: "$response.body#/id"
-              description: >
-                The `id` value returned in the response can be used as
-                the **partyId** parameter in `GET /elections/{electionId}/parties/{partyId}`.
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-
-  /elections/{electionId}/parties/{partyId}:
-    get:
-      tags:
-        - Election
-      summary: Get single party
-      description: |
-        Fetching one party for one election by its ID is allowed for everyone.
-      operationId: getPartyForElection
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election
-        - in: path
-          name: partyId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the party
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Party.yaml#/Party"
-          links:
-            GetPartyById:
-              operationId: getPartyForElection
-              parameters:
-                electionId: "$response.body#/id"
-              description: >
-                The `id` value returned in the response can be used as
-                the **partyId** parameter in `GET /elections/{electionId}/parties/{partyId}`.
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    put:
-      tags:
-        - Election
-      summary: Change party for election
-      description: |
-        Changing a party for one election is allowed for `admin`, `creator` and the `trustperson` for its own party.
-      operationId: putPartyForElection
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election
-        - in: path
-          name: partyId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the party
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Party.yaml#/NewParty"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Party.yaml#/Party"
-          links:
-            GetPartyById:
-              operationId: getPartyForElection
-              parameters:
-                electionId: "$response.body#/id"
-              description: >
-                The `id` value returned in the response can be used as
-                the **partyId** parameter in `GET /elections/{electionId}/parties/{partyId}`.
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-
-    delete:
-      tags:
-        - Election
-      summary: Delete party object
-      description: |
-        Deleting a party for one election is allowed for `admin`, `creator` and `trustperson` for its own party.
-      operationId: deletePartyForElection
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election
-        - in: path
-          name: partyId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the party
-      responses:
-        "204":
-          description: No content
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-
-  /elections/{electionId}/parties/{partyId}/votes:
-    get:
-      tags:
-        - Election
-      summary: Get votes of a party
-      description: |
-        Fetching votes for one specific party is allowed for everyone.
-      operationId: getVotingsForParty
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election to get
-        - in: path
-          name: partyId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the party to get
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Voting.yaml#/Vote"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    put:
-      tags:
-        - Election
-      summary: Change party votes for election
-      description: |
-        Changing votes for one specific party is only allowed for `trustperson` (for its own party)
-      operationId: putPartyVotes
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: electionId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the election to put
-        - in: path
-          name: partyId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the partyId to put
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                votes:
-                  type: array
-                  items:
-                    $ref: "schemas/Voting.yaml#/Vote"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  votes:
-                    type: array
-                    items:
-                      $ref: "schemas/Voting.yaml#/Vote"
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
 
   /applications:
     get:
@@ -1301,7 +477,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/clusters:
+  /clusters:
     get:
       tags:
         - VAA
@@ -1385,7 +561,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/clusters/{clusterId}:
+  /clusters/{clusterId}:
     get:
       tags:
         - VAA
@@ -1480,7 +656,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/themes:
+  /themes:
     get:
       tags:
         - VAA
@@ -1564,7 +740,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/themes/{themeId}:
+  /themes/{themeId}:
     get:
       tags:
         - VAA
@@ -2155,6 +1331,832 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /applications/{applicationId}/matches/candidates:
+    get:
+      tags:
+        - VAA/Matches
+      summary: Get candidates for application
+      operationId: getCandidatesForApplication
+      description: |
+        Fetching candidates for one single application by its ID is allowed for everyone.
+      parameters:
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
+        - name: page
+          in: query
+          description: Sets the page offset
+          schema:
+            type: integer
+            example: 20
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to get
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/Candidates"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - VAA/Matches
+      summary: Create new candidate for application
+      description: |
+        Creation of candidates is allowed for `admin`, `creator` (only in his application) and `trustperson` (only for his party)
+      operationId: createCandidatesForApplication
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to get
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewCandidate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/Candidate"
+          links:
+            GetCandidateById:
+              operationId: getCandidateForApplication
+              parameters:
+                candidateId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/candidates/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/matches/candidates/{candidateId}:
+    get:
+      tags:
+        - VAA/Matches
+      summary: Get single candidate
+      description: |
+        Fetching a candidate for one application is allowed for everyone.
+      operationId: getCandidateForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to get
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to get
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/Candidate"
+          links:
+            GetCandidateById:
+              operationId: getCandidateForApplication
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/candidates/{candidateId}`.
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA/Matches
+      summary: Change candidate for application
+      description: |
+        Changing a candidate for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party) and one `candidate` for itself.
+      operationId: putCandidateForApplication
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to put
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewCandidate"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/Candidate"
+          links:
+            GetCandidateById:
+              operationId: getCandidateForApplication
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/candidates/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - VAA/Matches
+      summary: Delete candidate object
+      description: |
+        Deleting a candidate for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party) and one `candidate` for itself.
+      operationId: deleteCandidateForApplication
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to delete
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+  /applications/{applicationId}/matches/candidates/{candidateId}/votes:
+    get:
+      tags:
+        - VAA/Matches
+      summary: Get votes of a candidate
+      description: |
+        Fetching a candidates votes for one application is allowed for everyone.
+      operationId: getVotingsForCandidate
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to get
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to get
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Voting.yaml#/Vote"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA/Matches
+      summary: Change candidate votes for application
+      description: |
+        Changing a candidates votes for one application is allowed for `admin` and one `candidate` for itself.
+      operationId: putCandidateVotes
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to put
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                votes:
+                  type: array
+                  items:
+                    $ref: "schemas/Voting.yaml#/Vote"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  votes:
+                    type: array
+                    items:
+                      $ref: "schemas/Voting.yaml#/Vote"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/matches/parties:
+    get:
+      tags:
+        - VAA/Matches
+      summary: Get parties for application
+      operationId: getPartiesForApplication
+      description: |
+        Fetching parties for one application is allowed for everyone.
+      parameters:
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 50.
+          schema:
+            type: integer
+            example: 20
+        - name: page
+          in: query
+          description: Sets the page offset
+          schema:
+            type: integer
+            example: 20
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Party.yaml#/Parties"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - VAA/Matches
+      summary: Create new party for application
+      description: |
+        Creating parties for one application is allowed for `admin` and `creator` (for its own application)
+      operationId: createPartyForApplication
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Party.yaml#/NewParty"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Party.yaml#/Party"
+          links:
+            GetPartyById:
+              operationId: getPartyForApplication
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **partyId** parameter in `GET /applications/{applicationId}/matches/parties/{partyId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/matches/parties/{partyId}:
+    get:
+      tags:
+        - VAA/Matches
+      summary: Get single party
+      description: |
+        Fetching one party for one application by its ID is allowed for everyone.
+      operationId: getPartyForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Party.yaml#/Party"
+          links:
+            GetPartyById:
+              operationId: getPartyForApplication
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **partyId** parameter in `GET /applications/{applicationId}/matches/parties/{partyId}`.
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA/Matches
+      summary: Change party for application
+      description: |
+        Changing a party for one application is allowed for `admin`, `creator` and the `trustperson` for its own party.
+      operationId: putPartyForApplication
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Party.yaml#/NewParty"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Party.yaml#/Party"
+          links:
+            GetPartyById:
+              operationId: getPartyForApplication
+              parameters:
+                electionId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **partyId** parameter in `GET /applications/{applicationId}/matches/parties/{partyId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+    delete:
+      tags:
+        - VAA/Matches
+      summary: Delete party object
+      description: |
+        Deleting a party for one application is allowed for `admin`, `creator` and `trustperson` for its own party.
+      operationId: deletePartyForApplication
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/matches/parties/{partyId}/votes:
+    get:
+      tags:
+        - VAA/Matches
+      summary: Get votes of a party
+      description: |
+        Fetching votes for one specific party is allowed for everyone.
+      operationId: getVotingsForParty
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the election to get
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to get
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Voting.yaml#/Vote"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA/Matches
+      summary: Change party votes for application
+      description: |
+        Changing votes for one specific party is only allowed for `trustperson` (for its own party)
+      operationId: putPartyVotes
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to put
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the partyId to put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                votes:
+                  type: array
+                  items:
+                    $ref: "schemas/Voting.yaml#/Vote"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  votes:
+                    type: array
+                    items:
+                      $ref: "schemas/Voting.yaml#/Vote"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /admins:
     get:
       tags:
@@ -2573,7 +2575,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/creator:
+  /applications/{applicationId}/roles/creator:
     get:
       tags:
         - Roles
@@ -2690,7 +2692,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/creator/{creatorId}:
+  /applications/{applicationId}/roles/creator/{creatorId}:
     get:
       tags:
         - Roles
@@ -2720,70 +2722,6 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Roles.yaml#/Creator"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    put:
-      tags:
-        - Roles
-      summary: Update creator for VAA
-      description: |
-        Updating creator is allowed for admins and creator.
-      operationId: updateCreatorForApplication
-      parameters:
-        - in: path
-          name: applicationId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the VAA
-        - in: path
-          name: creatorId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the creator
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Roles.yaml#/Creator"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Roles.yaml#/Creator"
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
         "401":
           description: Unauthorized
           content:
@@ -2858,7 +2796,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/trustpersons:
+  /applications/{applicationId}/roles/trustpersons:
     get:
       tags:
         - Roles
@@ -2981,7 +2919,7 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-  /applications/{applicationId}/trustpersons/{trustpersonId}:
+  /applications/{applicationId}/roles/trustpersons/{trustpersonId}:
     get:
       tags:
         - Roles
@@ -3011,70 +2949,6 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Roles.yaml#/TrustPerson"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    put:
-      tags:
-        - Roles
-      summary: Update trustperson for VAA
-      description: |
-        Updating trustpersons is allowed for admins and creator as well as for trustpersons ( for their own party )
-      operationId: updateTrustPersonForApplicationById
-      parameters:
-        - in: path
-          name: applicationId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the VAA
-        - in: path
-          name: trustpersonId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the trustperson
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Roles.yaml#/TrustPerson"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Roles.yaml#/TrustPerson"
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
         "401":
           description: Unauthorized
           content:
