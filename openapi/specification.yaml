@@ -1146,7 +1146,7 @@ paths:
       summary: Fetches single these of one VAA
       description: |
         Fetching one applications these is allowed for everyone
-      operationId: getThesesForApplication
+      operationId: getSpecificTheseForApplication
       parameters:
         - in: path
           name: applicationId
