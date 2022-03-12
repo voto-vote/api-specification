@@ -1034,7 +1034,7 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /applications/{applicationId}/theses:
+  /applications/{applicationId}/theses/{language}:
     get:
       tags:
         - VAA
@@ -1050,6 +1050,10 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the VAA
+        - in: path
+          name: language
+          required: true
+          description: Language identification string, e.g. 'de'
       responses:
         "200":
           description: Success
@@ -1088,6 +1092,10 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the VAA
+        - in: path
+          name: language
+          required: true
+          description: Language identification string, e.g. 'de'
       requestBody:
         content:
           application/json:
@@ -1130,13 +1138,57 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/theses/{language}/{theseId}:
+    get:
+      tags:
+        - VAA
+      summary: Fetches single these of one VAA
+      description: |
+        Fetching one applications these is allowed for everyone
+      operationId: getThesesForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: language
+          required: true
+          description: Language identification string, e.g. 'de'
+        - in: path
+          name: theseId
+          required: true
+          description: Numeric ID of the these
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/These.yaml#/These"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     put:
       tags:
         - VAA
-      summary: Put these
+      summary: Update single these
       description: |
-        Changing application theses is allowed for `admin` and `creator` (for its own applications)
-      operationId: putThesesForApplication
+        Updating application theses is allowed for `admin` and `creator` (for its own applications)
+      operationId: updateSpecificTheseForApplication
       security:
         - firebase: []
       parameters:
@@ -1147,6 +1199,17 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the VAA
+        - in: path
+          name: language
+          required: true
+          description: Language identification string, e.g. 'de'
+        - in: path
+          name: theseId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description:  Numeric ID of the these
       requestBody:
         content:
           application/json:
@@ -1191,11 +1254,11 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
-        - VAA
-      summary: Delete theses object
+        - VAA/Matches
+      summary: Delete specific these of application
       description: |
-        Deleting application theses is allowed for `admin` and `creator` (for its own applications)
-      operationId: deleteThesesForApplication
+        Deleting a specific these for one application is allowed for `admin`, `creator` (within his application)
+      operationId: deleteSpecificTheseForApplication
       security:
         - firebase: []
       parameters:
@@ -1205,10 +1268,24 @@ paths:
           schema:
             type: integer
             format: int64
-          description: Numeric ID of the VAA
+          description: Numeric ID of the application
+        - in: path
+          name: language
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Language identification string, e.g. 'de'
+        - in: path
+          name: theseId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the these
       responses:
         "204":
-          description: Success
+          description: No content
         "401":
           description: Unauthorized
           content:
