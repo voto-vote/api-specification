@@ -1254,7 +1254,7 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
-        - VAA/Matches
+        - VAA
       summary: Delete specific these of application
       description: |
         Deleting a specific these for one application is allowed for `admin`, `creator` (within his application)
