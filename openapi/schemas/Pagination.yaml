@@ -1,18 +1,30 @@
-Metadata:
+Pagination:
   type: object
   properties:
-    count: 
-      type: integer
-      example: 20
-      description: If there is an array, how much items are in it
     total:
       type: integer
       example: 100
       description: How much entries are there in total
-    page:
+    per_page: 
+      type: integer
+      example: 20
+      description: Describes how much items per page are requested
+    current_page:
       type: integer
       example: 0
       description: Always starts at 0 - the only way a normal person should start counting
+    last_page:
+      type: integer
+      example: 4
+      description: Always starts at 0 - the only way a normal person should start counting
+    from:
+      type: integer
+      example: 0
+      description: Always starts at 0 - the only way a normal person should start counting
+    to:
+      type: integer
+      example: 19
+      description: Always starts at 0 - From plus per_page or the last index
     _links:
       type: object
       properties:

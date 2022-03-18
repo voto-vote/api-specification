@@ -26,8 +26,8 @@ Applications:
       items:
         type: object
         $ref: "Application.yaml#/Application"
-    metadata:
-      $ref: "Metadata.yaml#/Metadata"
+    pagination:
+      $ref: "Pagination.yaml#/Pagination"
 
 NewApplication:
   type: object
