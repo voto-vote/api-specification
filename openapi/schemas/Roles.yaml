@@ -43,8 +43,8 @@ Admins:
       items:
         type: object
         $ref: "Roles.yaml#/Admin"
-    metadata:
-      $ref: "Metadata.yaml#/Metadata" 
+    pagination:
+      $ref: "Pagination.yaml#/Pagination" 
 
 NewAdmin:
   type: object
@@ -104,8 +104,8 @@ Creators:
       items:
         type: object
         $ref: "Roles.yaml#/Creator"
-    metadata:
-      $ref: "Metadata.yaml#/Metadata" 
+    pagination:
+      $ref: "Pagination.yaml#/Pagination" 
 
 NewCreator:
   type: object
@@ -164,8 +164,8 @@ TrustPersons:
       items:
         type: object
         $ref: "Roles.yaml#/TrustPerson"
-    metadata:
-      $ref: "Metadata.yaml#/Metadata" 
+    pagination:
+      $ref: "Pagination.yaml#/Pagination" 
 
 NewTrustPerson:
   type: object
@@ -258,8 +258,8 @@ Candidates:
       items:
         type: object
         $ref: "Roles.yaml#/Candidate"
-    metadata:
-      $ref: "Metadata.yaml#/Metadata" 
+    pagination:
+      $ref: "Pagination.yaml#/Pagination" 
 
 NewCandidate:
   type: object

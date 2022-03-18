@@ -30,8 +30,8 @@ Elections:
       items:
         type: object
         $ref: "Election.yaml#/Election"
-    metadata:
-      $ref: "Metadata.yaml#/Metadata" 
+    pagination:
+      $ref: "Pagination.yaml#/Pagination" 
 
 NewElection:
   type: object
