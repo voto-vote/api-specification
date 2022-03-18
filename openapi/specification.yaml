@@ -372,20 +372,18 @@ paths:
       security:
         - firebase: []
       parameters:
-        - name: launch_date
+        - name: search
           in: query
-          description: Launch date of VAA
+          description: Searches the title
           schema:
             type: string
-            format: date
-            example: "2021-10-01"
-        - name: sundown_date
+            example: "kreis"
+        - name: sort
           in: query
-          description: Sundown date of VAA
+          description: sort results as you want
           schema:
             type: string
-            format: date
-            example: "2021-10-01"
+            example: "id"
         - name: limit
           in: query
           description: Limits the amount of items in the responsing array. Max results is 50.
