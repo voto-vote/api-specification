@@ -12,11 +12,11 @@ Pagination:
     current_page:
       type: integer
       example: 0
-      description: Always starts at 0 - the only way a normal person should start counting
+      description: Always starts at 1
     last_page:
       type: integer
       example: 4
-      description: Always starts at 0 - the only way a normal person should start counting
+      description: Always starts at 1
     from:
       type: integer
       example: 0
