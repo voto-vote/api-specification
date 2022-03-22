@@ -121,7 +121,7 @@ paths:
           schema:
             type: integer
             example: 5
-            default: 0
+            default: 1
         - name: search
           in: query
           description: Search for election name
@@ -394,7 +394,7 @@ paths:
           schema:
             type: integer
             example: 5
-            default: 0
+            default: 1
         - name: search
           in: query
           description: Search for application title
@@ -1441,7 +1441,7 @@ paths:
           schema:
             type: integer
             example: 5
-            default: 0
+            default: 1
         - name: search
           in: query
           description: Search for candidate last name
@@ -1869,7 +1869,7 @@ paths:
           schema:
             type: integer
             example: 5
-            default: 0
+            default: 1
         - name: search
           in: query
           description: Search for party detailed name
@@ -2299,7 +2299,7 @@ paths:
           schema:
             type: integer
             example: 5
-            default: 0
+            default: 1
         - name: search
           in: query
           description: Search for admins email
@@ -2740,7 +2740,7 @@ paths:
           schema:
             type: integer
             example: 5
-            default: 0
+            default: 1
         - name: search
           in: query
           description: Search for creators email
@@ -2977,7 +2977,7 @@ paths:
           schema:
             type: integer
             example: 5
-            default: 0
+            default: 1
         - name: search
           in: query
           description: Search for trustpersons email
