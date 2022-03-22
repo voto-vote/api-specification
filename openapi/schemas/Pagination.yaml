@@ -11,7 +11,7 @@ Pagination:
       description: Describes how much items per page are requested
     current_page:
       type: integer
-      example: 0
+      example: 1
       description: Always starts at 1
     last_page:
       type: integer
@@ -19,7 +19,7 @@ Pagination:
       description: Always starts at 1
     from:
       type: integer
-      example: 0
+      example: 1
       description: Always starts at 0 - the only way a normal person should start counting
     to:
       type: integer
