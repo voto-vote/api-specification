@@ -374,9 +374,9 @@ paths:
     get:
       tags:
         - Election
-      summary: Fetches array of Elections
+      summary: Fetches array of applications for one specific instance
       description: |
-        Fetching elections is allowed for the `creator` and `admin` role.
+        Fetching applications is for one specific election is only allowed for the `admin` role.
       operationId: getElections
       security:
         - firebase: []
@@ -397,7 +397,7 @@ paths:
             default: 1
         - name: search
           in: query
-          description: Search for election name
+          description: Search for application title
           schema:
             type: string
             example: "Bundestagswahl"
