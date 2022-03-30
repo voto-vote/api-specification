@@ -377,7 +377,7 @@ paths:
       summary: Fetches array of applications for one specific instance
       description: |
         Fetching applications is for one specific election is only allowed for the `admin` role.
-      operationId: getElections
+      operationId: getApplicationsForElection
       security:
         - firebase: []
       parameters:
