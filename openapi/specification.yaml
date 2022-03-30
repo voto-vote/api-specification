@@ -370,6 +370,71 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /elections/{electionId}/applications:
+    get:
+      tags:
+        - Election
+      summary: Fetches array of Elections
+      description: |
+        Fetching elections is allowed for the `creator` and `admin` role.
+      operationId: getElections
+      security:
+        - firebase: []
+      parameters:
+        - name: limit
+          in: query
+          description: Limits the amount of items in the responsing array. Max results is 100.
+          schema:
+            type: integer
+            example: 20
+            default: 20
+        - name: page
+          in: query
+          description: Sets the page offset
+          schema:
+            type: integer
+            example: 5
+            default: 1
+        - name: search
+          in: query
+          description: Search for election name
+          schema:
+            type: string
+            example: "Bundestagswahl"
+            default: ""
+        - name: sort
+          in: query
+          description: Sort either ascending or descending all retrieving objects. Always like {attribute}|{sortingOrder} where sortingOrder can be either `asc` or `desc`
+          schema:
+            type: string
+            example: location|desc
+            default: name|asc
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Election.yaml#/Elections"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /applications:
     get:
       tags:
