@@ -358,3 +358,27 @@ NewUser:
       format: int64
       example: 1
       description: Status of user
+
+InviteRequest:
+  type: object
+  required:
+    - mail
+  properties:
+    mail:
+      type: string
+      example: "foo@bar.com"
+
+InviteResponse:
+  type: object
+  required:
+    - mail
+  properties:
+    UserId:
+      type: integer
+      format: int64
+      example: 1
+      description: user id for requested mail. -1 when user is not found
+    New:
+      type: boolean
+      example: true
+      description: Indicates, whether the user already exists or not

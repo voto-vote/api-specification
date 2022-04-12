@@ -2748,6 +2748,57 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /users/invite:
+    post:
+      tags:
+        - Roles
+      summary: Invite user
+      description: |
+        Inviting users is allowed for admins, creator and trustpersons
+      operationId: inviteUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/InviteRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/InviteResponse"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /me:
     get:
       tags:
