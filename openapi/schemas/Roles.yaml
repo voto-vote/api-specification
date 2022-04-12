@@ -142,6 +142,10 @@ TrustPerson:
           type: string
           example: john@doe.com
           description: Contact mail of trustperson
+        party_name:
+          type: string
+          example: VOP
+          description: Short Name of the party - Voto Party
         status:
           type: integer
           format: int64
@@ -211,6 +215,10 @@ Candidate:
           format: int64
           example: 456
           description: Age of the candidate, pulled from users profile
+        party_name:
+          type: string
+          example: VOP
+          description: Short Name of the party - Voto Party
         profile_picture:
           type: string
           example: "https://"
