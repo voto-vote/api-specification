@@ -2220,6 +2220,60 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /applications/{applicationId}/matches/parties/{partyId}/candidates:
+    get:
+      tags:
+        - VAA/Matches
+      summary: Get candidates for party
+      description: |
+        Fetching candidates for one party within one application by its ID is allowed for everyone.
+      operationId: getCandidatesForPartyWithinApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/Candidate"
+          links:
+            GetPartyById:
+              operationId: getPartyForApplication
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **partyId** parameter in `GET /applications/{applicationId}/matches/parties/{partyId}`.
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /applications/{applicationId}/matches/parties/{partyId}/votes:
     get:
       tags:
