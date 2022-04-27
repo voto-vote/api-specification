@@ -1844,6 +1844,90 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/matches/candidates/{candidateId}/picture:
+    put:
+      tags:
+        - VAA/Matches
+      summary: Change candidates profile picture
+      description: |
+        Changing a candidates profile picture for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party) and one `candidate` for itself.
+      operationId: putCandidatesPictureForApplication
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to put
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to put
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                candidateId:
+                  type: integer
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "schemas/Roles.yaml#/Candidate"
+          links:
+            GetCandidateById:
+              operationId: getCandidateForApplication
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/candidates/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /applications/{applicationId}/matches/candidates/{candidateId}/votes:
     get:
       tags:
@@ -2302,6 +2386,81 @@ paths:
       responses:
         "204":
           description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/matches/parties/{partyId}/logo:
+    put:
+      tags:
+        - VAA/Matches
+      summary: Change party profile picture
+      description: |
+        Changing a party logo for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party)
+      operationId: putPartyPictureForApplication
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to put
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to put
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                partyId:
+                  type: integer
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "schemas/Roles.yaml#/Party"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
         "401":
           description: Unauthorized
           content:
