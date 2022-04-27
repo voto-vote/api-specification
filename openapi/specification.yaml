@@ -2454,7 +2454,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "schemas/Roles.yaml#/Party"
+                $ref: "schemas/Party.yaml#/Party"
         "400":
           description: Malformed request
           content:
