@@ -96,6 +96,14 @@ Creator:
           format: date-time
           example: 2021-10-05T06:00:00Z
 
+ToggleRole: 
+  type: object
+  properties:
+    status:
+      type: integer
+      format: int64
+      example: 123
+
 Creators: 
   type: object
   properties: 

@@ -1739,6 +1739,60 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+    patch: 
+      tags: 
+        - VAA/Matches
+      summary: Toggle candidate status
+      description: |
+        Toggle candidates is allowed for admins, creators ( their own application ) and trustpersons ( their own party )
+      operationId: toggleCandidateForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/ToggleRole"
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
         - VAA/Matches
@@ -2167,7 +2221,60 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-
+    patch: 
+      tags: 
+        - VAA/Matches
+      summary: Toggle party status
+      description: |
+        Toggle party is allowed for admins and creators ( their own application )
+      operationId: togglePartyForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/ToggleRole"
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
         - VAA/Matches
@@ -3068,6 +3175,60 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+    patch: 
+      tags: 
+        - Roles
+      summary: Toggle creator status
+      description: |
+        Toggle creator is allowed for admins
+      operationId: toggleCreatorForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: creatorId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the creator
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/ToggleRole"
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
         - Roles
@@ -3280,6 +3441,60 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Roles.yaml#/TrustPerson"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    patch: 
+      tags: 
+        - Roles
+      summary: Toggle trustperson status
+      description: |
+        Toggle trustpersons is allowed for admins and creators ( their own application )
+      operationId: toggleTrustpersonForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: trustpersonId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the trustperson
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/ToggleRole"
+      responses:
+        "200":
+          description: Success
         "401":
           description: Unauthorized
           content:
