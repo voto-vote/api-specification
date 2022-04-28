@@ -61,6 +61,3 @@ NewParty:
     website:
       type: string
       example: "https://voto.vote"
-    logo:
-      type: string
-      example: "https://foo.bar/logo.png"
