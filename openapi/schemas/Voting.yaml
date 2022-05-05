@@ -52,6 +52,9 @@ Vote:
     weight:
       type: integer
       example: 1
+    explanation:
+      type: string
+      example: Lorem ipsum
 
 PartyVote:
   type: object
@@ -63,27 +66,14 @@ PartyVote:
           type: integer
           format: int64
           example: 123
-        application_id:
-          type: integer
-          format: int64
-          example: 456
-        statement_id:
-          type: integer
-          format: int64
-          example: 456
         party_id:
           type: integer
           format: int64
           example: 456
-        value:
-          type: int64
-          example: 25
-        weight:
-          type: int64
-          example: 1
-        explanation:
+        created_at:
           type: string
-          example: Lorem ipsum
+          format: date-time
+          example: 2021-10-05T06:00:00Z
         updated_at:
           type: string
           format: date-time
@@ -99,27 +89,14 @@ CandidateVote:
           type: integer
           format: int64
           example: 123
-        application_id:
-          type: integer
-          format: int64
-          example: 456
-        statement_id:
-          type: integer
-          format: int64
-          example: 456
         candidate_id:
           type: integer
           format: int64
           example: 456
-        value:
-          type: int64
-          example: 25
-        weight:
-          type: int64
-          example: 1
-        explanation:
+        created_at:
           type: string
-          example: Lorem ipsum
+          format: date-time
+          example: 2021-10-05T06:00:00Z
         updated_at:
           type: string
           format: date-time
