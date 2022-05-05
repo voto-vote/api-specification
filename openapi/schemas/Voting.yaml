@@ -52,10 +52,9 @@ Vote:
     weight:
       type: integer
       example: 1
-    created_at:
+    explanation:
       type: string
-      format: date-time
-      example: 2021-10-05T06:00:00Z
+      example: Lorem ipsum
 
 PartyVote:
   type: object
@@ -71,9 +70,10 @@ PartyVote:
           type: integer
           format: int64
           example: 456
-        explanation:
+        created_at:
           type: string
-          example: Lorem ipsum
+          format: date-time
+          example: 2021-10-05T06:00:00Z
         updated_at:
           type: string
           format: date-time
@@ -93,9 +93,10 @@ CandidateVote:
           type: integer
           format: int64
           example: 456
-        explanation:
+        created_at:
           type: string
-          example: Lorem ipsum
+          format: date-time
+          example: 2021-10-05T06:00:00Z
         updated_at:
           type: string
           format: date-time

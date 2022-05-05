@@ -1960,7 +1960,7 @@ paths:
                 type: array
                 items:
                   type: object
-                  $ref: "schemas/Voting.yaml#/Vote"
+                  $ref: "schemas/Voting.yaml#/CandidateVote"
         "404":
           description: Not found
           content:
@@ -2001,24 +2001,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                votes:
-                  type: array
-                  items:
-                    $ref: "schemas/Voting.yaml#/Vote"
+              $ref: "schemas/Voting.yaml#/Vote"
       responses:
         "200":
           description: Success
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  votes:
-                    type: array
-                    items:
-                      $ref: "schemas/Voting.yaml#/Vote"
+                $ref: "schemas/Voting.yaml#/CandidateVote"
         "400":
           description: Malformed request
           content:
@@ -2572,7 +2562,7 @@ paths:
                 type: array
                 items:
                   type: object
-                  $ref: "schemas/Voting.yaml#/Vote"
+                  $ref: "schemas/Voting.yaml#/PartyVote"
         "404":
           description: Not found
           content:
@@ -2613,24 +2603,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                votes:
-                  type: array
-                  items:
-                    $ref: "schemas/Voting.yaml#/Vote"
+              $ref: "schemas/Voting.yaml#/Vote"
       responses:
         "200":
           description: Success
           content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  votes:
-                    type: array
-                    items:
-                      $ref: "schemas/Voting.yaml#/Vote"
+          application/json:
+            schema:
+              $ref: "schemas/Voting.yaml#/PartyVote"
         "400":
           description: Malformed request
           content:
