@@ -381,6 +381,13 @@ paths:
       security:
         - firebase: []
       parameters:
+        - name: electionId
+          required: true
+          in: path
+          description: Defines the election 
+          schema:
+            type: integer
+            example: 1
         - name: limit
           in: query
           description: Limits the amount of items in the responsing array. Max results is 100.
@@ -1128,6 +1135,10 @@ paths:
           description: Numeric ID of the VAA
         - in: path
           name: language
+          schema:
+            type: string
+            example: "de"
+            default: ""
           required: true
           description: Language identification string, e.g. 'de'
       responses:
@@ -1171,6 +1182,10 @@ paths:
         - in: path
           name: language
           required: true
+          schema:
+            type: string
+            example: "de"
+            default: ""
           description: Language identification string, e.g. 'de'
       requestBody:
         content:
@@ -1234,11 +1249,19 @@ paths:
         - in: path
           name: language
           required: true
+          schema:
+            type: string
+            example: "de"
+            default: ""
           description: Language identification string, e.g. 'de'
         - in: path
           name: theseId
           required: true
           description: Numeric ID of the these
+          schema:
+            type: integer
+            format: int64
+            example: 123
       responses:
         "200":
           description: Success
@@ -1279,6 +1302,10 @@ paths:
           name: language
           required: true
           description: Language identification string, e.g. 'de'
+          schema:
+            type: string
+            example: "de"
+            default: ""
         - in: path
           name: theseId
           required: true
@@ -2608,9 +2635,9 @@ paths:
         "200":
           description: Success
           content:
-          application/json:
-            schema:
-              $ref: "schemas/Voting.yaml#/PartyVote"
+            application/json:
+              schema:
+                $ref: "schemas/Voting.yaml#/PartyVote"
         "400":
           description: Malformed request
           content:
