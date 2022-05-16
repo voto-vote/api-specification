@@ -375,6 +375,20 @@ NewUser:
       example: 1
       description: Status of user
 
+UserActionRequest: 
+  type: object
+  required:
+    - action
+    - value
+  properties:
+    action: 
+      type: string
+      enum: [email, password]
+    value: 
+      type: string
+      description: The value for either the new password or the new mail
+      example: "newmail@voto.vote"
+
 InviteRequest:
   type: object
   required:
