@@ -62,12 +62,12 @@ NewApplication:
       example: "https://foo.bar/vaa"
     launch_date:
       type: string
-      format: date
-      example: "2021-08-27"
+      format: date-time
+      example: 2021-10-05T06:00:00Z
     sundown_date:
       type: string
-      format: date
-      example: "2021-09-27"
+      format: date-time
+      example: 2021-10-05T06:00:00Z
     configuration:
       type: string
       example: "https://voto.vote/foo_bar.json"
