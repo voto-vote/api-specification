@@ -1,0 +1,8 @@
+ActionRequest: 
+  type: object
+  properties: 
+    action: 
+      type: string
+      enum: [FinalizeAppTheses, FinalizePartyTheses, InviteCandidate, InviteTrustperson]
+    value:
+      type: string
