@@ -9,6 +9,9 @@ Application:
           type: integer
           format: int64
           example: 123
+        status:
+          type: integer
+          example: 123
         created_at:
           type: string
           format: date-time
@@ -72,9 +75,6 @@ NewApplication:
       type: string
       example: "https://voto.vote/foo_bar.json"
       description: "This is the url, where you find your individual configuration for the VOTO VAA"
-    status:
-      type: integer
-      example: 123
 
 DeleteApplication:
   type: object

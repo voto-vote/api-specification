@@ -5,4 +5,8 @@ ActionRequest:
       type: string
       enum: [FinalizeAppTheses, FinalizePartyTheses, InviteCandidate, InviteTrustperson]
     value:
-      type: string
+      type: array
+      items:
+        type: integer
+        example: 1
+        description: This is the ID of the application and based on the request also ID of party/candidate
