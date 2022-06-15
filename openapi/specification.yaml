@@ -1191,7 +1191,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "schemas/These.yaml#/LanguageThese"
+              $ref: "schemas/These.yaml#/NewThese"
       responses:
         "201":
           description: Created
@@ -1317,7 +1317,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "schemas/These.yaml#/LanguageThese"
+              $ref: "schemas/These.yaml#/NewThese"
       responses:
         "200":
           description: Success
