@@ -3789,14 +3789,14 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /actions/finalize:
+  /actions/custom:
     post:
       tags:
         - Action
-      summary: finalize action
+      summary: Custom VOTO action
       description: |
-        Send action request to finalize action
-      operationId: finalizeActionRequest
+        Send action request to trigger custom action
+      operationId: customActionRequest
       security:
         - firebase: []
       requestBody:

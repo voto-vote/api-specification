@@ -3,7 +3,7 @@ ActionRequest:
   properties:
     action: 
       type: string
-      enum: [FinalizeAppTheses, FinalizePartyTheses]
+      enum: [FinalizeAppTheses, FinalizePartyTheses,FinalizeCandidateTheses,CandidateFirstLogin]
     id:
       type: integer
       example: 123
