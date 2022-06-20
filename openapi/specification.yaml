@@ -3793,9 +3793,9 @@ paths:
     post:
       tags:
         - Action
-      summary: Invite admins
+      summary: finalize action
       description: |
-        Send action request to invite admins
+        Send action request to finalize action
       operationId: finalizeActionRequest
       security:
         - firebase: []
@@ -3881,7 +3881,7 @@ paths:
     post:
       tags:
         - Action
-      summary: Invite admins
+      summary: Invite creator
       description: |
         Send action request to invite creator
       operationId: inviteCreatorRequest
@@ -3933,7 +3933,7 @@ paths:
     post:
       tags:
         - Action
-      summary: Invite admins
+      summary: Invite trustperson
       description: |
         Send action request to invite TrustPersons
       operationId: inviteTrustPersonRequest
