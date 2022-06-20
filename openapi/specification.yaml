@@ -3788,14 +3788,15 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-  /actions:
+
+  /actions/finalize:
     post:
       tags:
         - Action
-      summary: Send action request for non-typical crud operations
+      summary: Invite admins
       description: |
-        Send action request for non-typical crud operations
-      operationId: actionRequest
+        Send action request to invite admins
+      operationId: finalizeActionRequest
       security:
         - firebase: []
       requestBody:
@@ -3804,6 +3805,213 @@ paths:
             schema:
               type: object
               $ref: "schemas/Action.yaml#/ActionRequest"
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /actions/invite/admin:
+    post:
+      tags:
+        - Action
+      summary: Invite admins
+      description: |
+        Send action request to invite admins
+      operationId: inviteAdminRequest
+      security:
+        - firebase: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "schemas/Action.yaml#/InviteRequest"
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /actions/invite/{applicationId}/creator:
+    post:
+      tags:
+        - Action
+      summary: Invite admins
+      description: |
+        Send action request to invite creator
+      operationId: inviteCreatorRequest
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "schemas/Action.yaml#/InviteRequest"
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /actions/invite/{applicationId}/trustperson:
+    post:
+      tags:
+        - Action
+      summary: Invite admins
+      description: |
+        Send action request to invite TrustPersons
+      operationId: inviteTrustPersonRequest
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "schemas/Action.yaml#/InviteRequest"
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /actions/invite/{applicationId}/party/{partyId}/candidate:
+    post:
+      tags:
+        - Action
+      summary: Invite candidates
+      description: |
+        Send action request to invite candidates
+      operationId: inviteCandidatesRequest
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "schemas/Action.yaml#/InviteRequest"
       responses:
         "200":
           description: Success

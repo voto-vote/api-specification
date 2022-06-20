@@ -1,12 +1,30 @@
 ActionRequest: 
   type: object
-  properties: 
+  properties:
     action: 
       type: string
-      enum: [FinalizeAppTheses, FinalizePartyTheses, InviteCandidate, InviteTrustperson]
-    value:
-      type: array
-      items:
-        type: integer
-        example: 1
-        description: This is the ID of the application and based on the request also ID of party/candidate
+      enum: [FinalizeAppTheses, FinalizePartyTheses]
+    id:
+      type: integer
+      example: 123
+      description: Must be the applicationId/partyId
+
+
+MailOptions: 
+  type: object
+  properties: 
+    formats:
+      type: string
+      description: "comma separated list of mail formats. Can be 'html' and/or 'plain'"
+
+
+InviteRequest: 
+  type: object
+  properties: 
+    id:
+      type: integer
+      example: 123
+      description: Must be the candidate/trustperson/creator/admin ID
+    Mailoptions:
+      type: object
+      $ref: "Action.yaml#/MailOptions"
