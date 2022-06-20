@@ -3796,7 +3796,7 @@ paths:
       summary: Invite admins
       description: |
         Send action request to invite admins
-      operationId: inviteAdminRequest
+      operationId: finalizeActionRequest
       security:
         - firebase: []
       requestBody:
@@ -3804,7 +3804,7 @@ paths:
           application/json:
             schema:
               type: object
-              $ref: "schemas/Action.yaml#/InviteRequest"
+              $ref: "schemas/Action.yaml#/ActionRequest"
       responses:
         "200":
           description: Success
@@ -3887,6 +3887,14 @@ paths:
       operationId: inviteCreatorRequest
       security:
         - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
       requestBody:
         content:
           application/json:
@@ -3931,6 +3939,14 @@ paths:
       operationId: inviteTrustPersonRequest
       security:
         - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
       requestBody:
         content:
           application/json:
@@ -3975,6 +3991,21 @@ paths:
       operationId: inviteCandidatesRequest
       security:
         - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
       requestBody:
         content:
           application/json:
