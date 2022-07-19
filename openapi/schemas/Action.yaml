@@ -3,7 +3,7 @@ ActionRequest:
   properties:
     action: 
       type: string
-      enum: [FinalizeAppTheses, FinalizePartyTheses,FinalizeCandidateTheses,CandidateFirstLogin]
+      enum: [ActionTypeChangeMail, ActionTypeChangePassword, ActionFinalizeAppTheses, ActionFinalizePartyTheses, ActionFinalizeCandidateTheses, ActionCandidateFirstLogin]
     id:
       type: integer
       example: 123
@@ -28,3 +28,32 @@ InviteRequest:
     Mailoptions:
       type: object
       $ref: "Action.yaml#/MailOptions"
+
+TheseDeviation: 
+  type: object
+  properties: 
+    Value:
+      type: float
+      example: 12.2
+    StatementId:
+      type: integer
+      example: 123
+      description: ID of the statement
+    Votes:
+      type: integer
+      example: 123
+      description: Number of votes used for the calculation
+
+StdDeviationAnalysis:
+  type: object
+  properties:
+    Candidates:
+      type: array
+      items:
+        type: object
+        $ref: "Action.yaml#/TheseDeviation"
+    Parties:
+      type: array
+      items:
+        type: object
+        $ref: "Action.yaml#/TheseDeviation"
