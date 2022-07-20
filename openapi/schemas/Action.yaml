@@ -33,7 +33,7 @@ TheseDeviation:
   type: object
   properties: 
     Value:
-      type: float
+      type: number
       example: 12.2
     StatementId:
       type: integer

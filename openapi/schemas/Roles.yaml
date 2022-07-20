@@ -439,7 +439,7 @@ CandidateShortCut:
       example: 1
       description: candidate id
     ApplicationId: 
-      type: int64
+      type: integer
       example: 1
       description: Instance id
    
@@ -458,11 +458,11 @@ TrustPersonShortCut:
       type: string
       description: Party detailed name
     TrustPersonId: 
-      type: int64
+      type: integer
       example: 1
       description: trustperson Id
     ApplicationId: 
-      type: int64
+      type: integer
       example: 1
       description: Application Id
 
@@ -486,15 +486,15 @@ Me:
   type: object
   properties:
     User: 
-      - $ref: "Roles.yaml#/User"
+      $ref: "Roles.yaml#/User"
     Creator:
-      - $ref: "Roles.yaml#/InstanceShortCut"
+      $ref: "Roles.yaml#/InstanceShortCut"
     TrustPerson: 
-      - $ref: "Roles.yaml#/InstanceShortCut"
+      $ref: "Roles.yaml#/InstanceShortCut"
     Candidate: 
-      - $ref: "Roles.yaml#/InstanceShortCut"
+      $ref: "Roles.yaml#/InstanceShortCut"
     Candidates: 
-      - $ref: "Roles.yaml#/CandidateShortCutArray"
+      $ref: "Roles.yaml#/CandidateShortCutArray"
     TrustPersons: 
-      - $ref: "Roles.yaml#/TrustPersonShortCutArray"
+      $ref: "Roles.yaml#/TrustPersonShortCutArray"
     

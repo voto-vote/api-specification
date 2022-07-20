@@ -1468,7 +1468,6 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-
   /vote:
     post:
       tags:
@@ -1477,14 +1476,6 @@ paths:
       description: |
         Creation of votings is allowed for everyone. Please note, that we still prevent CORS requests.
       operationId: createVotingForApplication
-      parameters:
-        - in: path
-          name: applicationId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the VAA
       requestBody:
         content:
           application/json:
@@ -2717,6 +2708,13 @@ paths:
             type: integer
             format: int64
           description: Numeric ID of the application to get
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
       requestBody:
         content:
           application/json:
@@ -4039,7 +4037,7 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-  /applications/{applicationId}/roles/trustpersons/{trustpersonId}:
+  /applications/{applicationId}/roles/trustpersons/{trustPersonId}:
     get:
       tags:
         - Roles
@@ -4056,7 +4054,7 @@ paths:
             format: int64
           description: Numeric ID of the VAA
         - in: path
-          name: trustpersonId
+          name: trustPersonId
           required: true
           schema:
             type: integer
@@ -4109,19 +4107,12 @@ paths:
             format: int64
           description: Numeric ID of the VAA
         - in: path
-          name: trustpersonId
+          name: trustPersonId
           required: true
           schema:
             type: integer
             format: int64
           description: Numeric ID of the trustperson
-        - in: path
-          name: partyId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the party
       requestBody:
         content:
           application/json:
@@ -4170,19 +4161,12 @@ paths:
             format: int64
           description: Numeric ID of the VAA
         - in: path
-          name: trustpersonId
+          name: trustPersonId
           required: true
           schema:
             type: integer
             format: int64
           description: Numeric ID of the trustperson
-        - in: path
-          name: partyId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the party
       responses:
         "204":
           description: No content
@@ -4234,7 +4218,7 @@ paths:
             format: int64
           description: Numeric ID of the VAA
         - in: path
-          name: trustpersonId
+          name: trustPersonId
           required: true
           schema:
             type: integer
@@ -4294,7 +4278,7 @@ paths:
             format: int64
           description: Numeric ID of the VAA
         - in: path
-          name: trustpersonId
+          name: trustPersonId
           required: true
           schema:
             type: integer
@@ -4355,7 +4339,7 @@ paths:
             format: int64
           description: Numeric ID of the VAA
         - in: path
-          name: trustpersonId
+          name: trustPersonId
           required: true
           schema:
             type: integer
@@ -4815,7 +4799,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "schemas/Actions.yaml#/StdDeviationAnalysis"
+                $ref: "schemas/Action.yaml#/StdDeviationAnalysis"
         "400":
           description: Malformed request
           content:
