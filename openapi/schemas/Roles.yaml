@@ -412,3 +412,89 @@ InviteResponse:
       type: boolean
       example: true
       description: Indicates, whether the user already exists or not
+
+InstanceShortCut: 
+  type: object
+  properties:
+    Id: 
+      type: integer
+      format: int64
+      example: 1
+      description: Instance id
+    Title: 
+      type: string
+      description: Instance title
+    LaunchDate: 
+      type: string
+      format: date
+      example: "1993-12-27"
+
+
+CandidateShortCut: 
+  type: object
+  properties:
+    Id: 
+      type: integer
+      format: int64
+      example: 1
+      description: candidate id
+    ApplicationId: 
+      type: integer
+      example: 1
+      description: Instance id
+   
+TrustPersonShortCut: 
+  type: object
+  properties:
+    Id: 
+      type: integer
+      format: int64
+      example: 1
+      description: candidate id
+    ShortName: 
+      type: string
+      description: Party shortcut
+    DetailedName: 
+      type: string
+      description: Party detailed name
+    TrustPersonId: 
+      type: integer
+      example: 1
+      description: trustperson Id
+    ApplicationId: 
+      type: integer
+      example: 1
+      description: Application Id
+
+InstanceShortCutArray:
+  type: array
+  items:
+    $ref: "Roles.yaml#/InstanceShortCut"
+
+CandidateShortCutArray:
+  type: array
+  items:
+    $ref: "Roles.yaml#/CandidateShortCut"
+
+TrustPersonShortCutArray:
+  type: array
+  items:
+    $ref: "Roles.yaml#/TrustPersonShortCut"
+
+
+Me:
+  type: object
+  properties:
+    User: 
+      $ref: "Roles.yaml#/User"
+    Creator:
+      $ref: "Roles.yaml#/InstanceShortCut"
+    TrustPerson: 
+      $ref: "Roles.yaml#/InstanceShortCut"
+    Candidate: 
+      $ref: "Roles.yaml#/InstanceShortCut"
+    Candidates: 
+      $ref: "Roles.yaml#/CandidateShortCutArray"
+    TrustPersons: 
+      $ref: "Roles.yaml#/TrustPersonShortCutArray"
+    

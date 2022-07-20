@@ -738,6 +738,61 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - VAA
+      summary: Remove Cluster object
+      description: |
+        Updating one cluster is allowed for `admins`
+      operationId: removeCluster
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: clusterId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the Cluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Cluster.yaml#/NewCluster"
+      responses:
+        "204":
+          description: No content
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
 
   /themes:
     get:
@@ -1413,8 +1468,7 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-
-  /applications/{applicationId}/votings:
+  /vote:
     post:
       tags:
         - Vote
@@ -1422,14 +1476,6 @@ paths:
       description: |
         Creation of votings is allowed for everyone. Please note, that we still prevent CORS requests.
       operationId: createVotingForApplication
-      parameters:
-        - in: path
-          name: applicationId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the VAA
       requestBody:
         content:
           application/json:
@@ -1450,11 +1496,7 @@ paths:
                 applicationId: "$response.body#/application_id"
               description: >
                 The `id` value returned in the response can be used as
-                the **voteId** parameter in `GET /applications/{applicationId}/votings/{voteId}`.
-
-
                 The `application_id` value returned in the response can be used as
-                the **applicationId** parameter in `GET /applications/{applicationId}/votings/{voteId}`.
         "400":
           description: Malformed request
           content:
@@ -1467,39 +1509,41 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-
-  /applications/{applicationId}/votings/{voteId}:
-    get:
+  
+  /events:
+    post:
       tags:
-        - Vote
-      summary: Get existing vote
+        - VAA
+      summary: Create new custom event for application
       description: |
-        Fetching votings is allowed for everyone.
-      operationId: getVotingForApplication
-      parameters:
-        - in: path
-          name: applicationId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the VAA
-        - in: path
-          name: voteId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the vote
+        Create new custom event for application
+      operationId: createMetricsEvent
+      security:
+        - firebase: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: integer
       responses:
-        "200":
-          description: Success
+        "201":
+          description: No content
+        "400":
+          description: Malformed request
           content:
             application/json:
               schema:
-                $ref: "schemas/Voting.yaml#/Voting"
-        "404":
-          description: Not found
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
           content:
             application/json:
               schema:
@@ -1510,6 +1554,7 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+  
 
   /applications/{applicationId}/matches/candidates:
     get:
@@ -1847,6 +1892,96 @@ paths:
       responses:
         "204":
           description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/matches/parties/{partyId}/candidates/{candidateId}/picture:
+    put:
+      tags:
+        - VAA/Matches
+      summary: Change candidates profile picture
+      description: |
+        Changing a candidates profile picture for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party) and one `candidate` for itself.
+      operationId: putCandidatesPictureForApplicationAndParty
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to put
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to put
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to put
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                candidateId:
+                  type: integer
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "schemas/Roles.yaml#/Candidate"
+          links:
+            GetCandidateById:
+              operationId: getCandidateForApplication
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/candidates/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
         "401":
           description: Unauthorized
           content:
@@ -2556,6 +2691,283 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - VAA/Matches
+      summary: Create new candidate for application
+      description: |
+        Creation of candidates is allowed for `admin`, `creator` (only in his application) and `trustperson` (only for his party)
+      operationId: createCandidatesForApplicationAndParty
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to get
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewCandidate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/Candidate"
+          links:
+            GetCandidateById:
+              operationId: getCandidateForApplication
+              parameters:
+                candidateId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/candidates/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/matches/parties/{partyId}/candidates/{candidateId}:
+    put:
+      tags:
+        - VAA/Matches
+      summary: Change candidate for application and party
+      description: |
+        Changing a candidate for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party) and one `candidate` for itself.
+      operationId: putCandidateForApplicationAndParty
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to put
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to put
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewCandidate"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/Candidate"
+          links:
+            GetCandidateById:
+              operationId: getCandidateForApplication
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/candidates/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    patch: 
+      tags: 
+        - VAA/Matches
+      summary: Toggle candidate status
+      description: |
+        Toggle candidates is allowed for admins, creators ( their own application ) and trustpersons ( their own party )
+      operationId: toggleCandidateForApplicationAndParty
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/ToggleRole"
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - VAA/Matches
+      summary: Delete candidate object
+      description: |
+        Deleting a candidate for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party) and one `candidate` for itself.
+      operationId: deleteCandidateForApplicationAndParty
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to delete
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to put
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
 
   /applications/{applicationId}/matches/parties/{partyId}/votes:
     get:
@@ -3188,7 +3600,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "schemas/Roles.yaml#/User"
+                $ref: "schemas/Roles.yaml#/Me"
         "404":
           description: Not found
           content:
@@ -3625,7 +4037,7 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
-  /applications/{applicationId}/roles/trustpersons/{trustpersonId}:
+  /applications/{applicationId}/roles/trustpersons/{trustPersonId}:
     get:
       tags:
         - Roles
@@ -3642,7 +4054,7 @@ paths:
             format: int64
           description: Numeric ID of the VAA
         - in: path
-          name: trustpersonId
+          name: trustPersonId
           required: true
           schema:
             type: integer
@@ -3695,7 +4107,7 @@ paths:
             format: int64
           description: Numeric ID of the VAA
         - in: path
-          name: trustpersonId
+          name: trustPersonId
           required: true
           schema:
             type: integer
@@ -3738,7 +4150,7 @@ paths:
         - Roles
       summary: Remove TrustPerson for VAA
       description: |
-        Remove TrustPerson is allowed for admins and creator (for its own application) and for trustpersons ( for its own party ).
+        Remove TrustPerson is allowed for admins and creator (for its own application).
       operationId: deleteTrustPersonForApplication
       parameters:
         - in: path
@@ -3749,12 +4161,197 @@ paths:
             format: int64
           description: Numeric ID of the VAA
         - in: path
-          name: trustpersonId
+          name: trustPersonId
           required: true
           schema:
             type: integer
             format: int64
           description: Numeric ID of the trustperson
+      responses:
+        "204":
+          description: No content
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/matches/parties/{partyId}/trustpersons/{trustPersonId}:
+    get:
+      tags:
+        - Roles
+      summary: Get trustperson by ID for VAA and party
+      description: |
+        Fetching trustperson by id and party is allowed for admins and creator as well as the trustpersons for this party
+      operationId: getTrustpersonForApplicationAndPartyById
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: trustPersonId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the trustperson
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Roles.yaml#/TrustPerson"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    patch: 
+      tags: 
+        - Roles
+      summary: Toggle trustperson status
+      description: |
+        Toggle trustpersons is allowed for admins and creators ( their own application ) and trustpersons ( their own party )
+      operationId: toggleTrustpersonForApplicationAndParty
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: trustPersonId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the trustperson
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/ToggleRole"
+      responses:
+        "200":
+          description: Success
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - Roles
+      summary: Remove TrustPerson for VAA
+      description: |
+        Remove TrustPerson is allowed for admins and creator (for its own application) and for trustpersons ( for its own party ).
+      operationId: deleteTrustPersonForApplicationAndParty
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: trustPersonId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the trustperson
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
       responses:
         "204":
           description: No content
@@ -3805,6 +4402,144 @@ paths:
             schema:
               type: object
               $ref: "schemas/Action.yaml#/ActionRequest"
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /actions/finalize/app/{applicationId}:
+    post:
+      tags:
+        - Action
+      summary: Finalize app theses
+      description: |
+        Send action request to finalize app theses
+      operationId: finalizeAppThesesRequest
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      security:
+        - firebase: []
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /actions/finalize/party/{partyId}:
+    post:
+      tags:
+        - Action
+      summary: Finalize party theses
+      description: |
+        Send action request to finalize party theses
+      operationId: finalizePartyThesesRequest
+      parameters:
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      security:
+        - firebase: []
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /actions/finalize/candidate/{candidateId}:
+    post:
+      tags:
+        - Action
+      summary: Finalize party theses
+      description: |
+        Send action request to finalize candidate theses
+      operationId: finalizeCandidateThesesRequest
+      parameters:
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate
+      security:
+        - firebase: []
       responses:
         "200":
           description: Success
@@ -4015,6 +4750,56 @@ paths:
       responses:
         "200":
           description: Success
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /actions/theses/{applicationId}/standard-deviation:
+    post:
+      tags:
+        - Action
+      summary: Calculate standard deviation for app
+      description: |
+        Send action request to calculate standard deviation of answered theses of matches 
+      operationId: calculateStandardDeviationRequest
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Action.yaml#/StdDeviationAnalysis"
         "400":
           description: Malformed request
           content:
