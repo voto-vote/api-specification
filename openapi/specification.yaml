@@ -794,229 +794,6 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
-  /themes:
-    get:
-      tags:
-        - VAA
-      summary: Fetches array of themes.
-      operationId: getThemes
-      description: |
-        Fetching themes is allowed for `admin` and `creators`
-      security:
-        - firebase: []
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  $ref: "schemas/Theme.yaml#/Theme"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    post:
-      tags:
-        - VAA
-      summary: Create theme object
-      operationId: createTheme
-      description: |
-        Creating themes is allowed for `admin` and `creators`
-      security:
-        - firebase: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Theme.yaml#/NewTheme"
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Theme.yaml#/Theme"
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-
-  /themes/{themeId}:
-    get:
-      tags:
-        - VAA
-      summary: Fetches single theme
-      description: |
-        Fetching one theme is allowed for everyone
-      operationId: getTheme
-      parameters:
-        - in: path
-          name: themeId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the theme
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Theme.yaml#/Theme"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    put:
-      tags:
-        - VAA
-      summary: Update theme object
-      description: |
-        Updating one theme is allowed for `admin` and `creator` (for its own applications)
-      operationId: putTheme
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: themeId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the theme
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "schemas/Theme.yaml#/Theme"
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Theme.yaml#/Theme"
-        "400":
-          description: Malformed request
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-    delete:
-      tags:
-        - VAA
-      summary: Delete theme object
-      description: |
-        Deleting one theme is allowed for `admin` and `creator` (for its own applications)
-      operationId: deleteTheme
-      security:
-        - firebase: []
-      parameters:
-        - in: path
-          name: themeId
-          required: true
-          schema:
-            type: integer
-            format: int64
-          description: Numeric ID of the theme
-      responses:
-        "204":
-          description: No content
-        "401":
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "403":
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "404":
-          description: Not found
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "schemas/Error.yaml#/Error"
-
   /applications/{applicationId}:
     get:
       tags:
@@ -1167,6 +944,148 @@ paths:
                 $ref: "schemas/Error.yaml#/Error"
         "500":
           description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/configuration:
+    get:
+      tags:
+        - VAA
+      summary: Fetches the configuration of the application
+      description: |
+        Fetching one applications config is allowed for everyone
+      operationId: getConfigurationForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      responses:
+        "200":
+          description: Success response contains a JSON structure of the configuration. The configuration itself is not documented in this repository. Please visit the VOTO github page for more information.
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Configuration.yaml#/Configuration"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA
+      summary: Update the configuration of the application
+      description: |
+        Fetching one applications config is allowed for everyone
+      operationId: updateConfigurationForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      requestBody:
+        content: 
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                configuration: 
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Success response contains the updated JSON structure of the configuration. The configuration itself is not documented in this repository. Please visit the VOTO github page for more information.
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Configuration.yaml#/Configuration"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/configuration/image:
+    post:
+      tags:
+        - VAA
+      summary: Upload image to configuration of the application
+      description: |
+        Upload one applications config is allowed for everyone
+      operationId: postConfigurationImageForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      responses:
+        "200":
+          description: Success response is OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: OK
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA
+      summary: Delete an image of the configuration of the application
+      description: |
+        Deleting one applications config images is allowed for admins and creator of this application
+      operationId: removeConfigurationImageForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      requestBody:
+        content: 
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name: 
+                  type: string
+                  example: background.jpg
+      responses:
+        "204":
+          description: Success response is OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: OK
+        "400":
+          description: Bad request
           content:
             application/json:
               schema:
@@ -4430,6 +4349,50 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /actions/custom-mail:
+    post:
+      tags:
+        - Action
+      summary: Custom mail VOTO action
+      description: |
+        Send action request to trigger custom mail sending
+      operationId: customMailActionRequest
+      security:
+        - firebase: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "schemas/Action.yaml#/CustomMailRequest"
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /actions/finalize/app/{applicationId}:
     post:
       tags:
@@ -4824,3 +4787,55 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+  
+  /metrics/votes:
+    post:
+      tags:
+        - Metrics
+      summary: Get global voto votes
+      description: |
+        Get global voto votes count
+      operationId: getVotoVotes
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Metric.yaml#/Votes"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+  
+  /metrics/votes/{applicationId}:
+    post:
+      tags:
+        - Metrics
+      summary: Get voto metrics for one instance
+      description: |
+        Get global voto votes count
+      operationId: getVotoVotesForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Metric.yaml#/Metrics"
+        "400":
+          description: Success
+          content:
+            application/json:
+                  schema:
+                    $ref: "schemas/Error.yaml#/Error"

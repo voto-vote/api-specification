@@ -57,3 +57,44 @@ StdDeviationAnalysis:
       items:
         type: object
         $ref: "Action.yaml#/TheseDeviation"
+
+CustomMailRequest:
+  type: object
+  properties:
+    AddressType: 
+      type: string
+      enum: [AddressTypePersonalized, AddressTypeCommon]
+    Subject: 
+      type: string
+      description: The subject of the mail
+    Title: 
+      type: string
+      description: Title within the mail
+    Call2Action: 
+      type: string
+      description: Some call to action ( text of the button )
+    HTML: 
+      type: string
+      description: html string of the mail content
+    DryRun: 
+      type: boolean
+      description: Test only mode - not sending except to you
+    Apps: 
+      type: array
+      items: 
+        type: integer
+        format: int64
+    TargetStatus: 
+      type: object
+      properties:
+        TargetTrustPersonStatus:
+          type: integer
+          format: int64
+          description: The target status of the trustpersons which should receive the mail
+        TargetCandidateStatus: 
+          type: integer
+          format: int64
+          description: The target status of the candidates which should receive the email
+
+        
+

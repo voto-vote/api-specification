@@ -1,0 +1,38 @@
+Votes:
+  type: object
+  properties:
+    votes:
+      type: number
+      example: 204604
+      description: Overall voto votes
+
+DayVotes: 
+  type: object
+  properties:
+    Votes: 
+      type: number
+      example: 204604
+      description: Votes on this day
+    Timestamp: 
+      type: number
+      example: 1662595217
+      description: Unix timestamp of this day
+
+Metrics: 
+  type: object
+  properties:
+    votes:
+      type: object
+      $ref: "Metric.yaml#/Votes"
+    voto_started: 
+      type: number
+      example: 100000
+    voto_finished: 
+      type: number
+      example: 99999
+    history:
+      type: array
+      items:
+        type: object
+        $ref: "Metric.yaml#/DayVotes"
+
