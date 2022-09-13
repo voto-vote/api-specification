@@ -4349,6 +4349,50 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /actions/custom-mail:
+    post:
+      tags:
+        - Action
+      summary: Custom mail VOTO action
+      description: |
+        Send action request to trigger custom mail sending
+      operationId: customMailActionRequest
+      security:
+        - firebase: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "schemas/Action.yaml#/CustomMailRequest"
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /actions/finalize/app/{applicationId}:
     post:
       tags:
