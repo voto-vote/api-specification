@@ -94,7 +94,7 @@ CustomMailRequest:
         TargetCandidateStatus: 
           type: integer
           format: int64
-          description: The target status of the candidates which should reeive the email
+          description: The target status of the candidates which should receive the email
 
         
 
