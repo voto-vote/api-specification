@@ -96,6 +96,14 @@ Creator:
           format: date-time
           example: 2021-10-05T06:00:00Z
 
+ToggleRole: 
+  type: object
+  properties:
+    status:
+      type: integer
+      format: int64
+      example: 123
+
 Creators: 
   type: object
   properties: 
@@ -142,6 +150,10 @@ TrustPerson:
           type: string
           example: john@doe.com
           description: Contact mail of trustperson
+        party_name:
+          type: string
+          example: VOP
+          description: Short Name of the party - Voto Party
         status:
           type: integer
           format: int64
@@ -211,6 +223,10 @@ Candidate:
           format: int64
           example: 456
           description: Age of the candidate, pulled from users profile
+        party_name:
+          type: string
+          example: VOP
+          description: Short Name of the party - Voto Party
         profile_picture:
           type: string
           example: "https://"
@@ -358,3 +374,127 @@ NewUser:
       format: int64
       example: 1
       description: Status of user
+
+UserActionRequest: 
+  type: object
+  required:
+    - action
+    - value
+  properties:
+    action: 
+      type: string
+      enum: [email, password]
+    value: 
+      type: string
+      description: The value for either the new password or the new mail
+      example: "newmail@voto.vote"
+
+InviteRequest:
+  type: object
+  required:
+    - mail
+  properties:
+    mail:
+      type: string
+      example: "foo@bar.com"
+
+InviteResponse:
+  type: object
+  required:
+    - mail
+  properties:
+    UserId:
+      type: integer
+      format: int64
+      example: 1
+      description: user id for requested mail. -1 when user is not found
+    New:
+      type: boolean
+      example: true
+      description: Indicates, whether the user already exists or not
+
+InstanceShortCut: 
+  type: object
+  properties:
+    Id: 
+      type: integer
+      format: int64
+      example: 1
+      description: Instance id
+    Title: 
+      type: string
+      description: Instance title
+    LaunchDate: 
+      type: string
+      format: date
+      example: "1993-12-27"
+
+
+CandidateShortCut: 
+  type: object
+  properties:
+    Id: 
+      type: integer
+      format: int64
+      example: 1
+      description: candidate id
+    ApplicationId: 
+      type: integer
+      example: 1
+      description: Instance id
+   
+TrustPersonShortCut: 
+  type: object
+  properties:
+    Id: 
+      type: integer
+      format: int64
+      example: 1
+      description: candidate id
+    ShortName: 
+      type: string
+      description: Party shortcut
+    DetailedName: 
+      type: string
+      description: Party detailed name
+    TrustPersonId: 
+      type: integer
+      example: 1
+      description: trustperson Id
+    ApplicationId: 
+      type: integer
+      example: 1
+      description: Application Id
+
+InstanceShortCutArray:
+  type: array
+  items:
+    $ref: "Roles.yaml#/InstanceShortCut"
+
+CandidateShortCutArray:
+  type: array
+  items:
+    $ref: "Roles.yaml#/CandidateShortCut"
+
+TrustPersonShortCutArray:
+  type: array
+  items:
+    $ref: "Roles.yaml#/TrustPersonShortCut"
+
+
+Me:
+  type: object
+  properties:
+    User: 
+      $ref: "Roles.yaml#/User"
+    Creator:
+      $ref: "Roles.yaml#/InstanceShortCut"
+    TrustPerson: 
+      $ref: "Roles.yaml#/InstanceShortCut"
+    Candidate: 
+      $ref: "Roles.yaml#/InstanceShortCut"
+    Candidates: 
+      $ref: "Roles.yaml#/CandidateShortCutArray"
+    TrustPersons: 
+      $ref: "Roles.yaml#/TrustPersonShortCutArray"
+    

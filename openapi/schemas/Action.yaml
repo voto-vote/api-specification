@@ -1,0 +1,100 @@
+ActionRequest: 
+  type: object
+  properties:
+    action: 
+      type: string
+      enum: [ActionTypeChangeMail, ActionTypeChangePassword, ActionFinalizeAppTheses, ActionFinalizePartyTheses, ActionFinalizeCandidateTheses, ActionCandidateFirstLogin]
+    id:
+      type: integer
+      example: 123
+      description: Must be the applicationId/partyId
+
+
+MailOptions: 
+  type: object
+  properties: 
+    formats:
+      type: string
+      description: "comma separated list of mail formats. Can be 'html' and/or 'plain'"
+
+
+InviteRequest: 
+  type: object
+  properties: 
+    id:
+      type: integer
+      example: 123
+      description: Must be the candidate/trustperson/creator/admin ID
+    Mailoptions:
+      type: object
+      $ref: "Action.yaml#/MailOptions"
+
+TheseDeviation: 
+  type: object
+  properties: 
+    Value:
+      type: number
+      example: 12.2
+    StatementId:
+      type: integer
+      example: 123
+      description: ID of the statement
+    Votes:
+      type: integer
+      example: 123
+      description: Number of votes used for the calculation
+
+StdDeviationAnalysis:
+  type: object
+  properties:
+    Candidates:
+      type: array
+      items:
+        type: object
+        $ref: "Action.yaml#/TheseDeviation"
+    Parties:
+      type: array
+      items:
+        type: object
+        $ref: "Action.yaml#/TheseDeviation"
+
+CustomMailRequest:
+  type: object
+  properties:
+    AddressType: 
+      type: string
+      enum: [AddressTypePersonalized, AddressTypeCommon]
+    Subject: 
+      type: string
+      description: The subject of the mail
+    Title: 
+      type: string
+      description: Title within the mail
+    Call2Action: 
+      type: string
+      description: Some call to action ( text of the button )
+    HTML: 
+      type: string
+      description: html string of the mail content
+    DryRun: 
+      type: boolean
+      description: Test only mode - not sending except to you
+    Apps: 
+      type: array
+      items: 
+        type: integer
+        format: int64
+    TargetStatus: 
+      type: object
+      properties:
+        TargetTrustPersonStatus:
+          type: integer
+          format: int64
+          description: The target status of the trustpersons which should receive the mail
+        TargetCandidateStatus: 
+          type: integer
+          format: int64
+          description: The target status of the candidates which should receive the email
+
+        
+

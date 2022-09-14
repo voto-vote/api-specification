@@ -1,0 +1,60 @@
+
+Sponsor: 
+  type: object
+  properties:
+    name: 
+      type: string
+      description: example name of the sponsor
+    image: 
+      type: string
+      description: path to the image, either within voto or external link
+    href: 
+      type: string
+      description: Link to the external sponsor, opens in new tab
+
+Configuration:
+  type: object
+  properties: 
+    introduction:
+      type: object
+      properties: 
+        background: 
+          type: string
+          example: voto://configuration/default/bg1.jpg
+    sponsors: 
+      type: array
+      items:
+        type: object
+        $ref: "Configuration.yaml#/Sponsor"
+    cluster: 
+      type: object
+      properties:
+        instances: 
+          type: array
+          items: 
+            type: number
+            example: 123
+        title: 
+          type: string
+          example: Cluster title
+          description: Cluster title
+        description:
+          type: string
+          example: Cluster description
+          description: Description of this cluster
+    ads:
+      type: object
+      properties:
+        html: 
+          type: string
+          description: Freely defined html which will be shown at the footer of the matches screen
+        link: 
+          type: string
+          description: Link to the advertisment partner
+        theme: 
+          type: string
+          description: ONE color. Can be rgba/rgb/hex or plain
+
+
+
+        
