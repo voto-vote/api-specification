@@ -302,6 +302,55 @@ NewCandidate:
       type: string
       example: "https://voto.vote"
 
+NewCandidateLight:
+  type: object
+  required:
+    - gender_id
+    - party_id
+    - firstName
+    - lastName
+  properties:
+    gender_id:
+      type: integer
+      example: 123
+    party_id:
+      type: integer
+      example: 123
+    firstName: 
+      type: string
+      example: "Max"
+      description: "Firstname of candidate light. Can also contain title as prefix"
+    lastName: 
+      type: string
+      example: "Max"
+      description: "Firstname of candidate light. Can also contain title as prefix"
+
+CandidateLight:
+  allOf:
+    - $ref: "Roles.yaml#/NewCandidateLight"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        created_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2021-10-05T06:00:00Z
+
+CandidatesLight: 
+  type: array
+  items:
+      type: object
+      $ref: "Roles.yaml#/CandidateLight"
+
 User:
   allOf:
     - $ref: "Roles.yaml#/NewUser"
