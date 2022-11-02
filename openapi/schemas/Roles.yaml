@@ -322,8 +322,8 @@ NewCandidateLight:
       description: "Firstname of candidate light. Can also contain title as prefix"
     lastName: 
       type: string
-      example: "Max"
-      description: "Firstname of candidate light. Can also contain title as prefix"
+      example: "Mustermann"
+      description: "Lastname of candidate light"
 
 CandidateLight:
   allOf:
