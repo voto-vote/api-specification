@@ -1836,6 +1836,96 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /applications/{applicationId}/matches/parties/{partyId}/candidates-light/{candidateId}/picture:
+    put:
+      tags:
+        - VAA/Matches
+      summary: Change candidates light profile picture
+      description: |
+        Changing a candidates light profile picture for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party)
+      operationId: putCandidatesLightPictureForApplicationAndParty
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to put
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to put
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to put
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                candidateId:
+                  type: integer
+                image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "schemas/Roles.yaml#/CandidateLight"
+          links:
+            GetCandidateLightById:
+              operationId: getCandidateLightForApplicationAndParty
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/parties/{partyId}/candidates-light/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
   /applications/{applicationId}/matches/parties/{partyId}/candidates/{candidateId}/picture:
     put:
       tags:
@@ -2887,6 +2977,353 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /applications/{applicationId}/matches/parties/{partyId}/candidates-light:
+    get:
+      tags:
+        - VAA/Matches
+      summary: Get candidates light for party
+      description: |
+        Fetching candidates light for one party within one application by its ID is allowed for everyone.
+      operationId: getCandidatesLightForPartyWithinApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/CandidatesLight"
+          links:
+            GetPartyById:
+              operationId: getPartyForApplication
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **partyId** parameter in `GET /applications/{applicationId}/matches/parties/{partyId}`.
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    post:
+      tags:
+        - VAA/Matches
+      summary: Create new candidate for application
+      description: |
+        Creation of candidates is allowed for `admin`, `creator` (only in his application) and `trustperson` (only for his party)
+      operationId: createCandidateLightForApplicationAndParty
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to get
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewCandidateLight"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/CandidateLight"
+          links:
+            GetCandidateLightById:
+              operationId: getCandidateLightForApplicationAndParty
+              parameters:
+                candidateId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/parties/{partyId}/candidates-light/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/matches/parties/{partyId}/candidates-light/{candidateId}:
+    get:
+      tags:
+        - VAA/Matches
+      summary: Get candidate light for application and party
+      description: |
+        Get a candidate light for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party)
+      operationId: getCandidateLightForApplicationAndParty
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to get
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to get
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to get
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/CandidateLight"
+          links:
+            GetCandidateLightById:
+              operationId: getCandidateLightForApplicationAndParty
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/parties/{partyId}/candidates-light/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    put:
+      tags:
+        - VAA/Matches
+      summary: Change candidate for application and party
+      description: |
+        Changing a candidate for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party)
+      operationId: putCandidateLightForApplicationAndParty
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application to put
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to put
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to put
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/Roles.yaml#/NewCandidateLight"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Roles.yaml#/CandidateLight"
+          links:
+            GetCandidateLightById:
+              operationId: getCandidateLightForApplicationAndParty
+              parameters:
+                applicationId: "$response.body#/id"
+              description: >
+                The `id` value returned in the response can be used as
+                the **candidateId** parameter in `GET /applications/{applicationId}/matches/parties/{partyId}/candidates-light/{candidateId}`.
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+    delete:
+      tags:
+        - VAA/Matches
+      summary: Delete candidate object
+      description: |
+        Deleting a candidate light for one application is allowed for `admin`, `creator` (within his application), `trustperson` (within his party)
+      operationId: deleteCandidateLightForApplicationAndParty
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the application
+        - in: path
+          name: candidateId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the candidate to delete
+        - in: path
+          name: partyId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the party to delete
+      responses:
+        "204":
+          description: No content
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
 
   /applications/{applicationId}/matches/parties/{partyId}/votes:
     get:
