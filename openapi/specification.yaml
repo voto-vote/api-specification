@@ -1329,6 +1329,80 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+    patch:
+      tags:
+        - VAA
+      summary: Add translation for specific these
+      description: |
+        Adding translation for specific these is allowed for `admin` and `creator` (for its own applications)
+      operationId: addTranslationForSpecificTheseForApplication
+      security:
+        - firebase: []
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+        - in: path
+          name: language
+          required: true
+          description: Language identification string, e.g. 'de'
+          schema:
+            type: string
+            example: "de"
+            default: ""
+        - in: path
+          name: theseId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description:  Numeric ID of the these - not the translation, but the statementID !
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "schemas/These.yaml#/NewTheseTranslation"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/These.yaml#/These"
+        "400":
+          description: Malformed request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
     delete:
       tags:
         - VAA

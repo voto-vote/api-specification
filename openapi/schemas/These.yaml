@@ -9,6 +9,22 @@ NewThese:
       format: text
       example: "Lorem ipsum dolor sed amet"
 
+NewTheseTranslation:
+  type: object
+  properties:
+    statement_id:
+      type: integer
+      description: identifies the statement id
+      format: int64
+      example: 123
+    title:
+      type: string
+      example: "Lorem ipsum..."
+    text:
+      type: string
+      format: text
+      example: "Lorem ipsum dolor sed amet"
+
 These:
   type: object
   properties:
