@@ -1204,6 +1204,41 @@ paths:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
 
+  /applications/{applicationId}/theses/languages:
+    get:
+      tags:
+        - VAA
+      summary: Fetches available languages for theses
+      description: |
+        Fetching available languages for theses is allowed admin and creator (for its own applications)
+      operationId: getLanguagesForApplicationTheses
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Language.yaml#/Languages"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
   /applications/{applicationId}/theses/{language}/{theseId}:
     get:
       tags:

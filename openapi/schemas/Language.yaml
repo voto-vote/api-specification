@@ -32,3 +32,20 @@ NewTranslation:
       type: string
       format: text
       example: "de"
+
+Language:
+  type: object
+  properties:
+    language_code:
+      type: string
+      format: text
+      example: "de"
+
+Languages: 
+  type: object
+  properties: 
+    data: 
+      type: array
+      items:
+        type: object
+        $ref: "Language.yaml#/Language"
