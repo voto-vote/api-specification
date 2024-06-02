@@ -1,0 +1,36 @@
+
+TimelineApplication: 
+  type: object
+  properties:
+    id:
+      type: integer
+      format: int64
+      example: 1
+    title:
+      type: string
+      example: "Application 1"
+    url:
+      type: string
+      example: "Direct link to application 1"
+    background:
+      type: string
+      example: "Background image url for application 1"
+
+TimelineEntry:
+  type: object
+  properties:
+    election_date:
+      type: string
+      format: date
+      example: 2021-10-05
+    applications:
+      type: array
+      items:
+        type: object
+        $ref: "Timeline.yaml#/TimelineApplication"
+
+Timeline:
+  type: array
+  items:
+    type: object
+    $ref: "Timeline.yaml#/TimelineEntry"
