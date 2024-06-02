@@ -5385,3 +5385,19 @@ paths:
             application/json:
                   schema:
                     $ref: "schemas/Error.yaml#/Error"
+
+  /timeline:
+    get:
+      tags:
+        - Timeline
+      summary: Get timeline for landing page
+      description: |
+        Get timeline of VAAs for landing page
+      operationId: getTimelineForLandingPage
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Timeline.yaml#/Timeline"
