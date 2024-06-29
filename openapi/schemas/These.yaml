@@ -54,3 +54,17 @@ These:
       type: string
       format: date-time
       example: 2021-10-05T06:00:00Z
+
+ThesesForLanguage:
+  type: object
+  properties:
+    lamguage:
+      type: string
+      format: text
+      example: "de"
+      description: language code
+    theses:
+      type: array
+      items:
+        type: object
+        $ref: "These.yaml#/These"

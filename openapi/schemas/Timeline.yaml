@@ -22,8 +22,8 @@ TimelineApplication:
 TimelineEntry:
   type: object
   properties:
-    id:
-      election_date: integer
+    election_date:
+      type: integer
       format: date-time
       example: "2024-07-14"
     applications:
