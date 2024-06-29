@@ -1,0 +1,39 @@
+TimelineApplication:
+  allOf:
+    - $ref: "Application.yaml#/NewApplication"
+    - type: object
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 123
+        title:
+          type: string
+          example: "Example Title"
+        url:
+          type: string
+          example: "https://app.voto.vote/neubrandenburg"
+        background:
+          type: string
+          example: "https://votoprod.appspot.com.storage.googleapis.com/configuration/1626736/blob"
+
+TimelineEntry:
+  type: object
+  properties:
+    id:
+      election_date: integer
+      format: date-time
+      example: "2024-07-14"
+    applications:
+      type: array
+      items:
+        type: object
+        $ref: "Timeline.yaml#/TimelineApplication"
+
+Timeline: 
+  type: array
+  items:
+    type: object
+    $ref: "Timeline.yaml#/TimelineEntry"

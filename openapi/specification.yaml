@@ -441,6 +441,26 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+  /timeline:
+    get:
+      tags: 
+        - Election
+      summary: Fetches array of timeline entries
+      security:
+        - firebase: []
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Application.yaml#/Timeline"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
 
   /applications:
     get:
