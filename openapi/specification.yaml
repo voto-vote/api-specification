@@ -455,7 +455,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "schemas/Timeline.yaml#/Timeline"
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Timeline.yaml#/TimelineEntry"
         "400":
           description: Bad request
           content:
@@ -1140,6 +1143,7 @@ paths:
           content:
             application/json:
               schema:
+                type: array
                 items:
                   type: object
                   $ref: "schemas/These.yaml#/ThesesForLanguage"
@@ -1178,6 +1182,7 @@ paths:
           content:
             application/json:
               schema:
+                type: array
                 items:
                   type: string
                   format: text
