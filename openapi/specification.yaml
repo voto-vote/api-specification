@@ -441,6 +441,36 @@ paths:
             application/json:
               schema:
                 $ref: "schemas/Error.yaml#/Error"
+  /timeline:
+    get:
+      tags: 
+        - Election
+      summary: Fetches array of timeline entries
+      security:
+        - firebase: []
+      operationId: getTimeline
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/Timeline.yaml#/TimelineEntry"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
 
   /applications:
     get:
@@ -1086,6 +1116,85 @@ paths:
                 example: OK
         "400":
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/theses:
+    get:
+      tags:
+        - VAA
+      summary: Fetches all theses for one VAA regardless of the language
+      description: |
+        Fetching one applications theses is allowed for everyone
+      operationId: getAllLanguagesThesesForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  $ref: "schemas/These.yaml#/ThesesForLanguage"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+
+  /applications/{applicationId}/theses/languages:
+    get:
+      tags:
+        - VAA
+      summary: Fetches all available languages for theses for one VAA regardless of the language
+      description: |
+        Fetching all available languages of theses is allowed for everyone
+      operationId: getAllLanguagesForThesesForApplication
+      parameters:
+        - in: path
+          name: applicationId
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: Numeric ID of the VAA
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  format: text
+                  example: "de"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/Error.yaml#/Error"
+        "500":
+          description: Internal server error
           content:
             application/json:
               schema:
